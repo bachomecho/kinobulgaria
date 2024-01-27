@@ -11,6 +11,7 @@ app.get("/movies/", async (_req, res) => {
   res.send({ data: movies });
 });
 
+const port = process.env.PORT || 8080
 setTimeout(() => {
-  app.listen(8080, () => console.log("listening on port 8080"));
+  app.listen(port, () => console.log(`listening on port ${port}`));
 }, 2000);
