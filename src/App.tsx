@@ -22,7 +22,7 @@ export default function Home() {
   };
 
   async function getPageData() {
-      const apiUrlEndpoint = "http://localhost:8080/movies";
+      const apiUrlEndpoint = "http://localhost:8080/api/movies";
       const response = await fetch(apiUrlEndpoint);
       const res = await response.json();
       console.log(res.data);
