@@ -6,16 +6,16 @@ dotenv.config()
 const PORT = process.env.port || 8080
 
 export default defineConfig({
-  server: {
-    proxy:{
-      "/api": {
-        target: `http://localhost:${PORT}`,
-        changeOrigin: true
-      }
-    }
-  },
-  build:{
-    outDir: "dist/app"
-  },
   plugins: [react()],
-})
+  server: {
+    proxy: {
+      '/api': `http://localhost:${PORT}`,
+    },
+  },
+  build: {
+    outDir: 'dist/app',
+    emptyOutDir: true,
+  },
+});
+
+

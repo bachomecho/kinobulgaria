@@ -8,7 +8,7 @@
     "esModuleInterop": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -21,9 +21,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "paths":  { "@/*": [ "./src/*" ] },
   },
-  "include": ["src/*", "src/**/*"],
+  "include": ["src/*", "src/**/*", "server/*", "server/**/*"],
   "exclude": ["vite-env.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json"}]
 }

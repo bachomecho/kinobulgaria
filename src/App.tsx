@@ -4,7 +4,7 @@ import Search from "./components/Search";
 
 // TODO: style search bar in dark mode (defaults to normal blue in dark mode)
 // TODO: close button for iFrame (maybe a modal instead of an iframe?)
-// TODO: rewrite the api with FastApi (https://fastapi.tiangolo.com/)
+// TODO: handle unavailable videos
 
 interface Movie {
   title: string
@@ -22,7 +22,7 @@ export default function Home() {
   };
 
   async function getPageData() {
-      const apiUrlEndpoint = "http://localhost:8080/api/movies";
+      const apiUrlEndpoint = "http://localhost:3000/api/movies";
       const response = await fetch(apiUrlEndpoint);
       const res = await response.json();
       console.log(res.data);

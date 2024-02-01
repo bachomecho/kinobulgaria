@@ -1,5 +1,5 @@
 import express from "express";
-import { getMovies } from "./database";
+import { getMovies } from "./database.js";
 
 export const router = express.Router()
 
