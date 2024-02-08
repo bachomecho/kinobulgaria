@@ -11,7 +11,7 @@ app.use("/api", router)
 app.use(express.static("dist/app"))
 
 app.get('*', (_req, res) => {
-  res.sendFile("app/index.html", {root: "dist"})
+  res.sendFile("./app/index.html", {root: "./"})
 })
 
 const port = process.env.PORT || 3000
