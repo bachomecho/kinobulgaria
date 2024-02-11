@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "client:dev": "vite",
     "server:dev": "npx tsx ./server/server.ts",
-    "client:build": "vite build",
+    "client:build": "vite build --base=/",
     "server:build": "tsc -p ./server/tsconfig.json",
     "build": "npm run client:build && npm run server:build",
     "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",

@@ -7,4 +7,3 @@ router.get("/movies", async (_req, res) => {
   const movies = await getMovies();
   res.send({ data: movies });
 });
-
