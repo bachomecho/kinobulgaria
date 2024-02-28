@@ -21,9 +21,8 @@ export default function Home() {
     setSearch(e.target.value);
   };
 
-  const apiUrlEndpoint = process.env.ENVIRONMENT === "production" ? "http://kinobulgaria.com:3000/api/movies" : "http://localhost:3000/api/movies";
   async function getPageData() {
-      const response = await fetch(apiUrlEndpoint);
+      const response = await fetch("http://localhost:3000/api/movies");
       const res = await response.json();
       setMovies(res.data);
     }
