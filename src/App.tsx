@@ -33,13 +33,17 @@ export default function Home() {
 
 
   function showHideIframe(id: string) {
-    if(!moviesrc) {
+    if (moviesrc) {
+      if (id === movie_id)
+        setMoviesrc(false)
+      else setMovieId(id)
+    }
+    else {
       setMoviesrc(true)
       setMovieId(id)
-    } else {
-      setMoviesrc(false)
     }
   }
+
 
   function filteredMovies(): Movie[] {
     if (search === "") {
