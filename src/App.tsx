@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import MovieItem from "./components/MovieItem";
 import Search from "./components/Search";
 
-// TODO: style search bar in dark mode (defaults to normal blue in dark mode)
 // TODO: close button for iFrame (maybe a modal instead of an iframe?)
 // TODO: handle unavailable videos
+// TODO: put images into a list <li>
 
 interface Movie {
   title: string
@@ -27,14 +27,18 @@ export default function Home() {
       setMovies(res.data);
     }
 
-  useEffect( () => {
+  useEffect (() => {
     getPageData();
   }, []);
 
+
   function showHideIframe(id: string) {
-    setMoviesrc(true);
-    setMovieId(id);
-    return 1
+    if(!moviesrc) {
+      setMoviesrc(true)
+      setMovieId(id)
+    } else {
+      setMoviesrc(false)
+    }
   }
 
   function filteredMovies(): Movie[] {
