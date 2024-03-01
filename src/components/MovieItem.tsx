@@ -8,7 +8,7 @@ interface MovieParams {
 function MovieItem(props: MovieParams){
   return (
       <img
-          src={"../assets/static/images/" + props.thumbnail_name + ".jpg"}
+          src={"/images/" + props.thumbnail_name + ".jpg"}
           title={props.title}
           className="thumbnail"
           onClick={props.onClick}

@@ -8,6 +8,7 @@ app.use(cors())
 
 app.use("/api", router)
 
+app.use("/images", express.static("dist/app/assets/static/images"))
 app.use(express.static("dist/app"))
 
 app.get('*', (_req, res) => {

@@ -21,8 +21,9 @@ export default function Home() {
     setSearch(e.target.value);
   };
 
+  // TODO: set up environment variables so urls vary based on dev or prod, maybe not needed?
   async function getPageData() {
-      const response = await fetch("http://localhost:3000/api/movies");
+      const response = await fetch("/api/movies");
       const res = await response.json();
       setMovies(res.data);
     }
