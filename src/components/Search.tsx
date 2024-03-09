@@ -1,4 +1,3 @@
-import { TextField } from "@mui/material";
 import React from "react";
 
 interface SearchProps {
@@ -8,14 +7,12 @@ interface SearchProps {
 
 function Search(props: SearchProps) {
   return (
-    <TextField
-      label="Търсене"
+    <input
+      type="text"
+      id="searchField"
       value={props.filterValue}
       onChange={props.handleSearch}
-      type="text"
-      size="small"
-      margin="normal"
-      inputProps={{ style: { fontFamily: "Arial", color: "white" } }}
+      placeholder="Tърсене"
     />
   );
 }

@@ -15,14 +15,6 @@ header {
   align-items: center;
 }
 
-.search {
-  display: flex;
-  height: 10px;
-  background-color: aliceblue;
-  height: 25px;
-  border-radius: 5px;
-}
-
 h2 {
   font-size: 36px;
   text-align: left;
@@ -62,4 +54,25 @@ p {
 body {
   margin: 0%;
   overflow-x: hidden;
+}
+
+#searchField {
+  font-size: 14px;
+  border-radius: 6px;
+  line-height: 1.5;
+  padding: 5px 10px;
+  transition: box-shadow 100ms ease-in, border 100ms ease-in,
+    background-color 100ms ease-in;
+  border: 2px solid #dee1e2;
+  color: rgb(14, 14, 16);
+  background: #dee1e2;
+  display: block;
+  height: 20px;
+  :hover {
+    border-color: #ccc;
+  }
+  :focus {
+    border-color: #000000;
+    background: #fff;
+  }
 }
