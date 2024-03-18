@@ -5,13 +5,6 @@ import About from "./components/About";
 export default function App() {
   return (
     <div className="wrapper">
-      <nav>
-        <ul>
-          <li>
-            <a href="/"></a>
-          </li>
-        </ul>
-      </nav>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

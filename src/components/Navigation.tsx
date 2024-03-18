@@ -2,21 +2,29 @@ function Navigation() {
   return (
     <>
       <h2>
-        <a href="/">
-          <h2>Kino Bulgaria</h2>
-        </a>
+        <a href="/">Kino Bulgaria</a>
       </h2>
       <nav>
-        <ul>
+        <ul className="navigation-menu">
           <li>
-            <a className="navigation" href="/">
-              Начало
-            </a>
-            <a className="navigation" href="/about">
-              За нас
-            </a>
+            <a href="/">Начало</a>
+            <a href="/about">За нас</a>
           </li>
         </ul>
+
+        <div className="dropdown-menu">
+          <button className="dropbtn">Меню</button>
+          <div className="dropdown-content">
+            <ul>
+              <li>
+                <a href="/">Начало</a>
+              </li>
+              <li>
+                <a href="/about">За нас</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </nav>
     </>
   );

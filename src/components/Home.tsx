@@ -4,7 +4,6 @@ import Search from "./Search";
 import Navigation from "./Navigation";
 
 // TODO: close button for iFrame (maybe a modal instead of an iframe?)
-// TODO: handle unavailable videos
 
 interface Movie {
   title: string;
