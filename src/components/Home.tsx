@@ -3,8 +3,6 @@ import MovieItem from "./MovieItem";
 import Search from "./Search";
 import Navigation from "./Navigation";
 
-// TODO: close button for iFrame (maybe a modal instead of an iframe?)
-
 interface Movie {
   title: string;
   thumbnail_name: string;
@@ -40,7 +38,7 @@ export default function Home() {
     }
   }
 
-  function filteredMovies(): Movie[] {
+  function filterMovies(): Movie[] {
     if (search === "") {
       return movies;
     } else {
@@ -50,7 +48,7 @@ export default function Home() {
     }
   }
 
-  const filteredMoviesVariable = filteredMovies();
+  const filteredMovies = filterMovies();
   return (
     <>
       <header>
@@ -58,7 +56,7 @@ export default function Home() {
         <Search handleSearch={handleSearch} filterValue={search} />
       </header>
       <div className="intro">
-        {filteredMoviesVariable && !moviesrc && (
+        {filteredMovies && !moviesrc && (
           <p id="instruction">
             Кликнете върху една от иконките за да изберете вашия филм
           </p>
@@ -79,8 +77,8 @@ export default function Home() {
           </div>
           <div className={"image_thumbs"}>
             <li>
-              {filteredMoviesVariable ? (
-                filteredMoviesVariable.map((item, index) => (
+              {filteredMovies.length !== 0 ? (
+                filteredMovies.map((item, index) => (
                   <MovieItem
                     key={index}
                     {...item}
