@@ -27,8 +27,12 @@ h2 {
   padding: 1%;
 }
 
-p {
+p.instruction {
   font-size: 14pt;
+}
+
+p.no-movies-found {
+  font-size: 11pt;
 }
 
 .image_gallery {
@@ -48,11 +52,14 @@ p {
   width: 100px;
   height: 140px;
   object-fit: fill;
+}
+
+.thumbnail.grid {
   margin-right: 10px;
   cursor: pointer;
 }
 
-.thumbnail:hover {
+.thumbnail.grid:hover {
   outline: 4px solid #43a113;
 }
 
@@ -65,11 +72,11 @@ body {
 #searchField {
   font-size: 14px;
   border-radius: 6px;
+  border: 2px solid #dee1e2;
   line-height: 1.5;
   padding: 5px 10px;
   transition: box-shadow 100ms ease-in, border 100ms ease-in,
     background-color 100ms ease-in;
-  border: 2px solid #dee1e2;
   color: rgb(14, 14, 16);
   background: #dee1e2;
   display: block;
@@ -197,4 +204,55 @@ div a {
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-container-old {
+  position: "fixed";
+  top: "50%";
+  left: "50%";
+  transform: "translate(-50%, -50%)";
+  width: "50%";
+  height: "50%";
+  background-color: "white";
+  border-radius: "8px";
+  box-shadow: "0 2px 4px rgba(0, 0, 0, 0.2)";
+  padding: "20px";
+  display: "flex";
+  flex-direction: "column";
+  justify-content: "center";
+  align-items: "center";
+}
+
+.modal-container-hidden {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: -50%; /* Adjust this value to control how much of the screen the modal covers */
+  width: 50%; /* Adjust this value to control the width of the modal */
+  height: 100vh;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Adjust the alpha value for the background dim effect */
+  z-index: 1000;
+  /* transition: margin-right 2s ease-in-out; */
+}
+
+.modal-container-active {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0; /* Adjust this value to control how much of the screen the modal covers */
+  width: 50%; /* Adjust this value to control the width of the modal */
+  height: 100vh;
+  background-color: rgb(
+    207,
+    205,
+    205
+  ); /* Adjust the alpha value for the background dim effect */
+  z-index: 1000;
+  /* transition: margin-right 2s ease-in-out; */
 }

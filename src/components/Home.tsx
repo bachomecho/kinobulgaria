@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import MovieItem from "./MovieItem";
 import Search from "./Search";
 import Navigation from "./Navigation";
+import Modal from "./Modal";
 
 interface Movie {
   title: string;
@@ -11,12 +12,12 @@ interface Movie {
 
 export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [movie_id, setMovieId] = useState<string>("");
-  const [moviesrc, setMoviesrc] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
+  const thumbnailName = useRef("");
 
   async function getPageData() {
     const response = await fetch("/api/movies");
@@ -27,16 +28,6 @@ export default function Home() {
   useEffect(() => {
     getPageData();
   }, []);
-
-  function showHideIframe(id: string) {
-    if (moviesrc) {
-      if (id === movie_id) setMoviesrc(false);
-      else setMovieId(id);
-    } else {
-      setMoviesrc(true);
-      setMovieId(id);
-    }
-  }
 
   function filterMovies(): Movie[] {
     if (search === "") {
@@ -56,25 +47,19 @@ export default function Home() {
         <Search handleSearch={handleSearch} filterValue={search} />
       </header>
       <div className="intro">
-        {filteredMovies && !moviesrc && (
-          <p id="instruction">
+        {filteredMovies && (
+          <p className={"instruction"}>
             Кликнете върху една от иконките за да изберете вашия филм
           </p>
         )}
+        <div className="modal-sector">
+          <Modal
+            imagePath={"/images/" + thumbnailName.current + ".jpg"}
+            isActive={showModal}
+            onClose={() => setShowModal(false)}
+          />
+        </div>
         <div className={"image_gallery"}>
-          <div id="iframe-container">
-            {moviesrc && (
-              <iframe
-                id="current-image"
-                src={"https://www.youtube.com/embed/" + movie_id + "?rel=0"}
-                width="700"
-                height="400"
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              ></iframe>
-            )}
-          </div>
           <div className={"image_thumbs"}>
             <li>
               {filteredMovies.length !== 0 ? (
@@ -82,11 +67,14 @@ export default function Home() {
                   <MovieItem
                     key={index}
                     {...item}
-                    onClick={() => showHideIframe(item.video_id)}
+                    openModal={() => {
+                      setShowModal(true);
+                      thumbnailName.current = item.thumbnail_name;
+                    }}
                   />
                 ))
               ) : (
-                <p>Няма намерени филми</p>
+                <p className={"no-movies-found"}>Няма намерени филми</p>
               )}
             </li>
           </div>
