@@ -1,0 +1,27 @@
+.image_gallery {
+  width: auto;
+  margin: 0 auto;
+}
+
+#iframe-container {
+  margin-top: 10px;
+}
+
+.image_thumbs {
+  margin-top: 20px;
+}
+
+.thumbnail {
+  width: 100px;
+  height: 140px;
+  object-fit: fill;
+}
+
+.thumbnail.grid {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.thumbnail.grid:hover {
+  outline: 4px solid #43a113;
+}

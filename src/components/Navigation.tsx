@@ -1,3 +1,5 @@
+import "./css_files/Navigation.css";
+
 function Navigation() {
   return (
     <>

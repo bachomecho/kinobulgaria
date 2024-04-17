@@ -3,7 +3,7 @@
     "target": "ES6",
     "useDefineForClassFields": true,
     "lib": ["ES6", "DOM", "DOM.Iterable"],
-    "module": "ES6",
+    "module": "esnext",
     "skipLibCheck": true,
     "esModuleInterop": true,
 
@@ -20,9 +20,9 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src/*", "src/**/*", "server/*", "server/**/*"],
   "exclude": ["vite-env.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json"}]
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

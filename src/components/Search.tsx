@@ -1,4 +1,5 @@
 import React from "react";
+import "./css_files/Search.css";
 
 interface SearchProps {
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;

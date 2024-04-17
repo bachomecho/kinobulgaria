@@ -1,4 +1,5 @@
 import Navigation from "./Navigation";
+import "./css_files/About.css";
 
 function About() {
   return (

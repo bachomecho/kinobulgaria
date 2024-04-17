@@ -1,0 +1,178 @@
+.modal-container {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: -60%; /* Adjust this value to control how much of the screen the modal covers */
+	width: 60%; /* Adjust this value to control the width of the modal */
+	height: 100vh;
+	background-color: rgba(
+		0,
+		0,
+		0,
+		0.8
+	); /* Adjust the alpha value for the background dim effect */
+	z-index: 99999;
+	/* transition: margin-right 2s ease-in-out; */
+}
+
+.modal-container.active {
+	transform: translateX(-40%);
+}
+
+.movie-info-main-container {
+	top: 0;
+	display: flex;
+	justify-content: inherit;
+	align-items: center;
+	transition: right 0.3s ease-in-out;
+}
+.modal-thumbnail img {
+	position: absolute;
+	display: block;
+	width: 100px;
+	height: 140px;
+	border-radius: 8px;
+	margin-left: 17%;
+	top: 30px;
+}
+.modal-title p {
+	position: absolute;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	color: white;
+	margin-top: 180px;
+	margin-left: 15%;
+}
+.movie-info-main {
+	text-align: center;
+	flex-grow: 1;
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+.modal-container button {
+	cursor: pointer;
+	font-size: 16px;
+	border: none;
+	border-radius: 4px;
+	padding: 10px 20px;
+}
+
+.modal-container button.close-button {
+	position: absolute;
+	display: flex;
+	top: 10px;
+	margin-left: 35%;
+	background-color: transparent;
+	color: white;
+	font-weight: bold;
+	z-index: 1001;
+}
+
+.movie-info-list {
+	list-style-type: none;
+	padding: 0;
+}
+.movie-info-container {
+	position: absolute;
+	font-size: 20px;
+	color: rgb(255, 255, 255);
+	margin-left: 10%;
+	display: block;
+	justify-content: flex-end;
+	padding: 5px;
+}
+.movie-info-item {
+	/* flex: 1; */
+	margin: 0 5px;
+}
+
+#movie-duration {
+	margin-top: 290px;
+	/* margin-left: 4%; */
+}
+
+#movie-release-year {
+	margin-top: 10px;
+	/* margin-left: 4%; */
+}
+#movie-director {
+	margin-top: 10px;
+}
+
+.modal-container .button-container {
+	position: absolute;
+	display: flex;
+	gap: 10px;
+	margin-top: 230px;
+	margin-left: 10%;
+}
+
+.modal-container .button-container button {
+	color: white;
+	padding: 10px 20px;
+}
+
+#youtube-button {
+	background-color: #007bff;
+	cursor: pointer;
+}
+
+#wikipedia-button {
+	color: rgb(0, 3, 5);
+	background-color: aliceblue;
+}
+
+.icon-button {
+	display: flex;
+	align-items: center;
+}
+
+.icon-button img {
+	margin-right: 5px;
+	width: 20px;
+	height: 20px;
+}
+
+@media screen and (max-width: 955px) {
+	.modal-container {
+		max-width: none;
+		/* right: -60%; */
+		transform: translateX(50%);
+	}
+	.modal-container .button-container {
+		flex-direction: column; /* Stack buttons vertically on smaller screens */
+		margin-left: 15%;
+	}
+
+	.modal-container button.close-button {
+		margin-left: 40%;
+	}
+}
+
+@media screen and (max-width: 590px) {
+	.modal-container {
+		width: 70%;
+	}
+	.modal-container .button-container {
+		flex-direction: column; /* Stack buttons vertically on smaller screens */
+		margin-left: 20%;
+	}
+	.modal-container button.close-button {
+		margin-left: 50%;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.modal-container {
+		width: 90%;
+	}
+	.modal-container .button-container {
+		flex-direction: column; /* Stack buttons vertically on smaller screens */
+		margin-left: 30%;
+	}
+	.modal-container button.close-button {
+		margin-left: 70%;
+	} /* way to abstract this shit?? */
+}
