@@ -1,88 +1,45 @@
-export const movies = [
-	{
-		title: "Момчето си отива",
-		thumbnail_name: "momcheto_image",
-		video_id: "_uuhDvvY1_Q",
-		duration: "101",
-		releaseYear: "1972",
-		director: "Людмил Кирков",
-	},
-	{
-		title: "Господин за един ден",
-		thumbnail_name: "gospodin_image",
-		video_id: "evqlOa5youA",
-		duration: "87",
-		releaseYear: "1983",
-		director: "Николай Волев",
-	},
-	{
-		title: "Време разделно",
-		thumbnail_name: "vreme_razdelno_image",
-		video_id: "UCWF9ZJ-ibY",
-		duration: "267",
-		releaseYear: "1988",
-		director: "Людмил Стайков",
-	},
-	{
-		title: "Козият рог",
-		thumbnail_name: "kozijat_rog_image",
-		video_id: "kHE2qQuLHy4",
-		duration: "91",
-		releaseYear: "1972",
-		director: "Методи Андонов",
-	},
-	{
-		title: "Да обичаш на инат",
-		thumbnail_name: "inat_image",
-		video_id: "1PHqIndDyTI",
-		movieDescription: "test",
-	},
-	{
-		title: "Крадецът на праскови",
-		thumbnail_name: "kradec_image",
-		video_id: "7kwmpkXH2Nc",
-		movieDescription: "test",
-	},
-	{
-		title: "Двойникът",
-		thumbnail_name: "dvoinik_image",
-		video_id: "1N7wAD5UkKQ",
-		movieDescription: "test",
-	},
-	{
-		title: "Любимец 13",
-		thumbnail_name: "lubimec_image",
-		video_id: "aSOp9XhySyM",
-		movieDescription: "test",
-	},
-	{
-		title: "Баш майсторът",
-		thumbnail_name: "maistor_image",
-		video_id: "qbe3WrXl5sM",
-		movieDescription: "test",
-	},
-	{
-		title: "Свобода или смърт",
-		thumbnail_name: "svoboda_smart_image",
-		video_id: "v2c--Ir1KNc",
-		movieDescription: "test",
-	},
-	{
-		title: "С деца на море",
-		thumbnail_name: "deca_na_more_image",
-		video_id: "AqK_BACqmjo",
-		movieDescription: "test",
-	},
-	{
-		title: "Куче в чекмедже",
-		thumbnail_name: "kuche_image",
-		video_id: "UyKmIsS8bTU",
-		movieDescription: "test",
-	},
-	{
-		title: "Хитър Петър",
-		thumbnail_name: "hitur_petur_image",
-		video_id: "rzS1OqsB3gw",
-		movieDescription: "test",
-	},
-];
+import mysql, { Pool, RowDataPacket } from "mysql2";
+import dotenv from "dotenv";
+dotenv.config();
+
+function customCreatePool() {
+	return mysql.createPool({
+		host: process.env.DB_HOST || "localhost",
+		user: process.env.VITE_DB_USER,
+		password: process.env.DB_PASSWORD,
+		database: process.env.DATABASE || "website",
+	});
+}
+
+function establishConnection(pool_con: Pool) {
+	return new Promise((resolve, reject) => {
+		pool_con.getConnection((err, con) => {
+			if (err || !con) {
+				reject(err);
+			} else {
+				resolve(con);
+			}
+		});
+	});
+}
+
+async function checkConnection() {
+	const pool_con = customCreatePool();
+	try {
+		await establishConnection(pool_con);
+		console.log("MySQL connected.");
+	} catch (error) {
+		console.log(`Cannot connect to MySQL. ${error}`);
+	}
+}
+
+console.log("Checking connection...");
+checkConnection();
+
+// proper pool object
+const pool = customCreatePool().promise();
+
+export async function getMovies(): Promise<RowDataPacket[]> {
+	const [rows] = await pool.query("SELECT * FROM movies");
+	return rows as RowDataPacket[];
+}

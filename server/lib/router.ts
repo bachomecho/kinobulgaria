@@ -1,8 +1,9 @@
 import express from "express";
-import { movies } from "./database.js";
+import { getMovies } from "./database";
 
 export const router = express.Router();
+const movies = await getMovies();
 
 router.get("/movies", (_req, res) => {
-  res.send({ data: movies });
+	res.send({ data: movies });
 });
