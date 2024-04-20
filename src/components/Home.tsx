@@ -3,7 +3,6 @@ import MovieItem from "./MovieItem";
 import Search from "./Search";
 import Navigation from "./Navigation";
 import Modal from "./Modal";
-import { movieInfoSpacing } from "../utils/utils";
 
 export default function Home() {
 	const [movies, setMovies] = useState<Movie[]>([]);
@@ -14,7 +13,7 @@ export default function Home() {
 		thumbnail_name: "",
 		video_id: "",
 		duration: 0,
-		releaseYear: 0,
+		release_year: 0,
 		director: "",
 	});
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

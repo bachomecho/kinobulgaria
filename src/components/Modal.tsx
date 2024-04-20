@@ -30,53 +30,43 @@ function Modal(props: ModalProps) {
 				</div>
 			</div>
 			<div className="button-container">
-				<button
-					id="youtube-button"
-					onClick={() =>
-						window.open(`https://www.youtube.com/watch?v=${props.video_id}`)
-					}
-					type="button"
-				>
+				<button id="youtube-button" type="button">
 					<a
 						href={`https://www.youtube.com/watch?v=${props.video_id}`}
 						className="icon-button"
+						target="_blank"
 					>
 						<img src={youtubeIconSource} />
 						YouTube
 					</a>
 				</button>
-				<button
-					id="wikipedia-button"
-					onClick={
-						() =>
-							window.open(
-								`https://bg.wikipedia.org/wiki/${props.title.replace(" ", "_")}`
-							) // TODO:validation that wiki page exists
-					}
-					type="button"
-				>
+				<button id="wikipedia-button" type="button">
 					<a
-						href={`https://www.youtube.com/watch?v=${props.video_id}`}
+						href={`https://bg.wikipedia.org/wiki/${props.title.replace(
+							" ",
+							"_"
+						)}`}
 						className="icon-button"
+						target="_blank"
 					>
 						<img src={wikipediaIcon} />
 						Wikipedia
 					</a>
 				</button>
 			</div>
-			<li className="movie-info-list">
-				<div className="movie-info-container">
+			<div className="movie-info-container">
+				<li className="movie-info-list">
 					<div className="movie-info-item" id="movie-duration">
 						Времетраене: <span>{props.duration}</span> минути
 					</div>
 					<div className="movie-info-item" id="movie-release-year">
-						Премиера: <span>{props.releaseYear}</span> г.
+						Премиера: <span>{props.release_year}</span> г.
 					</div>
 					<div id="movie-director">
 						Режисъор: <span>{props.director}</span>
 					</div>
-				</div>
-			</li>
+				</li>
+			</div>
 		</div>
 	);
 }

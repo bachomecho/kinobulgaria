@@ -3,7 +3,7 @@ interface Movie {
 	thumbnail_name: string;
 	video_id: string;
 	duration: number;
-	releaseYear: number;
+	release_year: number;
 	director: string;
 }
 
@@ -15,5 +15,3 @@ interface ModalProps extends Omit<MovieProps, "openModal"> {
 	isActive: boolean;
 	onClose: () => void;
 }
-
-type lengthMarginMap = Map<string, Array<number>>;
