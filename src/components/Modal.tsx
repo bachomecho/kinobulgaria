@@ -1,7 +1,7 @@
 import "./css_files/Modal.css";
 import { modalTitle } from "../utils/utils";
+import { useEffect } from "react";
 
-// TODO: close modal on <esc>
 function Modal(props: ModalProps) {
 	const activeModal = props.isActive ? "active" : "hidden";
 	let thumbnailSource: string = `/images/${props.thumbnail_name}.jpg`;
@@ -13,6 +13,20 @@ function Modal(props: ModalProps) {
 		youtubeIconSource = "/assets/static" + youtubeIconSource;
 		wikipediaIcon = "/assets/static" + wikipediaIcon;
 	}
+	document.addEventListener("keypress", (e) => {
+		if (e.key === "27") props.onClose();
+	});
+
+	useEffect(() => {
+		function closeOnEscape(e: KeyboardEvent) {
+			if (e.key === "Escape") props.onClose();
+		}
+		window.addEventListener("keydown", closeOnEscape);
+
+		return () => {
+			window.removeEventListener("keydown", closeOnEscape); // cleanup
+		};
+	}, [props.onClose]);
 
 	return (
 		<div className={`modal-container ${activeModal}`} id="modal">
