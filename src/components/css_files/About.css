@@ -1,13 +1,59 @@
-.about-paragraph {
-  font-family: "Arial", sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #333;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #42d51d;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* AboutPage.module.css */
+
+.container {
+	max-width: 1024px; /* Tailwind's max-w-4xl */
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1rem; /* Tailwind's p-4 */
 }
+
+.header-text {
+	font-size: 2.25rem; /* Tailwind's text-4xl */
+	font-weight: 700; /* Tailwind's font-bold */
+	color: #1f2937; /* Tailwind's text-gray-800 */
+	margin-bottom: 1rem; /* Tailwind's mb-4 */
+}
+
+.about-paragraph {
+	font-size: 1.125rem; /* Tailwind's text-lg */
+	color: #4b5563; /* Tailwind's text-gray-600 */
+	margin-bottom: 1.5rem; /* Tailwind's mb-6 */
+}
+
+.sub-header {
+	font-size: 1.5rem; /* Tailwind's text-2xl */
+	font-weight: 600; /* Tailwind's font-semibold */
+	color: #1f2937; /* Tailwind's text-gray-800 */
+	margin-bottom: 0.75rem; /* Tailwind's mb-3 */
+}
+
+ul {
+	list-style-type: disc;
+	padding-left: 1.25rem; /* Tailwind's pl-5 */
+	margin-bottom: 1.5rem; /* Tailwind's mb-6 */
+}
+
+.popular-film {
+	margin-bottom: 0.5rem; /* Tailwind's mb-2 */
+}
+
+.content-container {
+	display: flex;
+	align-items: center; /* Vertically aligns items if they're not the same height */
+	justify-content: start; /* Aligns items to the start of the container */
+	gap: 20px; /* Spacing between the image and the text block */
+	margin-bottom: 2rem; /* Spacing below the container */
+}
+
+.cinema-image {
+	flex-shrink: 0; /* Prevents the image from shrinking smaller than its size */
+	width: 500px; /* Or your desired width */
+	height: auto;
+	border-radius: 8px; /* Optional: Adds rounded corners */
+}
+
+.text-block {
+	max-width: 800px; /* Ensures the text block doesn't grow too wide on large screens */
+}
+
+/* Keep the other styles as previously defined */

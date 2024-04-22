@@ -1,6 +1,7 @@
 import "./css_files/Modal.css";
 import { modalTitle } from "../utils/utils";
 
+// TODO: close modal on <esc>
 function Modal(props: ModalProps) {
 	const activeModal = props.isActive ? "active" : "hidden";
 	let thumbnailSource: string = `/images/${props.thumbnail_name}.jpg`;
