@@ -5,14 +5,9 @@
 	right: -60%; /* Adjust this value to control how much of the screen the modal covers */
 	width: 60%; /* Adjust this value to control the width of the modal */
 	height: 100vh;
-	background-color: rgba(
-		0,
-		0,
-		0,
-		0.8
-	); /* Adjust the alpha value for the background dim effect */
+	background-color: rgba(0, 0, 0, 0.8);
 	z-index: 99999;
-	/* transition: margin-right 2s ease-in-out; */
+	transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .modal-container.active {
@@ -20,12 +15,12 @@
 }
 
 .movie-info-main-container {
+	position: relative;
 	top: 0;
 	display: flex;
-	justify-content: inherit;
 	align-items: center;
-	transition: right 0.3s ease-in-out;
 }
+
 .modal-thumbnail img {
 	position: absolute;
 	display: block;
@@ -35,6 +30,7 @@
 	margin-left: 17%;
 	top: 30px;
 }
+
 .modal-title p {
 	position: absolute;
 	text-align: center;
@@ -42,8 +38,8 @@
 	font-weight: bold;
 	color: white;
 	margin-top: 180px;
-	margin-left: 15%;
 }
+
 .movie-info-main {
 	text-align: center;
 	flex-grow: 1;
@@ -74,6 +70,7 @@
 	list-style-type: none;
 	padding: 0;
 }
+
 .movie-info-container {
 	position: absolute;
 	display: block;
@@ -82,20 +79,20 @@
 	margin-left: 10%;
 	margin-top: 270px;
 	padding-top: 0;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
+
 .movie-info-item {
-	/* flex: 1; */
 	margin: 0 5px;
 }
 
 #movie-duration {
 	margin-top: 20px;
-	/* margin-left: 4%; */
 }
 
 #movie-release-year {
 	margin-top: 10px;
-	/* margin-left: 4%; */
 }
 #movie-director {
 	margin-top: 10px;
@@ -135,44 +132,133 @@
 	height: 20px;
 }
 
-@media screen and (max-width: 955px) {
+@media screen and (max-width: 1500px) {
+	/*955px*/
 	.modal-container {
 		max-width: none;
-		/* right: -60%; */
 		transform: translateX(50%);
 	}
-	.modal-container .button-container {
-		flex-direction: column; /* Stack buttons vertically on smaller screens */
+
+	.modal-thumbnail {
+		padding-bottom: 20px;
+	}
+	.modal-thumbnail img {
 		margin-left: 15%;
 	}
 
+	.modal-title {
+		position: absolute;
+		display: flex;
+		word-wrap: break-word;
+		top: 0;
+		margin-left: 15%;
+		padding-bottom: 10px;
+	}
+
+	.modal-container .button-container {
+		flex-direction: column; /* Stack buttons vertically on smaller screens */
+		margin-top: 270px;
+		margin-left: 13%;
+	}
+
+	.modal-container button.close-button {
+		margin-left: 35%;
+	}
+
+	.movie-info-container {
+		font-size: 18px;
+		margin-left: 13%;
+		margin-top: 360px;
+		padding-top: 10px;
+	}
+	.movie-info-list {
+		list-style-type: none;
+		padding: 0;
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+@media screen and (max-width: 1070px) {
+	.modal-container button.close-button {
+		margin-left: 30%;
+	}
+}
+
+@media screen and (max-width: 860px) {
+	.modal-container {
+		width: 70%;
+	}
+	.modal-container button.close-button {
+		margin-left: 40%;
+	}
+
+	.modal-thumbnail {
+		padding-bottom: 20px;
+	}
+	.modal-thumbnail img {
+		margin-left: 19%;
+	}
+	.modal-title {
+		margin-left: 19%;
+	}
+
+	.modal-title p {
+		flex-direction: column;
+	}
+	.modal-container .button-container {
+		flex-direction: column;
+		margin-top: 280px;
+		margin-left: 16%;
+	}
+	.movie-info-container {
+		font-size: 18px;
+		margin-left: 17%;
+		margin-top: 360px;
+		padding-top: 10px;
+	}
+	.movie-info-list {
+		list-style-type: none;
+		padding: 0;
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+	}
+}
+@media screen and (max-width: 550px) {
 	.modal-container button.close-button {
 		margin-left: 40%;
 	}
 }
-
-@media screen and (max-width: 590px) {
-	.modal-container {
-		width: 70%;
-	}
-	.modal-container .button-container {
-		flex-direction: column; /* Stack buttons vertically on smaller screens */
-		margin-left: 20%;
-	}
-	.modal-container button.close-button {
-		margin-left: 50%;
-	}
-}
-
 @media screen and (max-width: 480px) {
 	.modal-container {
 		width: 90%;
 	}
-	.modal-container .button-container {
-		flex-direction: column; /* Stack buttons vertically on smaller screens */
-		margin-left: 30%;
-	}
 	.modal-container button.close-button {
-		margin-left: 70%;
-	} /* way to abstract this shit?? */
+		margin-left: 60%;
+	}
+	.modal-thumbnail img {
+		margin-left: 23%;
+	}
+	.modal-title {
+		margin-left: 23%;
+	}
+	.modal-container .button-container {
+		flex-direction: column;
+		margin-left: 20%;
+	}
+	.movie-info-container {
+		font-size: 18px;
+		margin-left: 20%;
+		margin-top: 360px;
+		padding-top: 10px;
+	}
+	/* .movie-info-list {
+		list-style-type: none;
+		padding: 0;
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+	} */
 }

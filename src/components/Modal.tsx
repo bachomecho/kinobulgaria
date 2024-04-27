@@ -1,12 +1,13 @@
 import "./css_files/Modal.css";
 import { modalTitle } from "../utils/utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Modal(props: ModalProps) {
 	const activeModal = props.isActive ? "active" : "hidden";
 	let thumbnailSource: string = `/images/${props.thumbnail_name}.jpg`;
 	let youtubeIconSource: string = "/icons/youtube.png";
 	let wikipediaIcon: string = "/icons/wikipedia.png";
+	const [dropMargin, setDropMargin] = useState<boolean>(false);
 
 	if (import.meta.env.VITE_ENVIRONMENT === "DEV") {
 		thumbnailSource = "/assets/static" + thumbnailSource;
@@ -14,8 +15,24 @@ function Modal(props: ModalProps) {
 		wikipediaIcon = "/assets/static" + wikipediaIcon;
 	}
 	document.addEventListener("keypress", (e) => {
-		if (e.key === "27") props.onClose();
+		if (e.key === "27") props.onClose(); // escape key
 	});
+
+	useEffect(() => {
+		window.addEventListener("resize", () => {
+			if (window.innerWidth <= 1500) {
+				setDropMargin(true);
+			} else {
+				setDropMargin(false);
+			}
+		});
+
+		return () => {
+			window.addEventListener("resize", () => {
+				if (window.innerWidth <= 1500) setDropMargin(true);
+			});
+		};
+	}, []);
 
 	useEffect(() => {
 		function closeOnEscape(e: KeyboardEvent) {
@@ -24,7 +41,7 @@ function Modal(props: ModalProps) {
 		window.addEventListener("keydown", closeOnEscape);
 
 		return () => {
-			window.removeEventListener("keydown", closeOnEscape); // cleanup
+			window.removeEventListener("keydown", closeOnEscape);
 		};
 	}, [props.onClose]);
 
@@ -37,12 +54,20 @@ function Modal(props: ModalProps) {
 				<div className="modal-thumbnail">
 					<img src={thumbnailSource} alt="Thumbnail" />
 				</div>
-
-				<div className="modal-title">
-					<p style={{ marginLeft: `${modalTitle(props.title, 11, 14)}%` }}>
-						{props.title}
-					</p>
-				</div>
+				{!dropMargin ? (
+					<div
+						style={{
+							marginLeft: `${modalTitle(props.title)}%`,
+						}}
+						className="modal-title"
+					>
+						<p>{props.title}</p>
+					</div>
+				) : (
+					<div className="modal-title">
+						<p>{props.title}</p>
+					</div>
+				)}
 			</div>
 			<div className="button-container">
 				<button id="youtube-button" type="button">
@@ -77,7 +102,7 @@ function Modal(props: ModalProps) {
 					<div className="movie-info-item" id="movie-release-year">
 						Премиера: <span>{props.release_year}</span> г.
 					</div>
-					<div id="movie-director">
+					<div className="movie-info-item" id="movie-director">
 						Режисъор: <span>{props.director}</span>
 					</div>
 				</li>
