@@ -1,11 +1,13 @@
-import { movieInfoSpacing } from "./utils";
+import { modalTitle } from "./utils";
 
-describe("movieInfoSpacing", () => {
-	it("should pad the normal text with spaces to match the time text length", () => {
-		const referenceText = "Времетраене: 120 минути";
-		const normalText = "Премиера: 1988";
-		const expected = "Премиера:          1988";
-		const result = movieInfoSpacing(referenceText, normalText);
-		expect(result).toEqual(expected);
+describe("modalTitle", () => {
+	it("should return the correct result when title length is greater than or equal to midLength", () => {
+		expect(modalTitle("Крадецът на праскови")).toBe(10);
+		expect(modalTitle("Момчето си отива")).toBe(12);
+	});
+
+	it("should return the correct result when title length is less than midLength", () => {
+		expect(modalTitle("Двойникът")).toBe(15);
+		expect(modalTitle("Любимец 13")).toBe(15);
 	});
 });
