@@ -1,7 +1,5 @@
-export function modalTitle(title: string): number {
+export function modalTitle(title: string, marginMid: number): number {
 	const midLength = 11;
-	const marginMid = 14;
-
 	const dist = Math.abs(title.length - midLength);
 
 	let result = 0;

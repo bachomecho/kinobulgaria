@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import MovieItem from "./MovieItem";
-import Search from "./Search";
-import Navigation from "./Navigation";
-import Modal from "./Modal";
+import Header from "./Header";
 
 export default function Home() {
 	const [movies, setMovies] = useState<Movie[]>([]);
-	const [showModal, setShowModal] = useState<boolean>(false);
 	const [search, setSearch] = useState<string>("");
 	const [selectedMovie, setSelectedMovie] = useState<Movie>({
 		title: "",
@@ -18,7 +15,7 @@ export default function Home() {
 	});
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearch(e.target.value);
-	};
+	}; // TODO: adjust search functions with new Header component
 
 	async function getPageData() {
 		const response = await fetch("/api/movies");
@@ -45,44 +42,21 @@ export default function Home() {
 	const filteredMovies = filterMovies();
 	return (
 		<>
-			<header>
-				<Navigation />
-				<Search handleSearch={handleSearch} filterValue={search} />
-			</header>
-			<div className="intro">
-				<div className="modal-sector">
-					<Modal
-						{...selectedMovie}
-						isActive={showModal}
-						onClose={() => setShowModal(false)}
-					/>
+			<Header />
+			<main className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					{filteredMovies.length > 0 ? (
+						filteredMovies.map((item, index) => (
+							<MovieItem key={index} {...item} />
+						))
+					) : (
+						// TODO: check below styling
+						<p className="inline-flex items-center justify-center">
+							Няма намерени филми
+						</p>
+					)}
 				</div>
-				{filteredMovies && (
-					<p className={"instruction"}>
-						Кликнете върху една от иконките за да изберете вашия филм
-					</p>
-				)}
-				<div className={"image_gallery"}>
-					<div className={"image_thumbs"}>
-						<li>
-							{filteredMovies.length !== 0 ? (
-								filteredMovies.map((item, index) => (
-									<MovieItem
-										key={index}
-										{...item}
-										openModal={() => {
-											setShowModal(true);
-											setSelectedMovie(item);
-										}}
-									/>
-								))
-							) : (
-								<p className={"no-movies-found"}>Няма намерени филми</p>
-							)}
-						</li>
-					</div>
-				</div>
-			</div>
+			</main>
 		</>
 	);
 }

@@ -7,7 +7,9 @@ function Modal(props: ModalProps) {
 	let thumbnailSource: string = `/images/${props.thumbnail_name}.jpg`;
 	let youtubeIconSource: string = "/icons/youtube.png";
 	let wikipediaIcon: string = "/icons/wikipedia.png";
-	const [dropMargin, setDropMargin] = useState<boolean>(false);
+	const [dropTitle, setDropTitle] = useState<boolean>(false);
+	const [marginMid, setMarginMid] = useState<number>(14); // TODO: this could be potentially removed with new title functionality
+	const [activeTitle, setActiveTitle] = useState<boolean>(false);
 
 	if (import.meta.env.VITE_ENVIRONMENT === "DEV") {
 		thumbnailSource = "/assets/static" + thumbnailSource;
@@ -21,15 +23,16 @@ function Modal(props: ModalProps) {
 	useEffect(() => {
 		window.addEventListener("resize", () => {
 			if (window.innerWidth <= 1500) {
-				setDropMargin(true);
-			} else {
-				setDropMargin(false);
+				setMarginMid(11);
+			}
+			if (window.innerWidth <= 480) {
+				setMarginMid(15);
 			}
 		});
 
 		return () => {
 			window.addEventListener("resize", () => {
-				if (window.innerWidth <= 1500) setDropMargin(true);
+				if (window.innerWidth <= 1500) setDropTitle(true);
 			});
 		};
 	}, []);
@@ -45,6 +48,7 @@ function Modal(props: ModalProps) {
 		};
 	}, [props.onClose]);
 
+	const titleDisplayIndicator = activeTitle ? "active" : "";
 	return (
 		<div className={`modal-container ${activeModal}`} id="modal">
 			<button className="close-button" onClick={props.onClose}>
@@ -54,18 +58,26 @@ function Modal(props: ModalProps) {
 				<div className="modal-thumbnail">
 					<img src={thumbnailSource} alt="Thumbnail" />
 				</div>
-				{!dropMargin ? (
+				{!dropTitle ? (
 					<div
 						style={{
-							marginLeft: `${modalTitle(props.title)}%`,
+							marginLeft: `${modalTitle(props.title, marginMid)}%`,
 						}}
 						className="modal-title"
 					>
 						<p>{props.title}</p>
 					</div>
 				) : (
-					<div className="modal-title">
-						<p>{props.title}</p>
+					<div className="title-container">
+						<button
+							className="title-button"
+							onClick={() => setActiveTitle(!activeTitle)}
+						>
+							Title
+						</button>
+						<div className={`title-display${titleDisplayIndicator}`}>
+							{props.title}
+						</div>
 					</div>
 				)}
 			</div>
@@ -110,5 +122,4 @@ function Modal(props: ModalProps) {
 		</div>
 	);
 }
-
 export default Modal;

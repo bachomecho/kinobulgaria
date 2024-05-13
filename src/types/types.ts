@@ -7,11 +7,7 @@ interface Movie {
 	director: string;
 }
 
-interface MovieProps extends Movie {
-	openModal: () => void;
-}
-
-interface ModalProps extends Omit<MovieProps, "openModal"> {
+interface ModalProps extends Movie {
 	isActive: boolean;
 	onClose: () => void;
 }
