@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MovieItem from "./MovieItem";
 import Header from "./Header";
+import { Movie } from "../types/types";
 
 export default function Home() {
 	const [movies, setMovies] = useState<Movie[]>([]);
@@ -8,7 +9,7 @@ export default function Home() {
 
 	async function getPageData() {
 		const response = await fetch("/api/movies");
-		const res = await response.json(); //TODO: sanitize response
+		const res = await response.json();
 		console.log(res.data);
 		setMovies(res.data);
 	}
@@ -31,20 +32,19 @@ export default function Home() {
 	return (
 		<>
 			<Header setSearchQuery={setSearch} />
-			<main className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{filteredMovies.length > 0 ? (
-						filteredMovies.map((item, index) => (
-							<MovieItem key={index} {...item} />
-						))
-					) : (
-						// TODO: check below styling
-						<p className="inline-flex items-center justify-center">
-							Няма намерени филми
-						</p>
-					)}
-				</div>
-			</main>
+			{filteredMovies.length > 0 ? (
+				<>
+					<main className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+							{filteredMovies.map((item, index) => (
+								<MovieItem key={index} {...item} />
+							))}
+						</div>
+					</main>
+				</>
+			) : (
+				<p className="flex items-center justify-center">Няма намерени филми</p>
+			)}
 		</>
 	);
 }
