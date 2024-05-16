@@ -21,7 +21,7 @@ function Header({
 				>
 					<path d="m8 3 4 8 5-5 5 15H2L8 3z"></path>
 				</svg>
-				<span className="font-bold text-lg">Movie App</span>
+				<span className="font-bold text-lg">Kино България</span>
 			</a>
 			<div className="flex items-center gap-4">
 				<div className="hidden lg:flex items-center gap-4">
@@ -30,14 +30,14 @@ function Header({
 						href="/"
 						rel="ugc"
 					>
-						Home
+						Начало
 					</a>
 					<a
 						className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
 						href="/about"
 						rel="ugc"
 					>
-						About
+						За нас
 					</a>
 				</div>
 				<div className="relative hidden lg:block">

@@ -1,3 +1,4 @@
+import { Movie } from "../types/types";
 function MovieItem(props: Movie) {
 	let thumbnailSource: string = `/images/${props.thumbnail_name}.jpg`;
 	let youtubeIconSource: string = "/icons/youtube.png";
@@ -21,13 +22,13 @@ function MovieItem(props: Movie) {
 				<div className="p-4">
 					<h2 className="text-xl font-bold mb-2">{props.title}</h2>
 					<p className="text-gray-600 mb-1 line-clamp-3">
-						Duration: {props.duration}
+						Времетраене: {props.duration} минути
 					</p>
 					<p className="text-gray-600 mb-1 line-clamp-3">
-						Director: {props.director}
+						Режисъор: {props.director}
 					</p>
 					<p className="text-gray-600 mb-2 line-clamp-3">
-						Release: {props.release_year}
+						Премиера: {props.release_year} година
 					</p>
 					<div className="flex justify-between items-center">
 						<button className="inline-flex items-center w-1/2 justify-center whitespace-nowrap rounded-md text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
