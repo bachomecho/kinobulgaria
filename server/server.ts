@@ -1,8 +1,8 @@
 import cors from "cors";
 import path from "path";
 import express from "express";
-import fs from "fs";
 import dotenv from "dotenv";
+import sqlite3 from "sqlite3";
 dotenv.config();
 
 const app = express();
@@ -13,31 +13,37 @@ if (process.env.VITE_ENVIRONMENT === "PROD") {
 	filePath = "dist/app/assets/static";
 }
 
-const __dirname = process.cwd();
-console.log(__dirname);
-console.log(path.join(__dirname, "./dist/app/index.html"));
-console.log(path.resolve(process.cwd(), "dist/app/index.html"));
-const databaseFile = path.resolve(
-	process.cwd(),
-	`${filePath}/sample_database.json`
+console.log("test path: ", path.resolve(process.cwd(), filePath, "movies.db"));
+const moviesDb = new sqlite3.Database(
+	path.resolve(process.cwd(), filePath, "movies.db"),
+	(err: any) => {
+		if (err) {
+			console.error("Could not connect to db");
+		} else {
+			console.log("Successfully connected to db");
+		}
+	}
 );
-const data = fs.readFileSync(databaseFile, "utf8");
 
-const movies = JSON.parse(data); // TODO: check each entry if it conforms to the movie interface
-const router = express.Router();
+const apiRouter = express.Router();
 
-router.get("/movies", (_req, res) => {
-	res.send({ data: movies });
+apiRouter.get("/movies", (_req, res) => {
+	moviesDb.all("SELECT * FROM movies", [], (err, rows) => {
+		if (err) {
+			res.status(500).json({ error: err.message });
+			return;
+		}
+		res.send({ data: rows });
+	});
 });
-
-app.use("/api", router);
+app.use("/api", apiRouter);
 
 app.use("/images", express.static(`${filePath}/images`));
 app.use("/icons", express.static(`${filePath}/icons`));
-app.use(express.static(filePath));
+app.use(express.static("dist/app"));
 
 app.get("*", (_req, res) => {
-	res.sendFile(path.join(__dirname, "./dist/app/index.html"));
+	res.sendFile(path.join(process.cwd(), "./dist/app/index.html"));
 });
 
 const port = process.env.PORT || 3000;

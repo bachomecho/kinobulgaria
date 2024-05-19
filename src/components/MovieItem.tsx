@@ -1,4 +1,3 @@
-import { Movie } from "../types/types";
 function MovieItem(props: Movie) {
 	let thumbnailSource: string = `/images/${props.thumbnail_name}.jpg`;
 	let youtubeIconSource: string = "/icons/youtube.png";

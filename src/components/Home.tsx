@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import MovieItem from "./MovieItem";
 import Header from "./Header";
-import { Movie } from "../types/types";
 
 export default function Home() {
 	const [movies, setMovies] = useState<Movie[]>([]);
@@ -10,7 +9,6 @@ export default function Home() {
 	async function getPageData() {
 		const response = await fetch("/api/movies");
 		const res = await response.json();
-		console.log(res.data);
 		setMovies(res.data);
 	}
 
