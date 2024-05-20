@@ -3,24 +3,19 @@ function Header({
 }: {
 	setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }) {
+	let filePath = "public/assets/static";
+	if (import.meta.env.VITE_ENVIRONMENT === "PROD") {
+		filePath = "dist/app/assets/static";
+	}
 	return (
 		<header className="flex items-center justify-between px-4 md:px-6 lg:px-8 h-16 bg-white shadow">
 			<a className="flex items-center" href="/" rel="ugc">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
+				<img
+					src={filePath + "/logo/logo_kino.jpg"}
 					width="24"
 					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					className="h-6 w-6 mr-2 --darkreader-inline-stroke: currentColor"
-					data-darkreader-inline-stroke=""
-				>
-					<path d="m8 3 4 8 5-5 5 15H2L8 3z"></path>
-				</svg>
+					className="h-6 w-6 mr-2"
+				/>
 				<span className="font-bold text-lg">Kино България</span>
 			</a>
 			<div className="flex items-center gap-4">
