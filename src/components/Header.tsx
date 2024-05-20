@@ -5,7 +5,7 @@ function Header({
 }) {
 	return (
 		<header className="flex items-center justify-between px-4 md:px-6 lg:px-8 h-16 bg-white shadow">
-			<a className="flex items-center" href="#" rel="ugc">
+			<a className="flex items-center" href="/" rel="ugc">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -24,22 +24,7 @@ function Header({
 				<span className="font-bold text-lg">Kино България</span>
 			</a>
 			<div className="flex items-center gap-4">
-				<div className="hidden lg:flex items-center gap-4">
-					<a
-						className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
-						href="/"
-						rel="ugc"
-					>
-						Начало
-					</a>
-					<a
-						className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
-						href="/about"
-						rel="ugc"
-					>
-						За нас
-					</a>
-				</div>
+				<div className="hidden lg:flex items-center gap-4"></div>
 				<div className="relative hidden lg:block">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
