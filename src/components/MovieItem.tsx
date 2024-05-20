@@ -16,7 +16,7 @@ function MovieItem(props: Movie) {
 					alt="Movie Poster"
 					width="400"
 					height="600"
-					className="w-full h-[400px] object-cover aspect-ratio: 400 / 600; object-fit: cover"
+					className="w-full h-[300px] object-cover aspect-ratio: 400 / 600; object-fit: cover"
 				/>
 				<div className="p-4">
 					<h2 className="text-xl font-bold mb-2">{props.title}</h2>
@@ -33,7 +33,7 @@ function MovieItem(props: Movie) {
 						<button className="inline-flex items-center w-1/2 justify-center whitespace-nowrap rounded-md text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
 							<a
 								href={`https://www.youtube.com/watch?v=${props.video_id}`}
-								className="icon-button"
+								className="inline-flex items-center"
 								target="_blank"
 							>
 								<img
@@ -49,7 +49,7 @@ function MovieItem(props: Movie) {
 									" ",
 									"_"
 								)}`}
-								className="icon-button"
+								className="inline-flex items-center"
 								target="_blank"
 							>
 								<img
