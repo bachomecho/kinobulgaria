@@ -3,40 +3,40 @@
 		"title": "Момчето си отива",
 		"thumbnail_name": "momcheto_image",
 		"video_id": "_uuhDvvY1_Q",
-		"duration": "101",
-		"release_year": "1972",
+		"duration": 101,
+		"release_year": 1972,
 		"director": "Людмил Кирков"
 	},
 	{
 		"title": "Господин за един ден",
 		"thumbnail_name": "gospodin_image",
 		"video_id": "evqlOa5youA",
-		"duration": "87",
-		"release_year": "1983",
+		"duration": 87,
+		"release_year": 1983,
 		"director": "Николай Волев"
 	},
 	{
 		"title": "Време разделно",
 		"thumbnail_name": "vreme_razdelno_image",
 		"video_id": "UCWF9ZJ-ibY",
-		"duration": "267",
-		"release_year": "1988",
+		"duration": 267,
+		"release_year": 1988,
 		"director": "Людмил Стайков"
 	},
 	{
 		"title": "Козият рог",
 		"thumbnail_name": "kozijat_rog_image",
 		"video_id": "kHE2qQuLHy4",
-		"duration": "91",
-		"release_year": "1972",
+		"duration": 91,
+		"release_year": 1972,
 		"director": "Методи Андонов"
 	},
 	{
 		"title": "Да обичаш на инат",
 		"thumbnail_name": "inat_image",
 		"video_id": "1PHqIndDyTI",
-		"duration": "92",
-		"release_year": "1986",
+		"duration": 92,
+		"release_year": 1986,
 		"director": "Николай Волев"
 	},
 	{
@@ -75,24 +75,32 @@
 		"title": "Свобода или смърт",
 		"thumbnail_name": "svoboda_smart_image",
 		"video_id": "v2c--Ir1KNc",
-		"movieDescription": "test"
+		"duration": 91,
+		"release_year": 1969,
+		"director": "Никола Корабов"
 	},
 	{
 		"title": "С деца на море",
 		"thumbnail_name": "deca_na_more_image",
 		"video_id": "AqK_BACqmjo",
-		"movieDescription": "test"
+		"duration": 80,
+		"release_year": 1972,
+		"director": "Димитър Петров"
 	},
 	{
 		"title": "Куче в чекмедже",
 		"thumbnail_name": "kuche_image",
 		"video_id": "UyKmIsS8bTU",
-		"movieDescription": "test"
+		"duration": 80,
+		"release_year": 1982,
+		"director": "Димитър Петров"
 	},
 	{
 		"title": "Хитър Петър",
 		"thumbnail_name": "hitur_petur_image",
 		"video_id": "rzS1OqsB3gw",
-		"movieDescription": "test"
+		"duration": 101,
+		"release_year": 1960,
+		"director": "Стефан Сърчаджиев"
 	}
 ]
