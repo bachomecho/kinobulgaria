@@ -3,24 +3,20 @@ function Header({
 }: {
 	setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }) {
-	let filePath = "public/assets/static";
-	if (import.meta.env.VITE_ENVIRONMENT === "PROD") {
-		filePath = "dist/app/assets/static";
+	let logoPath = "logo/logo_kino.jpg";
+	if (import.meta.env.VITE_ENVIRONMENT === "DEV") {
+		logoPath = "/assets/static/logo/logo_kino.jpg";
 	}
+
 	return (
 		<header className="flex items-center justify-between px-4 md:px-6 lg:px-8 h-16 bg-white shadow">
 			<a className="flex items-center" href="/" rel="ugc">
-				<img
-					src={filePath + "/logo/logo_kino.jpg"}
-					width="24"
-					height="24"
-					className="h-6 w-6 mr-2"
-				/>
+				<img src={logoPath} width="24" height="24" className="h-6 w-6 mr-2" />
 				<span className="font-bold text-lg">Kино България</span>
 			</a>
 			<div className="flex items-center gap-4">
 				<div className="hidden lg:flex items-center gap-4"></div>
-				<div className="relative hidden lg:block">
+				<div className="relative block">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -44,34 +40,6 @@ function Header({
 						onChange={(e) => setSearchQuery(e.target.value)}
 					/>
 				</div>
-
-				<button
-					className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 lg:hidden"
-					type="button"
-					aria-haspopup="dialog"
-					aria-expanded="false"
-					aria-controls="radix-:r11:"
-					data-state="closed"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						className="h-6 w-6 --darkreader-inline-stroke: currentColor"
-						data-darkreader-inline-stroke=""
-					>
-						<line x1="4" x2="20" y1="12" y2="12"></line>
-						<line x1="4" x2="20" y1="6" y2="6"></line>
-						<line x1="4" x2="20" y1="18" y2="18"></line>
-					</svg>
-					<span className="sr-only">Toggle navigation menu</span>
-				</button>
 			</div>
 		</header>
 	);
