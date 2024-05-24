@@ -1,13 +1,12 @@
 import fs from "fs";
 import sqlite3 from "sqlite3";
-import path from "path";
 // WARNING: this file is meant to be run locally to dump json into sqlite
 
-const filePath = "public/assets/static";
-// const altPath = "../../public/assets/static/movies.db"; // use this path if above does not work
-const db = new sqlite3.Database(
-	path.resolve(process.cwd(), filePath, "movies.db")
-);
+const altPath = "../../public/assets/static/movies.db";
+
+if (fs.existsSync(altPath)) fs.unlinkSync(altPath);
+
+const db = new sqlite3.Database(altPath);
 
 const sampleDb = fs.readFileSync("./sample_database.json", "utf8");
 const jsonData = JSON.parse(sampleDb);
@@ -26,11 +25,11 @@ CREATE TABLE IF NOT EXISTS movies (
 `;
 db.run(createTableSql);
 
-// insert data into the table
 const insertStatement = `INSERT INTO movies (
     title, thumbnail_name, video_id, duration, release_year, director
 ) VALUES (?, ?, ?, ?, ?, ?)`;
 
+// TODO: check every movie for required fields
 db.serialize(() => {
 	db.run("BEGIN TRANSACTION");
 
