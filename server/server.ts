@@ -40,6 +40,7 @@ app.use("/api", apiRouter);
 
 app.use("/images", express.static(`${filePath}/images`));
 app.use("/icons", express.static(`${filePath}/icons`));
+app.use("/logo", express.static(`${filePath}/logo`));
 app.use(express.static("dist/app"));
 
 app.get("*", (_req, res) => {
