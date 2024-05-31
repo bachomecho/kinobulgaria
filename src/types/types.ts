@@ -7,7 +7,8 @@ interface Movie {
 	director: string;
 }
 
-interface ModalProps extends Movie {
-	isActive: boolean;
-	onClose: () => void;
+interface FilterProps {
+	yearRange: string;
+	genre: string;
+	duration: number;
 }
