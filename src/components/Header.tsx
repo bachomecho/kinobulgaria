@@ -1,4 +1,4 @@
-function Header({
+export default function Header({
 	setSearchQuery,
 }: {
 	setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -24,9 +24,9 @@ function Header({
 						viewBox="0 0 24 24"
 						fill="none"
 						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
+						strokeWidth="2"
+						strokeLinecap="round"
+						strokeLinejoin="round"
 						className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 --darkreader-inline-stroke: currentColor"
 						data-darkreader-inline-stroke=""
 					>
@@ -44,5 +44,3 @@ function Header({
 		</header>
 	);
 }
-
-export default Header;

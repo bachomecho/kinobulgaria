@@ -1,4 +1,4 @@
-function MovieItem(props: Movie) {
+export default function MovieItem(props: Movie) {
 	let thumbnailSource: string = `/images/${props.thumbnail_name}.jpg`;
 	let youtubeIconSource: string = "/icons/youtube.png";
 	let wikipediaIcon: string = "/icons/wikipedia.png";
@@ -65,5 +65,3 @@ function MovieItem(props: Movie) {
 		</>
 	);
 }
-
-export default MovieItem;
