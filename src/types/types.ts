@@ -9,6 +9,6 @@ interface Movie {
 
 interface FilterProps {
 	yearRange: string;
-	genre: string;
-	duration: number;
 }
+
+type TFilterMethod = (movieState: Movie[]) => Movie[];

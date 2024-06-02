@@ -8,12 +8,7 @@ export default function Home() {
 	const [search, setSearch] = useState<string>("");
 	const [filter, setFilter] = useState<FilterProps>({
 		yearRange: "",
-		genre: "",
-		duration: 0,
-	});
-	const [filterMethod, setFilterMethod] = useState<"search" | "filter">(
-		"search"
-	);
+	}); // TODO: add remove all filters at once functionality
 
 	useEffect(() => {
 		fetch("/api/movies")
@@ -31,7 +26,7 @@ export default function Home() {
 			);
 	}, []);
 
-	function filterWithSearch(movieState: Movie[]) {
+	const filterWithSearch: TFilterMethod = (movieState) => {
 		if (search === "") {
 			return movieState;
 		} else {
@@ -39,8 +34,8 @@ export default function Home() {
 				item.title.toLowerCase().includes(search.toLowerCase())
 			);
 		}
-	}
-	function filterWithFilter(movieState: Movie[]) {
+	};
+	const filterWithFilter: TFilterMethod = (movieState) => {
 		if (filter.yearRange === "") {
 			return movieState;
 		} else {
@@ -50,29 +45,30 @@ export default function Home() {
 					item.release_year >= bounds[0] && item.release_year <= bounds[1]
 			);
 		}
-	}
+	};
 
-	useEffect(() => {
-		setFilterMethod("search");
-	}, [search]);
+	const filterFuncMap = new Map<string, (movieState: Movie[]) => Movie[]>([
+		["search", filterWithSearch],
+		["yearRange", filterWithFilter],
+	]);
 
-	useEffect(() => {
-		setFilterMethod("filter");
-	}, [filter.yearRange]);
+	const filterDriver = (): Movie[] => {
+		let listToFill: Movie[] = [];
+		const allFilters = { search, ...filter };
+		for (const [key, val] of Object.entries(allFilters)) {
+			if (val !== "") {
+				const filterFunc = filterFuncMap.get(key);
+				if (filterFunc) {
+					if (listToFill.length > 0) {
+						listToFill = filterFunc(listToFill);
+					} else listToFill = filterFunc(movies);
+				}
+			}
+		}
+		return listToFill.length > 0 ? listToFill : movies;
+	};
 
-	let filteredMovies: Movie[] = [];
-	if (filterMethod === "search" && filter.yearRange === "") {
-		filteredMovies = filterWithSearch(movies);
-	}
-	if (filterMethod === "search" && filter.yearRange !== "") {
-		filteredMovies = filterWithSearch(filterWithFilter(movies));
-	}
-	if (filterMethod === "filter" && search === "") {
-		filteredMovies = filterWithFilter(movies);
-	}
-	if (filterMethod === "filter" && search !== "") {
-		filteredMovies = filterWithFilter(filterWithSearch(movies));
-	}
+	const filteredMovies = filterDriver();
 
 	return (
 		<>
