@@ -3,7 +3,6 @@ import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";
 
-// TODO: add remove all filters at once functionality
 // arrow to scroll to top of page
 // lazy load images that are out of viewport
 // don't render header and filter menus on every rerender
@@ -81,7 +80,12 @@ export default function Home() {
 	return (
 		<>
 			<Header setSearchQuery={setSearch} />
-			<Filter filterState={filter} setFilterQuery={setFilter} />
+			<Filter
+				filterState={filter}
+				setFilterQuery={setFilter}
+				setRemoveFilters={setRemoveFilters}
+			/>
+
 			{filteredMovies.length > 0 ? (
 				<>
 					<main className="container mx-auto py-12 px-4 md:px-6 lg:px-8">

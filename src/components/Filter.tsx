@@ -1,19 +1,22 @@
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 export default function Filter({
 	filterState,
 	setFilterQuery,
+	setRemoveFilters,
 }: {
 	filterState: FilterProps;
 	setFilterQuery: React.Dispatch<React.SetStateAction<FilterProps>>;
+	setRemoveFilters: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
 	return (
 		<div className="grid gap-4">
-			<div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
-				<div className="flex items-center gap-2 text-sm font-medium">
+			<div className="flex flex-col sm:flex-row px-8 items-start sm:items-center  gap-4 sm:gap-8 w-full">
+				<div className="flex items-center gap-2 text-sm font-medium flex-grow">
 					<FormControl sx={{ m: 1, minWidth: 120 }} size="small">
 						<InputLabel
 							sx={{
@@ -22,14 +25,14 @@ export default function Filter({
 								},
 							}}
 						>
-							Year
+							Година
 						</InputLabel>
 						<Select
 							labelId="demo-select-small-label"
 							className="w-32"
 							id="year"
 							value={filterState.yearRange}
-							label="Age"
+							label="godina"
 							onChange={(event: SelectChangeEvent) =>
 								setFilterQuery({
 									...filterState,
@@ -45,9 +48,6 @@ export default function Filter({
 								},
 							}}
 						>
-							<MenuItem value="">
-								<em>None</em>
-							</MenuItem>
 							<MenuItem value={"1950-1960"}>1950-1960</MenuItem>
 							<MenuItem value={"1960-1970"}>1960-1970</MenuItem>
 							<MenuItem value={"1970-1980"}>1970-1980</MenuItem>
@@ -56,6 +56,14 @@ export default function Filter({
 						</Select>
 					</FormControl>
 				</div>
+				<Button
+					className="self-end sm:self-auto"
+					variant="outlined"
+					color="error"
+					onClick={() => setRemoveFilters(true)}
+				>
+					Премахни филтри
+				</Button>
 			</div>
 		</div>
 	);
