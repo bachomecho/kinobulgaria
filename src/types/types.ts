@@ -11,4 +11,5 @@ interface FilterProps {
 	yearRange: string;
 }
 
-type TFilterMethod = (movieState: Movie[]) => Movie[];
+type TSearchMethod = (movieState: Movie[], filterState: string) => Movie[];
+type TFilterMethod = (movieState: Movie[], filterState: FilterProps) => Movie[];

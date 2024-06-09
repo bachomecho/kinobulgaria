@@ -3,12 +3,38 @@ import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";
 
+// TODO: add remove all filters at once functionality
+// arrow to scroll to top of page
+// lazy load images that are out of viewport
+// don't render header and filter menus on every rerender
+
+const filterWithSearch: TSearchMethod = (movieState, searchState) => {
+	if (searchState === "") {
+		return movieState;
+	} else {
+		return movieState.filter((item) =>
+			item.title.toLowerCase().includes(searchState.toLowerCase())
+		);
+	}
+};
+const filterWithFilter: TFilterMethod = (movieState, filterState) => {
+	if (filterState.yearRange === "") {
+		return movieState;
+	} else {
+		const bounds = filterState.yearRange.split("-").map(Number);
+		return movieState.filter(
+			(item) => item.release_year >= bounds[0] && item.release_year <= bounds[1]
+		);
+	}
+};
+
 export default function Home() {
 	const [movies, setMovies] = useState<Movie[]>([]);
 	const [search, setSearch] = useState<string>("");
 	const [filter, setFilter] = useState<FilterProps>({
 		yearRange: "",
-	}); // TODO: add remove all filters at once functionality
+	});
+	const [removeFilters, setRemoveFilters] = useState<boolean>(false);
 
 	useEffect(() => {
 		fetch("/api/movies")
@@ -26,49 +52,31 @@ export default function Home() {
 			);
 	}, []);
 
-	const filterWithSearch: TFilterMethod = (movieState) => {
-		if (search === "") {
-			return movieState;
-		} else {
-			return movieState.filter((item) =>
-				item.title.toLowerCase().includes(search.toLowerCase())
-			);
-		}
-	};
-	const filterWithFilter: TFilterMethod = (movieState) => {
-		if (filter.yearRange === "") {
-			return movieState;
-		} else {
-			const bounds = filter.yearRange.split("-").map(Number);
-			return movieState.filter(
-				(item) =>
-					item.release_year >= bounds[0] && item.release_year <= bounds[1]
-			);
-		}
-	};
-
-	const filterFuncMap = new Map<string, (movieState: Movie[]) => Movie[]>([
-		["search", filterWithSearch],
-		["yearRange", filterWithFilter],
-	]);
-
-	const filterDriver = (): Movie[] => {
-		let listToFill: Movie[] = [];
-		const allFilters = { search, ...filter };
-		for (const [key, val] of Object.entries(allFilters)) {
-			if (val !== "") {
-				const filterFunc = filterFuncMap.get(key);
-				if (filterFunc) {
-					if (listToFill.length > 0) {
-						listToFill = filterFunc(listToFill);
-					} else listToFill = filterFunc(movies);
-				}
+	let listToFill: Movie[] = [];
+	const allFilters = { search, ...filter };
+	for (const [key, val] of Object.entries(allFilters)) {
+		if (val !== "") {
+			if (key === "search") {
+				listToFill =
+					listToFill.length > 0
+						? filterWithSearch(listToFill, search)
+						: filterWithSearch(movies, search);
+			} else if (key === "yearRange") {
+				listToFill =
+					listToFill.length > 0
+						? filterWithFilter(listToFill, filter)
+						: filterWithFilter(movies, filter);
 			}
 		}
-		return listToFill.length > 0 ? listToFill : movies;
-	};
+	}
 
-	const filteredMovies = filterDriver();
+	if (removeFilters) {
+		setSearch("");
+		setFilter({ yearRange: "" });
+		setRemoveFilters(false);
+	}
+
+	const filteredMovies = listToFill.length > 0 ? listToFill : movies;
 
 	return (
 		<>
