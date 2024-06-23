@@ -75,7 +75,8 @@ export default function Home() {
 		setRemoveFilters(false);
 	}
 
-	const filteredMovies = listToFill.length > 0 ? listToFill : movies;
+	let filteredMovies = listToFill.length > 0 ? listToFill : movies;
+	filteredMovies = filteredMovies.filter((movie) => movie.multi_part === 0);
 
 	return (
 		<>
