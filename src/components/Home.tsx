@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";
+import arrowUpIcon from "../../public/assets/static/icons/scroll_top.svg"; // this is for dev build
 
 // arrow to scroll to top of page
 // lazy load images that are out of viewport
@@ -34,6 +35,7 @@ export default function Home() {
 		yearRange: "",
 	});
 	const [removeFilters, setRemoveFilters] = useState<boolean>(false);
+	const [scrollTop, setScrollTop] = useState(false);
 
 	useEffect(() => {
 		fetch("/api/movies")
@@ -49,6 +51,21 @@ export default function Home() {
 				(error) =>
 					`Following error occurred while fetching movie data: ${error}`
 			);
+	}, []);
+
+	const toggleVisibility = () => {
+		if (window.scrollY > 400) {
+			setScrollTop(true);
+		} else {
+			setScrollTop(false);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener("scroll", toggleVisibility);
+		return () => {
+			window.removeEventListener("scroll", toggleVisibility);
+		};
 	}, []);
 
 	let listToFill: Movie[] = [];
@@ -100,6 +117,16 @@ export default function Home() {
 			) : (
 				<p className="flex items-center justify-center">Няма намерени филми</p>
 			)}
+			<div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
+				{scrollTop && (
+					<button
+						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+						className=" text-white p-2 rounded-full shadow-lg hover:bg-green-700 focus:outline-none"
+					>
+						<img src={arrowUpIcon} alt="Scroll to top" className="w-7 h-7" />
+					</button>
+				)}
+			</div>
 		</>
 	);
 }
