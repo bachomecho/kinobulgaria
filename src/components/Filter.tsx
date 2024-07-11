@@ -55,6 +55,43 @@ export default function Filter({
 							<MenuItem value={"1990-2000"}>1990-2000</MenuItem>
 						</Select>
 					</FormControl>
+					<FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+						<InputLabel
+							sx={{
+								"&.Mui-focused": {
+									color: "green",
+								},
+							}}
+						>
+							Времетраене
+						</InputLabel>
+						<Select
+							labelId="demo-select-small-label"
+							className="w-40"
+							id="duration"
+							value={filterState.yearRange}
+							label="vremetraene"
+							onChange={(event: SelectChangeEvent) =>
+								setFilterQuery({
+									...filterState,
+									duration: event.target.value,
+								})
+							}
+							sx={{
+								"&:hover .MuiOutlinedInput-notchedOutline": {
+									borderColor: "green",
+								},
+								"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+									borderColor: "green",
+								},
+							}}
+						>
+							<MenuItem value={"до 1 час"}>до 1 час</MenuItem>
+							<MenuItem value={"1 - 1.5 часа"}>1 - 1.5 часа</MenuItem>
+							<MenuItem value={"1.5 - 2 часа"}>1.5 - 2 часа</MenuItem>
+							<MenuItem value={"над 2 часа"}>над 2 часа</MenuItem>
+						</Select>
+					</FormControl>
 				</div>
 				<Button
 					className="self-end sm:self-auto"

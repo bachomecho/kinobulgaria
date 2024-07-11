@@ -17,15 +17,29 @@ const filterWithSearch: TSearchMethod = (movieState, searchState) => {
 		);
 	}
 };
+
+const boundsMap = new Map<string, (elem: Movie) => boolean>([
+	["до 1 час", (item) => item.duration <= 60],
+	["1 - 1.5 часа", (item) => item.duration > 60 && item.duration <= 90],
+	["1.5 - 2 часа", (item) => item.duration > 90 && item.duration <= 120],
+	["над 2 часа", (item) => item.duration > 120],
+]);
+
 const filterWithFilter: TFilterMethod = (movieState, filterState) => {
-	if (filterState.yearRange === "") {
-		return movieState;
-	} else {
+	if (filterState.yearRange !== "") {
 		const bounds = filterState.yearRange.split("-").map(Number);
 		return movieState.filter(
 			(item) => item.release_year >= bounds[0] && item.release_year <= bounds[1]
 		);
+	} else if (filterState.duration !== "") {
+		const filterFunction = boundsMap.get(filterState.duration);
+		if (filterFunction) {
+			return movieState.filter(filterFunction);
+		} else {
+			return [];
+		}
 	}
+	return movieState;
 };
 
 export default function Home() {
@@ -33,6 +47,7 @@ export default function Home() {
 	const [search, setSearch] = useState<string>("");
 	const [filter, setFilter] = useState<FilterProps>({
 		yearRange: "",
+		duration: "",
 	});
 	const [removeFilters, setRemoveFilters] = useState<boolean>(false);
 	const [scrollTop, setScrollTop] = useState(false);
@@ -77,7 +92,7 @@ export default function Home() {
 					listToFill.length > 0
 						? filterWithSearch(listToFill, search)
 						: filterWithSearch(movies, search);
-			} else if (key === "yearRange") {
+			} else if (Object.keys(filter).includes(key)) {
 				listToFill =
 					listToFill.length > 0
 						? filterWithFilter(listToFill, filter)
@@ -88,12 +103,11 @@ export default function Home() {
 
 	if (removeFilters) {
 		setSearch("");
-		setFilter({ yearRange: "" });
+		setFilter({ yearRange: "", duration: "" });
 		setRemoveFilters(false);
 	}
 
 	let filteredMovies = listToFill.length > 0 ? listToFill : movies;
-	filteredMovies = filteredMovies.filter((movie) => movie.multi_part === 0);
 
 	return (
 		<>

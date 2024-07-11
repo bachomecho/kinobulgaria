@@ -10,6 +10,7 @@ interface Movie {
 
 interface FilterProps {
 	yearRange: string;
+	duration: string;
 }
 
 type TSearchMethod = (movieState: Movie[], filterState: string) => Movie[];
