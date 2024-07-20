@@ -82,7 +82,10 @@ export default function Home() {
 				return res.json();
 			})
 			.then((data) => {
-				setMovies(data.data);
+				const availableMovies = data.data.filter(
+					(movie: Movie) => movie.video_id !== null
+				);
+				setMovies(availableMovies);
 			})
 			.catch(
 				(error) =>
