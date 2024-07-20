@@ -8,10 +8,12 @@ export default function Filter({
 	filterState,
 	setFilterQuery,
 	setRemoveFilters,
+	genreList,
 }: {
 	filterState: FilterProps;
 	setFilterQuery: React.Dispatch<React.SetStateAction<FilterProps>>;
 	setRemoveFilters: React.Dispatch<React.SetStateAction<boolean>>;
+	genreList: string[];
 }) {
 	return (
 		<div className="grid gap-4">
@@ -90,6 +92,42 @@ export default function Filter({
 							<MenuItem value={"1 - 1.5 часа"}>1 - 1.5 часа</MenuItem>
 							<MenuItem value={"1.5 - 2 часа"}>1.5 - 2 часа</MenuItem>
 							<MenuItem value={"над 2 часа"}>над 2 часа</MenuItem>
+						</Select>
+					</FormControl>
+					<FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+						<InputLabel
+							sx={{
+								"&.Mui-focused": {
+									color: "green",
+								},
+							}}
+						>
+							Жанр
+						</InputLabel>
+						<Select
+							labelId="demo-select-small-label"
+							className="w-40"
+							id="genre"
+							value={filterState.genre}
+							label="janree"
+							onChange={(event: SelectChangeEvent) =>
+								setFilterQuery({
+									...filterState,
+									genre: event.target.value,
+								})
+							}
+							sx={{
+								"&:hover .MuiOutlinedInput-notchedOutline": {
+									borderColor: "green",
+								},
+								"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+									borderColor: "green",
+								},
+							}}
+						>
+							{genreList.map((genre) => (
+								<MenuItem value={genre}>{genre}</MenuItem>
+							))}
 						</Select>
 					</FormControl>
 				</div>

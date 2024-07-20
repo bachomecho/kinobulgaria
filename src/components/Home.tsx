@@ -25,6 +25,19 @@ const boundsMap = new Map<string, (elem: Movie) => boolean>([
 	["над 2 часа", (item) => item.duration > 120],
 ]);
 
+const generateGenreList = (movies: Movie[]) => {
+	const genreList = new Set<string>();
+	console.log("prev movies: ", movies);
+	movies.forEach((movie) => {
+		movie.genre.includes(",")
+			? movie.genre.split(",").forEach((genre) => genreList.add(genre))
+			: genreList.add(movie.genre);
+	});
+
+	console.log("after movies: ", genreList);
+	return Array.from(genreList);
+};
+
 const filterWithFilter: TFilterMethod = (movieState, filterState) => {
 	if (filterState.yearRange !== "") {
 		const bounds = filterState.yearRange.split("-").map(Number);
@@ -38,8 +51,13 @@ const filterWithFilter: TFilterMethod = (movieState, filterState) => {
 		} else {
 			return [];
 		}
+	} else if (filterState.genre !== "") {
+		return movieState.filter((movie) =>
+			movie.genre.includes(filterState.genre)
+		);
+	} else {
+		return movieState;
 	}
-	return movieState;
 };
 
 export default function Home() {
@@ -48,6 +66,7 @@ export default function Home() {
 	const [filter, setFilter] = useState<FilterProps>({
 		yearRange: "",
 		duration: "",
+		genre: "",
 	});
 	const [removeFilters, setRemoveFilters] = useState<boolean>(false);
 	const [scrollTop, setScrollTop] = useState(false);
@@ -103,7 +122,7 @@ export default function Home() {
 
 	if (removeFilters) {
 		setSearch("");
-		setFilter({ yearRange: "", duration: "" });
+		setFilter({ yearRange: "", duration: "", genre: "" });
 		setRemoveFilters(false);
 	}
 
@@ -116,6 +135,7 @@ export default function Home() {
 				filterState={filter}
 				setFilterQuery={setFilter}
 				setRemoveFilters={setRemoveFilters}
+				genreList={generateGenreList(filteredMovies)}
 			/>
 
 			{filteredMovies.length > 0 ? (

@@ -5,12 +5,14 @@ interface Movie {
 	multi_part: 0 | 1;
 	duration: number;
 	release_year: number;
+	genre: string;
 	director: string;
 }
 
 interface FilterProps {
 	yearRange: string;
 	duration: string;
+	genre: string;
 }
 
 type TSearchMethod = (movieState: Movie[], filterState: string) => Movie[];
