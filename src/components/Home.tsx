@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";
-import arrowUpIcon from "../../public/assets/static/icons/scroll_top.svg"; // this is for dev build
 
-// arrow to scroll to top of page
+let arrowUpIconPath = "/icons/scroll_top.svg";
+if (import.meta.env.VITE_ENVIRONMENT === "DEV") {
+	arrowUpIconPath = "/assets/static" + arrowUpIconPath;
+}
+
 // lazy load images that are out of viewport
 // don't render header and filter menus on every rerender
 
@@ -157,7 +160,11 @@ export default function Home() {
 						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 						className=" text-white p-2 rounded-full shadow-lg hover:bg-green-700 focus:outline-none"
 					>
-						<img src={arrowUpIcon} alt="Scroll to top" className="w-7 h-7" />
+						<img
+							src={arrowUpIconPath}
+							alt="Scroll to top"
+							className="w-7 h-7"
+						/>
 					</button>
 				)}
 			</div>
