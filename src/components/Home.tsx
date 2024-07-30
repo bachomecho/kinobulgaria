@@ -21,35 +21,34 @@ const filterWithSearch: TSearchMethod = (movieState, searchState) => {
 	}
 };
 
-const filterWithFilter: TFilterMethod = (movieState, filterState) => {
-	if (filterState.yearRange !== "") {
-		const bounds = filterState.yearRange.split("-").map(Number);
-		return movieState.filter(
-			(movie) =>
-				movie.release_year >= bounds[0] && movie.release_year <= bounds[1]
-		);
-	} else if (filterState.duration !== "") {
-		const filterFunction = durationBoundsMap.get(filterState.duration);
-		if (filterFunction) {
-			return movieState.filter(filterFunction);
-		} else {
-			return [];
-		}
-	} else if (filterState.genre !== "") {
-		return movieState.filter((movie) =>
-			movie.genre.includes(filterState.genre)
-		);
-	} else {
-		return movieState;
-	}
-};
-
 const durationBoundsMap = new Map<string, (elem: Movie) => boolean>([
 	["до 1 час", (item) => item.duration <= 60],
 	["1 - 1.5 часа", (item) => item.duration > 60 && item.duration <= 90],
 	["1.5 - 2 часа", (item) => item.duration > 90 && item.duration <= 120],
 	["над 2 часа", (item) => item.duration > 120],
 ]);
+
+const filterWithFilter: TFilterMethod = (movieState, filterState) => {
+	if (filterState.yearRange !== "") {
+		const bounds = filterState.yearRange.split("-").map(Number);
+		movieState = movieState.filter(
+			(movie) =>
+				movie.release_year >= bounds[0] && movie.release_year <= bounds[1]
+		);
+	}
+	if (filterState.duration !== "") {
+		const filterFunction = durationBoundsMap.get(filterState.duration);
+		if (filterFunction) {
+			movieState = movieState.filter(filterFunction);
+		}
+	}
+	if (filterState.genre !== "") {
+		movieState = movieState.filter((movie) =>
+			movie.genre.includes(filterState.genre)
+		);
+	}
+	return movieState;
+};
 
 const generateGenreList = (movies: Movie[]) => {
 	const genreList = new Set<string>();
