@@ -73,6 +73,8 @@ export default function Home() {
 	});
 	const [removeFilters, setRemoveFilters] = useState<boolean>(false);
 	const [scrollTop, setScrollTop] = useState(false);
+	const genres = useRef<string[]>([]);
+	genres.current = generateGenreList(initialMovies.current);
 
 	useEffect(() => {
 		fetch("/api/movies")
@@ -141,7 +143,7 @@ export default function Home() {
 				filterState={filter}
 				setFilterQuery={setFilter}
 				setRemoveFilters={setRemoveFilters}
-				genreList={generateGenreList(filteredMovies)}
+				genreList={genres.current}
 			/>
 
 			{filteredMovies.length > 0 ? (
