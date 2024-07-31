@@ -73,6 +73,7 @@ export default function Home() {
 	});
 	const [removeFilters, setRemoveFilters] = useState<boolean>(false);
 	const [scrollTop, setScrollTop] = useState(false);
+	const initialMovies = useRef<Movie[]>([]);
 	const genres = useRef<string[]>([]);
 	genres.current = generateGenreList(initialMovies.current);
 
@@ -87,6 +88,7 @@ export default function Home() {
 				const availableMovies = data.data.filter(
 					(movie: Movie) => movie.video_id !== null
 				);
+				initialMovies.current = availableMovies;
 				setMovies(availableMovies);
 			})
 			.catch(
