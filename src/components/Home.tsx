@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";
@@ -73,6 +73,9 @@ export default function Home() {
 	});
 	const [removeFilters, setRemoveFilters] = useState<boolean>(false);
 	const [scrollTop, setScrollTop] = useState(false);
+	const [filterInvokedButNotFiltered, setfilterInvokedButNotFiltered] =
+		useState(false);
+
 	const initialMovies = useRef<Movie[]>([]);
 	const genres = useRef<string[]>([]);
 	genres.current = generateGenreList(initialMovies.current);
@@ -148,11 +151,11 @@ export default function Home() {
 				genreList={genres.current}
 			/>
 
-			{filteredMovies.length > 0 ? (
+			{movies.length > 0 && !filterInvokedButNotFiltered ? (
 				<>
 					<main className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-							{filteredMovies.map((item, index) => (
+							{movies.map((item, index) => (
 								<MovieItem key={index} {...item} />
 							))}
 						</div>
