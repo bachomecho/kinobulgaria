@@ -50,6 +50,7 @@ export default function Filter({
 								},
 							}}
 						>
+							<MenuItem value={""}></MenuItem>
 							<MenuItem value={"1950-1960"}>1950-1960</MenuItem>
 							<MenuItem value={"1960-1970"}>1960-1970</MenuItem>
 							<MenuItem value={"1970-1980"}>1970-1980</MenuItem>
@@ -88,6 +89,7 @@ export default function Filter({
 								},
 							}}
 						>
+							<MenuItem value={""}></MenuItem>
 							<MenuItem value={"до 1 час"}>до 1 час</MenuItem>
 							<MenuItem value={"1 - 1.5 часа"}>1 - 1.5 часа</MenuItem>
 							<MenuItem value={"1.5 - 2 часа"}>1.5 - 2 часа</MenuItem>
@@ -125,6 +127,7 @@ export default function Filter({
 								},
 							}}
 						>
+							<MenuItem value={""}></MenuItem>
 							{genreList.map((genre) => (
 								<MenuItem value={genre}>{genre}</MenuItem>
 							))}
