@@ -130,16 +130,12 @@ export default function Home() {
 						? filterWithFilter(listToFill, filter)
 						: filterWithFilter(movies, filter);
 			}
-		}
-	}
-
-	if (removeFilters) {
+	useEffect(() => {
 		setSearch("");
 		setFilter({ yearRange: "", duration: "", genre: "" });
 		setRemoveFilters(false);
-	}
-
-	let filteredMovies = listToFill.length > 0 ? listToFill : movies;
+		setfilterInvokedButNotFiltered(false);
+	}, [removeFilters]);
 
 	return (
 		<>
