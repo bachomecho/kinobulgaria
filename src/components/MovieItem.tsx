@@ -8,6 +8,10 @@ export default function MovieItem(props: Movie) {
 		youtubeIconSource = "/assets/static" + youtubeIconSource;
 		wikipediaIcon = "/assets/static" + wikipediaIcon;
 	}
+	const quotientDuration = Math.floor(props.duration / 60);
+	const formattedDuration = `${quotientDuration} ${
+		quotientDuration == 1 ? "час" : "часа"
+	} и ${props.duration % 60} минути`;
 	return (
 		<>
 			<div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -21,7 +25,7 @@ export default function MovieItem(props: Movie) {
 				<div className="p-4">
 					<h2 className="text-xl font-bold mb-2">{props.title}</h2>
 					<p className="text-gray-600 mb-1 line-clamp-3">
-						Времетраене: {props.duration} минути
+						Времетраене: {formattedDuration}
 					</p>
 					<p className="text-gray-600 mb-1 line-clamp-3">
 						Режисъор: {props.director}
