@@ -21,6 +21,7 @@ export default function MovieItem(props: Movie) {
 					width="400"
 					height="600"
 					className="w-full h-[300px] object-cover aspect-ratio: 400 / 600; object-fit: cover"
+					loading="lazy"
 				/>
 				<div className="p-4">
 					<h2 className="text-xl font-bold mb-2">{props.title}</h2>
