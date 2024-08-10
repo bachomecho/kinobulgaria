@@ -15,6 +15,7 @@ export default function Filter({
 	setRemoveFilters: React.Dispatch<React.SetStateAction<boolean>>;
 	genreList: string[];
 }) {
+	let emptyString = "";
 	return (
 		<div className="grid gap-4">
 			<div className="flex flex-col sm:flex-row px-8 items-start sm:items-center  gap-4 sm:gap-8 w-full">
@@ -33,7 +34,7 @@ export default function Filter({
 							labelId="demo-select-small-label"
 							className="w-32"
 							id="year"
-							value={filterState.yearRange}
+							value={!emptyString ? filterState.yearRange : ""}
 							label="godina"
 							onChange={(event: SelectChangeEvent) =>
 								setFilterQuery({
@@ -50,7 +51,13 @@ export default function Filter({
 								},
 							}}
 						>
-							<MenuItem value={""}></MenuItem>
+							<MenuItem
+								sx={{ color: "red" }}
+								value={""}
+								onClick={() => (emptyString = "something")}
+							>
+								Премахни филтер
+							</MenuItem>
 							<MenuItem value={"1950-1960"}>1950-1960</MenuItem>
 							<MenuItem value={"1960-1970"}>1960-1970</MenuItem>
 							<MenuItem value={"1970-1980"}>1970-1980</MenuItem>
@@ -72,8 +79,8 @@ export default function Filter({
 							labelId="demo-select-small-label"
 							className="w-40"
 							id="duration"
-							value={filterState.yearRange}
-							label="vremetraene"
+							value={!emptyString ? filterState.duration : ""}
+							label="vremetraenee"
 							onChange={(event: SelectChangeEvent) =>
 								setFilterQuery({
 									...filterState,
@@ -89,7 +96,13 @@ export default function Filter({
 								},
 							}}
 						>
-							<MenuItem value={""}></MenuItem>
+							<MenuItem
+								sx={{ color: "red" }}
+								value={""}
+								onClick={() => (emptyString = "something")}
+							>
+								Премахни филтер
+							</MenuItem>
 							<MenuItem value={"до 1 час"}>до 1 час</MenuItem>
 							<MenuItem value={"1 - 1.5 часа"}>1 - 1.5 часа</MenuItem>
 							<MenuItem value={"1.5 - 2 часа"}>1.5 - 2 часа</MenuItem>
@@ -110,7 +123,7 @@ export default function Filter({
 							labelId="demo-select-small-label"
 							className="w-40"
 							id="genre"
-							value={filterState.genre}
+							value={!emptyString ? filterState.genre : ""}
 							label="janree"
 							onChange={(event: SelectChangeEvent) =>
 								setFilterQuery({
@@ -127,7 +140,13 @@ export default function Filter({
 								},
 							}}
 						>
-							<MenuItem value={""}></MenuItem>
+							<MenuItem
+								sx={{ color: "red" }}
+								value={""}
+								onClick={() => (emptyString = "something")}
+							>
+								Премахни филтер
+							</MenuItem>
 							{genreList.map((genre) => (
 								<MenuItem value={genre}>{genre}</MenuItem>
 							))}
