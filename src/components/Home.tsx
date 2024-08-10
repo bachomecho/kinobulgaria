@@ -115,21 +115,28 @@ export default function Home() {
 		};
 	}, []);
 
-	let listToFill: Movie[] = [];
-	const allFilters = { search, ...filter };
-	for (const [key, val] of Object.entries(allFilters)) {
-		if (val !== "") {
-			if (key === "search") {
-				listToFill =
-					listToFill.length > 0
-						? filterWithSearch(listToFill, search)
-						: filterWithSearch(movies, search);
-			} else if (Object.keys(filter).includes(key)) {
-				listToFill =
-					listToFill.length > 0
-						? filterWithFilter(listToFill, filter)
-						: filterWithFilter(movies, filter);
+	useEffect(() => {
+		if (search) {
+			const filteredMovies = filterWithSearch(initialMovies.current, search);
+			setMovies(filteredMovies);
+			if (filteredMovies.length === 0) {
+				setfilterInvokedButNotFiltered(true);
+			} else {
+				setfilterInvokedButNotFiltered(false);
 			}
+		} else if (!Object.values(filter).every((val) => val === "")) {
+			const filteredMovies = filterWithFilter(initialMovies.current, filter);
+			setMovies(filteredMovies);
+			if (filteredMovies.length === 0) {
+				setfilterInvokedButNotFiltered(true);
+			} else {
+				setfilterInvokedButNotFiltered(false);
+			}
+		} else {
+			setMovies(initialMovies.current);
+		}
+	}, [search, filter.yearRange, filter.duration, filter.genre]);
+
 	useEffect(() => {
 		setSearch("");
 		setFilter({ yearRange: "", duration: "", genre: "" });
