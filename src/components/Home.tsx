@@ -73,8 +73,8 @@ export default function Home() {
 	});
 	const [removeFilters, setRemoveFilters] = useState<boolean>(false);
 	const [scrollTop, setScrollTop] = useState(false);
-	const [filterInvokedButNotFiltered, setfilterInvokedButNotFiltered] =
-		useState(false);
+	const [selectedMovie, setSelectedMovie] = useState<Movie>();
+	const [modalOpen, setModalOpen] = useState(false);
 
 	const initialMovies = useRef<Movie[]>([]);
 	const genres = useRef<string[]>([]);
@@ -119,19 +119,10 @@ export default function Home() {
 		if (search) {
 			const filteredMovies = filterWithSearch(initialMovies.current, search);
 			setMovies(filteredMovies);
-			if (filteredMovies.length === 0) {
-				setfilterInvokedButNotFiltered(true);
-			} else {
-				setfilterInvokedButNotFiltered(false);
-			}
+
 		} else if (!Object.values(filter).every((val) => val === "")) {
 			const filteredMovies = filterWithFilter(initialMovies.current, filter);
 			setMovies(filteredMovies);
-			if (filteredMovies.length === 0) {
-				setfilterInvokedButNotFiltered(true);
-			} else {
-				setfilterInvokedButNotFiltered(false);
-			}
 		} else {
 			setMovies(initialMovies.current);
 		}
@@ -141,7 +132,6 @@ export default function Home() {
 		setSearch("");
 		setFilter({ yearRange: "", duration: "", genre: "" });
 		setRemoveFilters(false);
-		setfilterInvokedButNotFiltered(false);
 	}, [removeFilters]);
 
 	return (
@@ -153,8 +143,7 @@ export default function Home() {
 				setRemoveFilters={setRemoveFilters}
 				genreList={genres.current}
 			/>
-
-			{movies.length > 0 && !filterInvokedButNotFiltered ? (
+			{movies.length > 0 ? (
 				<>
 					<main className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
