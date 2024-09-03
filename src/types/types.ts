@@ -7,6 +7,7 @@ interface Movie {
 	release_year: number;
 	genre: string;
 	director: string;
+	modalOpenClosedMethod: () => void;
 }
 
 interface FilterProps {

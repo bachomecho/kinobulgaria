@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useContext } from "react";
 import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";
+import Modal from "./Modal";
 import { pathContext } from "../App";
 
 const filterWithSearch: TSearchMethod = (movieState, searchState) => {
@@ -137,14 +138,29 @@ export default function Home() {
 				setRemoveFilters={setRemoveFilters}
 				genreList={genres.current}
 			/>
+			{modalOpen && selectedMovie && (
+				<Modal
+					{...selectedMovie}
+					modalOpenClosedMethod={() => setModalOpen(false)}
+				/>
+			)}
 			{movies.length > 0 ? (
 				<>
 					<main className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+						<ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 							{movies.map((item, index) => (
-								<MovieItem key={index} {...item} />
+								<li>
+									<MovieItem
+										key={index}
+										{...item}
+										modalOpenClosedMethod={() => {
+											setSelectedMovie(item);
+											setModalOpen(true);
+										}}
+									/>
+								</li>
 							))}
-						</div>
+						</ul>
 					</main>
 				</>
 			) : (

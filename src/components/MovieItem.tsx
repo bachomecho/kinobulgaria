@@ -13,7 +13,10 @@ export default function MovieItem(props: Movie) {
 	} и ${props.duration % 60} минути`;
 	return (
 		<>
-			<div className="bg-white rounded-lg shadow-md overflow-hidden">
+			<div
+				className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
+				onClick={props.modalOpenClosedMethod}
+			>
 				<img
 					src={thumbnailSource}
 					alt="Movie Poster"
