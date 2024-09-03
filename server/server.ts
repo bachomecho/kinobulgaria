@@ -13,7 +13,7 @@ if (process.env.VITE_ENVIRONMENT === "PROD") {
 	filePath = "dist/app/assets/static";
 }
 
-const dbName = process.env.DB_NAME || null;
+const dbName = process.env.VITE_DB_NAME || null;
 if (!dbName) {
 	throw new Error("Database file name not provided in environment variables");
 }
