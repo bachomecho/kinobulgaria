@@ -13,9 +13,13 @@ if (process.env.VITE_ENVIRONMENT === "PROD") {
 	filePath = "dist/app/assets/static";
 }
 
-console.log("test path: ", path.resolve(process.cwd(), filePath, "movies.db"));
+const dbName = process.env.DB_NAME || null;
+if (!dbName) {
+	throw new Error("Database file name not provided in environment variables");
+}
+
 const moviesDb = new sqlite3.Database(
-	path.resolve(process.cwd(), filePath, "movies.db"),
+	path.resolve(process.cwd(), filePath, dbName),
 	(err: any) => {
 		if (err) {
 			console.error("Could not connect to db");
