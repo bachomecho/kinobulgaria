@@ -1,15 +1,8 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";
-
-let arrowUpIconPath = "/icons/scroll_top.svg";
-if (import.meta.env.VITE_ENVIRONMENT === "DEV") {
-	arrowUpIconPath = "/assets/static" + arrowUpIconPath;
-}
-
-// lazy load images that are out of viewport
-// don't render header and filter menus on every rerender
+import { pathContext } from "../App";
 
 const filterWithSearch: TSearchMethod = (movieState, searchState) => {
 	if (searchState === "") {
@@ -52,18 +45,19 @@ const filterWithFilter: TFilterMethod = (movieState, filterState) => {
 
 const generateGenreList = (movies: Movie[]) => {
 	const genreList = new Set<string>();
-	console.log("prev movies: ", movies);
 	movies.forEach((movie) => {
 		movie.genre.includes(",")
 			? movie.genre.split(",").forEach((genre) => genreList.add(genre))
 			: genreList.add(movie.genre);
 	});
 
-	console.log("after movies: ", genreList);
 	return Array.from(genreList);
 };
 
 export default function Home() {
+	const filePathPrefix = useContext(pathContext);
+	const arrowUpIconPath = filePathPrefix + "/icons/scroll_top.svg";
+
 	const [movies, setMovies] = useState<Movie[]>([]);
 	const [search, setSearch] = useState<string>("");
 	const [filter, setFilter] = useState<FilterProps>({

@@ -1,13 +1,12 @@
-export default function MovieItem(props: Movie) {
-	let thumbnailSource: string = `/images/${props.thumbnail_name}.jpg`;
-	let youtubeIconSource: string = "/icons/youtube.png";
-	let wikipediaIcon: string = "/icons/wikipedia.png";
+import { useContext } from "react";
+import { pathContext } from "../App";
 
-	if (import.meta.env.VITE_ENVIRONMENT === "DEV") {
-		thumbnailSource = "/assets/static" + thumbnailSource;
-		youtubeIconSource = "/assets/static" + youtubeIconSource;
-		wikipediaIcon = "/assets/static" + wikipediaIcon;
-	}
+export default function MovieItem(props: Movie) {
+	const filePath = useContext(pathContext);
+	const thumbnailSource = `${filePath}/images/${props.thumbnail_name}.jpg`;
+	let youtubeIconSource: string = filePath + "/icons/youtube.png";
+	let wikipediaIcon: string = filePath + "/icons/wikipedia.png";
+
 	const quotientDuration = Math.floor(props.duration / 60);
 	const formattedDuration = `${quotientDuration} ${
 		quotientDuration == 1 ? "час" : "часа"

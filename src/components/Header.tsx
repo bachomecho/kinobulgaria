@@ -1,12 +1,13 @@
+import { useContext } from "react";
+import { pathContext } from "../App";
+
 export default function Header({
 	setSearchQuery,
 }: {
 	setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }) {
-	let logoPath = "logo/logo_kino.jpg";
-	if (import.meta.env.VITE_ENVIRONMENT === "DEV") {
-		logoPath = "/assets/static/logo/logo_kino.jpg";
-	}
+	const filePathPrefix = useContext(pathContext);
+	const logoPath = filePathPrefix + "logo/logo_kino.jpg";
 
 	return (
 		<header className="flex items-center justify-between px-4 md:px-6 lg:px-8 h-16 bg-white shadow">
