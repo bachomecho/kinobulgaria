@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
+import Login from "./components/authentication/Login";
 import { createContext } from "react";
 
 let cntx = "";
@@ -17,6 +18,14 @@ export default function App() {
 						element={
 							<pathContext.Provider value={cntx}>
 								<Home />
+							</pathContext.Provider>
+						}
+					/>
+					<Route
+						path="/login"
+						element={
+							<pathContext.Provider value={cntx}>
+								<Login />
 							</pathContext.Provider>
 						}
 					/>

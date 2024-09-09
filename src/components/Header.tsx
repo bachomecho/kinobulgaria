@@ -15,6 +15,11 @@ export default function Header({
 				<img src={logoPath} width="24" height="24" className="h-6 w-6 mr-2" />
 				<span className="font-bold text-lg">Kино България</span>
 			</a>
+			<div className="">
+				<button className="">
+					<a href="/login">Вход</a>
+				</button>
+			</div>
 			<div className="flex items-center gap-4">
 				<div className="hidden lg:flex items-center gap-4"></div>
 				<div className="relative block">

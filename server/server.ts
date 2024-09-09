@@ -1,50 +1,27 @@
 import cors from "cors";
 import path from "path";
 import express from "express";
+import apiRouter from "./api";
 import dotenv from "dotenv";
-import sqlite3 from "sqlite3";
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-let filePath = "public/assets/static";
-if (process.env.VITE_ENVIRONMENT === "PROD") {
-	filePath = "dist/app/assets/static";
-}
 
-const dbName = process.env.VITE_DB_NAME || null;
-if (!dbName) {
-	throw new Error("Database file name not provided in environment variables");
-}
-
-const moviesDb = new sqlite3.Database(
-	path.resolve(process.cwd(), filePath, dbName),
-	(err: any) => {
-		if (err) {
-			console.error("Could not connect to db");
-		} else {
-			console.log("Successfully connected to db");
-		}
-	}
-);
-
-const apiRouter = express.Router();
-
-apiRouter.get("/movies", (_req, res) => {
-	moviesDb.all("SELECT * FROM movies", [], (err, rows) => {
-		if (err) {
-			res.status(500).json({ error: err.message });
-			return;
-		}
-		res.send({ data: rows });
-	});
-});
 app.use("/api", apiRouter);
 
-app.use("/images", express.static(`${filePath}/images`));
-app.use("/icons", express.static(`${filePath}/icons`));
-app.use("/logo", express.static(`${filePath}/logo`));
+const pathConf = {
+	DEV: "public/assets/static",
+	PROD: "dist/app/assets/static",
+};
+type Mode = "DEV" | "PROD";
+const envi = process.env.VITE_ENVIRONMENT as Mode;
+app.use("/images", express.static(`${envi}/images`));
+app.use("/icons", express.static(`${envi}/icons`));
+console.log(`${pathConf[process.env.VITE_ENVIRONMENT as Mode]}/logo`);
+app.use("/logo", express.static(`${envi}/logo`));
+
 app.use(express.static("dist/app"));
 
 app.get("*", (_req, res) => {
