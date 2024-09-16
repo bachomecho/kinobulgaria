@@ -110,6 +110,20 @@ export default function Home() {
 		};
 	}, []);
 
+	const escFunction = useCallback((event: any) => {
+		if (event.key === "Escape") {
+			setModalOpen(false);
+		}
+	}, []);
+
+	useEffect(() => {
+		document.addEventListener("keydown", escFunction, false);
+
+		return () => {
+			document.removeEventListener("keydown", escFunction, false);
+		};
+	}, [escFunction]);
+
 	useEffect(() => {
 		if (search) {
 			const filteredMovies = filterWithSearch(initialMovies.current, search);
