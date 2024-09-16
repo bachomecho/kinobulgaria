@@ -21,15 +21,15 @@ export default function Login() {
 	};
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		const credentials = { username, password };
+		const credentials = new URLSearchParams({ username, password });
 
 		try {
 			const response = await fetch("/api/login", {
 				method: "POST",
 				headers: {
-					"Content-Type": "application/json",
+					"Content-Type": "application/x-www-form-urlencoded",
 				},
-				body: JSON.stringify(credentials),
+				body: credentials.toString(),
 			});
 
 			if (!response.ok) {
