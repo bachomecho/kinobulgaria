@@ -60,4 +60,32 @@ router.post("/login", (req, res) => {
 	res.send({ credentials: { username: false, password: false } });
 });
 
+let allUsernames: string[] = [];
+for (let i = 0; i < sampleDB.length; i++) {
+	allUsernames.push(sampleDB[i].username);
+}
+setInterval(() => {
+	for (let i = 0; i < sampleDB.length; i++) {
+		allUsernames.push(sampleDB[i].username);
+	}
+
+	console.log("All usernames have been fetched from the user database");
+}, 10000);
+
+router.post("/check-username", (req, res) => {
+	const { username } = req.query;
+	if (!allUsernames.includes(username as string)) {
+		res.send({ available: true });
+	} else {
+		res.send({ available: false });
+	}
+});
+
+router.post("/register", (req, res) => {
+	const { username, password } = req.body;
+
+	sampleDB.push({ username: username, password: password });
+	res.send({ registrationStatus: true });
+});
+
 export default router;

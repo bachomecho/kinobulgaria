@@ -20,6 +20,11 @@ export default function Header({
 					<a href="/login">Вход</a>
 				</button>
 			</div>
+			<div className="">
+				<button className="">
+					<a href="/register">Регистрация</a>
+				</button>
+			</div>
 			<div className="flex items-center gap-4">
 				<div className="hidden lg:flex items-center gap-4"></div>
 				<div className="relative block">

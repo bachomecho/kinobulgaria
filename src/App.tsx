@@ -2,11 +2,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/authentication/Login";
 import { createContext } from "react";
+import Register from "./components/authentication/Register";
 
 let cntx = "";
 if (import.meta.env.VITE_ENVIRONMENT === "DEV") {
 	cntx = "/assets/static/";
 }
+
 export const pathContext = createContext(cntx);
 export default function App() {
 	return (
@@ -26,6 +28,14 @@ export default function App() {
 						element={
 							<pathContext.Provider value={cntx}>
 								<Login />
+							</pathContext.Provider>
+						}
+					/>
+					<Route
+						path="/register"
+						element={
+							<pathContext.Provider value={cntx}>
+								<Register />
 							</pathContext.Provider>
 						}
 					/>
