@@ -1,44 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/authentication/Login";
-import { createContext } from "react";
 import Register from "./components/authentication/Register";
 
-let cntx = "";
-if (import.meta.env.VITE_ENVIRONMENT === "DEV") {
-	cntx = "/assets/static/";
-}
-
-export const pathContext = createContext(cntx);
 export default function App() {
 	return (
 		<div className="wrapper">
 			<BrowserRouter>
 				<Routes>
-					<Route
-						path="/"
-						element={
-							<pathContext.Provider value={cntx}>
-								<Home />
-							</pathContext.Provider>
-						}
-					/>
-					<Route
-						path="/login"
-						element={
-							<pathContext.Provider value={cntx}>
-								<Login />
-							</pathContext.Provider>
-						}
-					/>
-					<Route
-						path="/register"
-						element={
-							<pathContext.Provider value={cntx}>
-								<Register />
-							</pathContext.Provider>
-						}
-					/>
+					<Route path="/" element={<Home />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/register" element={<Register />} />
 				</Routes>
 			</BrowserRouter>
 		</div>
