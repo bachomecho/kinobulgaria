@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { authCntx } from "./AuthContextProvider";
 
 export default function Login() {
 	const [username, setUserName] = useState("");
@@ -11,14 +12,12 @@ export default function Login() {
 		"username" | "password" | null
 	>();
 	const navigate = useNavigate();
+	const { isAuthenticated, changeAuthStatus } = useContext(authCntx);
 
 	useEffect(() => {
 		setErrorState(null);
 	}, [username, password]);
 
-	type TResponseData = {
-		credentials: { username: string | boolean; password: string | boolean };
-	};
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		const credentials = new URLSearchParams({ username, password });
@@ -36,7 +35,8 @@ export default function Login() {
 				throw new Error("Login failed");
 			}
 
-			const data: TResponseData = await response.json();
+			const data: TLoginResponseData = await response.json();
+			localStorage.setItem("userUuid", "");
 			if (typeof data.credentials.username !== "string") {
 				setErrorState("username");
 				return;
@@ -45,6 +45,9 @@ export default function Login() {
 				setErrorState("password");
 				return;
 			}
+			// store user uuid in local storage on succesful login and change authentication status to true
+			changeAuthStatus(true);
+			localStorage.setItem("userUuid", data.credentials.userUuid);
 			navigate("/");
 		} catch (error: any) {
 			throw new Error(error.message);

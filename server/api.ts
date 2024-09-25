@@ -2,6 +2,7 @@ import express from "express";
 import sqlite3 from "sqlite3";
 import path from "path";
 import dotenv from "dotenv";
+import { v4 as uuid } from "uuid";
 dotenv.config();
 
 const router = express.Router();
@@ -36,8 +37,15 @@ router.get("/movies", (_req, res) => {
 		res.send({ data: rows });
 	});
 });
-
-const sampleDB = [{ username: "sample", password: "sample" }];
+const sampleDB = [
+	{
+		userUuid: "s12312dxm",
+		username: "sample",
+		password: "sample",
+		lastLogin: new Date(),
+		isLoggedIn: 0,
+	},
+];
 
 router.post("/login", (req, res) => {
 	const { username, password } = req.body;
@@ -46,7 +54,13 @@ router.post("/login", (req, res) => {
 		if (username === entry.username) {
 			console.log("User exists");
 			if (password === entry.password) {
-				res.send({ credentials: { username: username, password: password } });
+				res.send({
+					credentials: {
+						userUuid: entry.userUuid,
+						username: username,
+						password: password,
+					},
+				});
 				console.log("Password is correct");
 				return;
 			} else {
@@ -58,6 +72,20 @@ router.post("/login", (req, res) => {
 	}
 
 	res.send({ credentials: { username: false, password: false } });
+});
+
+router.get("/is-verified/user/:token", (req, res) => {
+	const { token } = req.params;
+	console.log("testing token: ", token);
+	if (!token) {
+		console.log("no token on verification");
+		res.sendStatus(401).json({ error: "Unauthorized" });
+		return;
+	} else {
+		console.log("yes token on verification");
+		res.status(200).json({ success: "User is verified" });
+		usersDB.run("UPDATE users SET isLoggedIn=1 WHERE userUuid=?", [token]);
+	}
 });
 
 let allUsernames: string[] = [];
