@@ -3,7 +3,8 @@ import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";
 import Modal from "./Modal";
-import { pathContext } from "../App";
+import { pathContext } from "../index";
+import { authContext } from "../App";
 
 const filterWithSearch: TSearchMethod = (movieState, searchState) => {
 	if (searchState === "") {
@@ -74,6 +75,7 @@ export default function Home() {
 	const initialMovies = useRef<Movie[]>([]);
 	const genres = useRef<string[]>([]);
 	genres.current = generateGenreList(initialMovies.current);
+	const { isAuthenticated, setIsAuthenticated } = useContext(authContext);
 
 	useEffect(() => {
 		fetch("/api/movies")

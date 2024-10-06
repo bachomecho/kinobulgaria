@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { authCntx } from "./AuthContextProvider";
+import { authContext } from "../../App";
 
 export default function Login() {
 	const [username, setUserName] = useState("");
@@ -12,7 +12,7 @@ export default function Login() {
 		"username" | "password" | null
 	>();
 	const navigate = useNavigate();
-	const { isAuthenticated, changeAuthStatus } = useContext(authCntx);
+	const { _, setIsAuthenticated } = useContext(authContext);
 
 	useEffect(() => {
 		setErrorState(null);
@@ -48,6 +48,9 @@ export default function Login() {
 			// store user uuid in local storage on succesful login and change authentication status to true
 			changeAuthStatus(true);
 			localStorage.setItem("userUuid", data.credentials.userUuid);
+			setIsAuthenticated(true);
+			// TODO: snack bar to show login was successful
+
 			navigate("/");
 		} catch (error: any) {
 			throw new Error(error.message);
