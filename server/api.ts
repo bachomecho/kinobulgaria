@@ -74,20 +74,6 @@ router.post("/login", (req, res) => {
 	res.send({ credentials: { username: false, password: false } });
 });
 
-router.get("/is-verified/user/:token", (req, res) => {
-	const { token } = req.params;
-	console.log("testing token: ", token);
-	if (!token) {
-		console.log("no token on verification");
-		res.sendStatus(401).json({ error: "Unauthorized" });
-		return;
-	} else {
-		console.log("yes token on verification");
-		res.status(200).json({ success: "User is verified" });
-		usersDB.run("UPDATE users SET isLoggedIn=1 WHERE userUuid=?", [token]);
-	}
-});
-
 let allUsernames: string[] = [];
 for (let i = 0; i < sampleDB.length; i++) {
 	allUsernames.push(sampleDB[i].username);

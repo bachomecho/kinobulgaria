@@ -36,6 +36,7 @@ export default function Login() {
 			}
 
 			const data: TLoginResponseData = await response.json();
+
 			localStorage.setItem("userUuid", "");
 			if (typeof data.credentials.username !== "string") {
 				setErrorState("username");
@@ -45,8 +46,7 @@ export default function Login() {
 				setErrorState("password");
 				return;
 			}
-			// store user uuid in local storage on succesful login and change authentication status to true
-			changeAuthStatus(true);
+			// Store user UUID in local storage on successful login and change authentication status to true
 			localStorage.setItem("userUuid", data.credentials.userUuid);
 			setIsAuthenticated(true);
 			// TODO: snack bar to show login was successful
