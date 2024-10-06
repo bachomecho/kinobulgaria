@@ -29,5 +29,5 @@ app.get("*", (_req, res) => {
 	res.sendFile(path.join(process.cwd(), "./dist/app/index.html"));
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.API_PORT || 8080;
 app.listen(port, () => console.log(`listening on port ${port}`));

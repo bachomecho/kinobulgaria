@@ -15,6 +15,13 @@ interface FilterProps {
 	duration: string;
 	genre: string;
 }
+type TLoginResponseData = {
+	credentials: {
+		userUuid: string;
+		username: string | boolean;
+		password: string | boolean;
+	};
+};
 
 type TSearchMethod = (movieState: Movie[], filterState: string) => Movie[];
 type TFilterMethod = (movieState: Movie[], filterState: FilterProps) => Movie[];

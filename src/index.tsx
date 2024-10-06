@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import { App } from "./App.tsx";
 import { createContext } from "react";
+import "../css/input.css";
+
 let cntx = "";
 if (import.meta.env.VITE_ENVIRONMENT === "DEV") {
 	cntx = "/assets/static/";
 }
-
 export const pathContext = createContext(cntx);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

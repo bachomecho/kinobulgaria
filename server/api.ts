@@ -2,6 +2,7 @@ import express from "express";
 import sqlite3 from "sqlite3";
 import path from "path";
 import dotenv from "dotenv";
+import { v4 as uuid } from "uuid";
 dotenv.config();
 
 const router = express.Router();
@@ -36,8 +37,15 @@ router.get("/movies", (_req, res) => {
 		res.send({ data: rows });
 	});
 });
-
-const sampleDB = [{ username: "sample", password: "sample" }];
+const sampleDB = [
+	{
+		userUuid: "s12312dxm",
+		username: "sample",
+		password: "sample",
+		lastLogin: new Date(),
+		isLoggedIn: 0,
+	},
+];
 
 router.post("/login", (req, res) => {
 	const { username, password } = req.body;
@@ -46,7 +54,13 @@ router.post("/login", (req, res) => {
 		if (username === entry.username) {
 			console.log("User exists");
 			if (password === entry.password) {
-				res.send({ credentials: { username: username, password: password } });
+				res.send({
+					credentials: {
+						userUuid: entry.userUuid,
+						username: username,
+						password: password,
+					},
+				});
 				console.log("Password is correct");
 				return;
 			} else {
