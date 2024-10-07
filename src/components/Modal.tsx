@@ -1,5 +1,7 @@
 //  TODO: youtube button in modal
 export default function Modal(props: Movie) {
+	const youtubeIconSource: string = "/assets/static/icons/yt_icon_black.png";
+	const wikipediaIcon: string = "/assets/static/icons/wikipedia.png";
 	return (
 		<div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
 			<div className="bg-white p-6 rounded-lg w-full max-w-5xl">
@@ -23,6 +25,33 @@ export default function Modal(props: Movie) {
 							{`${props.director}, ${props.release_year}, ${props.duration} минути`}
 						</p>
 						<p className="mb-4">{props.plot}</p>
+						<div className="flex justify-between items-center">
+							<a
+								href={`https://www.youtube.com/watch?v=${props.video_id}`}
+								className="yt-btn ring-offset-background"
+								target="_blank"
+							>
+								<img
+									src={youtubeIconSource}
+									className="fill-current w-4 h-4 mr-2"
+								/>
+								YouTube
+							</a>
+							<a
+								href={`https://bg.wikipedia.org/wiki/${props.title.replace(
+									" ",
+									"_"
+								)}`}
+								className="wiki-btn ring-offset-background"
+								target="_blank"
+							>
+								<img
+									src={wikipediaIcon}
+									className="fill-current w-4 h-4 mr-2 -ml-1"
+								/>
+								Wikipedia
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
