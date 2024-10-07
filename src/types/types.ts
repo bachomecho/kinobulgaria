@@ -7,7 +7,8 @@ interface Movie {
 	release_year: number;
 	genre: string;
 	director: string;
-	modalOpenClosedMethod: () => void;
+	plot: string;
+	modalOpenClosedMethod: (e: any) => void;
 }
 
 interface FilterProps {
@@ -15,6 +16,12 @@ interface FilterProps {
 	duration: string;
 	genre: string;
 }
+
+interface HeaderProps {
+	showSearch: boolean;
+	setSearchQuery?: React.Dispatch<React.SetStateAction<string>>;
+}
+
 type TLoginResponseData = {
 	credentials: {
 		userUuid: string;
