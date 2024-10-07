@@ -3,10 +3,15 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				primary: "#3490dc",
+				primary: "#eb2323",
+				secondary: "#737373",
 				"primary-foreground": "#fff",
 				ring: "#5a67d8",
 				background: "#f7fafc",
+				navy: {
+					500: "#001f3f",
+					600: "#001a35",
+				},
 			},
 		},
 	},

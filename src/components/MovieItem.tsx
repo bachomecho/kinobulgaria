@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { pathContext } from "../App";
+import { pathContext } from "../index";
 
 export default function MovieItem(props: Movie) {
 	const filePath = useContext(pathContext);
 	const thumbnailSource = `${filePath}/images/${props.thumbnail_name}.jpg`;
-	let youtubeIconSource: string = filePath + "/icons/youtube.png";
+	let youtubeIconSource: string = filePath + "/icons/yt_icon_black.png";
 	let wikipediaIcon: string = filePath + "/icons/wikipedia.png";
 
 	const quotientDuration = Math.floor(props.duration / 60);
@@ -40,35 +40,33 @@ export default function MovieItem(props: Movie) {
 						Жанр: {props.genre.split(",").join(", ")}
 					</p>
 					<div className="flex justify-between items-center">
-						<button className="inline-flex items-center w-1/2 justify-center whitespace-nowrap rounded-md text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
-							<a
-								href={`https://www.youtube.com/watch?v=${props.video_id}`}
-								className="inline-flex items-center"
-								target="_blank"
-							>
-								<img
-									src={youtubeIconSource}
-									className="fill-current w-4 h-4 mr-2"
-								/>
-								YouTube
-							</a>
-						</button>
-						<button className="inline-flex items-center w-1/2 justify-center whitespace-nowrap rounded-md text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-							<a
-								href={`https://bg.wikipedia.org/wiki/${props.title.replace(
-									" ",
-									"_"
-								)}`}
-								className="inline-flex items-center"
-								target="_blank"
-							>
-								<img
-									src={wikipediaIcon}
-									className="fill-current w-4 h-4 mr-2 -ml-1"
-								/>
-								Wikipedia
-							</a>
-						</button>
+						<a
+							href={`https://www.youtube.com/watch?v=${props.video_id}`}
+							className="yt-btn ring-offset-background"
+							target="_blank"
+							onClick={(e) => e.stopPropagation()}
+						>
+							<img
+								src={youtubeIconSource}
+								className="fill-current w-4 h-4 mr-2"
+							/>
+							YouTube
+						</a>
+						<a
+							href={`https://bg.wikipedia.org/wiki/${props.title.replace(
+								" ",
+								"_"
+							)}`}
+							className="wiki-btn ring-offset-background"
+							target="_blank"
+							onClick={(e) => e.stopPropagation()}
+						>
+							<img
+								src={wikipediaIcon}
+								className="fill-current w-4 h-4 mr-2 -ml-1"
+							/>
+							Wikipedia
+						</a>
 					</div>
 				</div>
 			</div>
