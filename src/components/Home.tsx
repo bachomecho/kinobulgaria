@@ -147,7 +147,7 @@ export default function Home() {
 
 	return (
 		<>
-			<Header setSearchQuery={setSearch} />
+			<Header setSearchQuery={setSearch} showSearch={true} />
 			<Filter
 				filterState={filter}
 				setFilterQuery={setFilter}
