@@ -18,10 +18,11 @@ const pathConf = {
 };
 type Mode = "DEV" | "PROD";
 const envi = process.env.VITE_ENVIRONMENT as Mode;
-app.use("/images", express.static(`${envi}/images`));
-app.use("/icons", express.static(`${envi}/icons`));
+const filePath = path.resolve(pathConf[envi]);
+app.use("/images", express.static(`${filePath}/images`));
+app.use("/icons", express.static(`${filePath}/icons`));
 console.log(`${pathConf[process.env.VITE_ENVIRONMENT as Mode]}/logo`);
-app.use("/logo", express.static(`${envi}/logo`));
+app.use("/logo", express.static(`${filePath}/logo`));
 
 app.use(express.static("dist/app"));
 

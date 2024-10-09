@@ -1,16 +1,14 @@
 import { useContext } from "react";
-import { pathContext } from "../index";
 import { authContext } from "../App";
+import logo from "/assets/static/logo/logo_kino.png";
 
 export default function Header(props: HeaderProps) {
-	const filePathPrefix = useContext(pathContext);
-	const logoPath = filePathPrefix + "logo/logo_kino.jpg";
 	const { isAuthenticated, setIsAuthenticated } = useContext(authContext);
 
 	return (
 		<header className="flex items-center justify-between px-4 md:px-6 lg:px-8 h-16 bg-white shadow">
 			<a className="flex items-center" href="/" rel="ugc">
-				<img src={logoPath} width="24" height="24" className="h-6 w-6 mr-2" />
+				<img src={logo} width="24" height="24" className="h-6 w-6 mr-2" />
 				<span className="font-bold text-lg">Kино България</span>
 			</a>
 			<div className="flex items-center space-x-4">

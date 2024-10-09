@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { authContext } from "../../App";
+import logo from "/assets/static/logo/logo_kino.png";
 
 export default function Login() {
 	const [username, setUserName] = useState("");
@@ -61,7 +62,7 @@ export default function Login() {
 		<div className="min-h-screen flex items-center justify-center bg-gray-100">
 			<div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md">
 				<div className="flex justify-center mb-6">
-					<img src="/logo/logo_kino.jpg" alt="Logo" className="h-12 w-12" />
+					<img src={logo} alt="Logo" className="h-12 w-12" />
 				</div>
 
 				<Box

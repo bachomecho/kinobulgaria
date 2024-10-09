@@ -5,6 +5,8 @@ import Filter from "./Filter";
 import Modal from "./Modal";
 import { pathContext } from "../index";
 import { authContext } from "../App";
+import arrowUpIcon from "/assets/static/icons/scroll_top.svg";
+
 
 const filterWithSearch: TSearchMethod = (movieState, searchState) => {
 	if (searchState === "") {
@@ -57,9 +59,6 @@ const generateGenreList = (movies: Movie[]) => {
 };
 
 export default function Home() {
-	const filePathPrefix = useContext(pathContext);
-	const arrowUpIconPath = filePathPrefix + "/icons/scroll_top.svg";
-
 	const [movies, setMovies] = useState<Movie[]>([]);
 	const [search, setSearch] = useState<string>("");
 	const [filter, setFilter] = useState<FilterProps>({
@@ -186,13 +185,9 @@ export default function Home() {
 				{scrollTop && (
 					<button
 						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-						className=" text-white p-2 rounded-full shadow-lg hover:bg-green-700 focus:outline-none"
+						className=" text-white p-2 rounded-full shadow-lg hover:bg-grey-700 focus:outline-none"
 					>
-						<img
-							src={arrowUpIconPath}
-							alt="Scroll to top"
-							className="w-7 h-7"
-						/>
+						<img src={arrowUpIcon} alt="Scroll to top" className="w-7 h-7" />
 					</button>
 				)}
 			</div>

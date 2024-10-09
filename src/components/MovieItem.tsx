@@ -1,11 +1,12 @@
-import { useContext } from "react";
-import { pathContext } from "../index";
+import youtubeIcon from "/assets/static/icons/yt_icon_black.png";
+import wikipediaIcon from "/assets/static/icons/wikipedia.png";
+import conf from "../../pathConfig";
 
 export default function MovieItem(props: Movie) {
-	const filePath = useContext(pathContext);
-	const thumbnailSource = `${filePath}/images/${props.thumbnail_name}.jpg`;
-	let youtubeIconSource: string = filePath + "/icons/yt_icon_black.png";
-	let wikipediaIcon: string = filePath + "/icons/wikipedia.png";
+	type Mode = "DEV" | "PROD";
+	const thumbnailSource = `${
+		conf[import.meta.env.VITE_ENVIRONMENT as Mode]
+	}/images/${props.thumbnail_name}.jpg`;
 
 	const quotientDuration = Math.floor(props.duration / 60);
 	const formattedDuration = `${quotientDuration} ${
@@ -46,10 +47,7 @@ export default function MovieItem(props: Movie) {
 							target="_blank"
 							onClick={(e) => e.stopPropagation()}
 						>
-							<img
-								src={youtubeIconSource}
-								className="fill-current w-4 h-4 mr-2"
-							/>
+							<img src={youtubeIcon} className="fill-current w-4 h-4 mr-2" />
 							YouTube
 						</a>
 						<a
