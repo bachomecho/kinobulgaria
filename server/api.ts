@@ -14,11 +14,28 @@ if (process.env.VITE_ENVIRONMENT === "PROD") {
 
 const dbName = process.env.VITE_DB_NAME || null;
 if (!dbName) {
-	throw new Error("Database file name not provided in environment variables");
+	throw new Error(
+		"Database file name for movies not provided in environment variables"
+	);
 }
-
+const usersDbName = process.env.VITE_USERS_DB_NAME || null;
+if (!usersDbName) {
+	throw new Error(
+		"Database file name for users not provided in environment variables"
+	);
+}
 const moviesDb = new sqlite3.Database(
 	path.resolve(process.cwd(), filePath, dbName),
+	(err: any) => {
+		if (err) {
+			console.error("Could not connect to db");
+		} else {
+			console.log("Successfully connected to db");
+		}
+	}
+);
+const usersDB = new sqlite3.Database(
+	path.resolve(process.cwd(), filePath, usersDbName),
 	(err: any) => {
 		if (err) {
 			console.error("Could not connect to db");
@@ -72,6 +89,26 @@ router.post("/login", (req, res) => {
 	}
 
 	res.send({ credentials: { username: false, password: false } });
+});
+
+router.post("/logout", (req, res) => {
+	const { userUuid } = req.query;
+	usersDB.run(
+		"UPDATE users SET isLoggedIn=0 WHERE userUuid=?",
+		userUuid,
+		function (err) {
+			if (err) {
+				console.error("Error updating user:", err.message);
+				return;
+			}
+			if (this.changes === 0) {
+				console.log("No user found with the specified userUuid.");
+			} else {
+				console.log("User successfully logged out.");
+			}
+		}
+	);
+	res.sendStatus(200);
 });
 
 let allUsernames: string[] = [];

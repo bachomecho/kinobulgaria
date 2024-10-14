@@ -5,6 +5,28 @@ import logo from "/assets/static/logo/logo_kino.png";
 export default function Header(props: HeaderProps) {
 	const { isAuthenticated, setIsAuthenticated } = useContext(authContext);
 
+	async function handleLogout() {
+		try {
+			const userUuid = localStorage.getItem("userUuid") || "";
+			const response = await fetch(`/api/logout?userUuid=${userUuid}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+			});
+
+			if (!response.ok) {
+				throw new Error("Logout failed");
+			} else {
+				localStorage.removeItem("userUuid");
+				setTimeout(() => {
+					setIsAuthenticated(false);
+				}, 200);
+			}
+		} catch (err) {
+			throw new Error("Error while logging out: " + err);
+		}
+	}
 	return (
 		<header className="flex items-center justify-between px-4 md:px-6 lg:px-8 h-16 bg-white shadow">
 			<a className="flex items-center" href="/" rel="ugc">
@@ -26,15 +48,7 @@ export default function Header(props: HeaderProps) {
 						<a className="btn-nav" href="/usersettings">
 							Settings
 						</a>
-						<button
-							className="btn-nav"
-							onClick={() => {
-								localStorage.removeItem("userUuid");
-								setTimeout(() => {
-									setIsAuthenticated(false);
-								}, 200);
-							}}
-						>
+						<button className="btn-nav" onClick={handleLogout}>
 							Logout
 						</button>
 					</div>
