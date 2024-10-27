@@ -67,28 +67,31 @@ const sampleDB = [
 router.post("/login", (req, res) => {
 	const { username, password } = req.body;
 
-	for (const entry of sampleDB) {
-		if (username === entry.username) {
-			console.log("User exists");
-			if (password === entry.password) {
-				res.send({
-					credentials: {
-						userUuid: entry.userUuid,
-						username: username,
-						password: password,
-					},
-				});
-				console.log("Password is correct");
-				return;
-			} else {
-				res.send({ credentials: { username: username, password: false } });
-				console.log("Password is incorrect");
+	usersDB.get(
+		"SELECT userUuid, username, password FROM users WHERE username=?",
+		[username],
+		(err, row: any) => {
+			if (err) {
+				res.sendStatus(404);
 				return;
 			}
+			console.log("User exists");
+			if (row) {
+				if (row.password === password) {
+					console.log("Password is correct");
+					res.send({
+						userUuid: row.userUuid,
+					});
+					return;
+				} else {
+					res.sendStatus(401);
+					return;
+				}
+			} else {
+				res.sendStatus(404);
+			}
 		}
-	}
-
-	res.send({ credentials: { username: false, password: false } });
+	);
 });
 
 router.post("/logout", (req, res) => {

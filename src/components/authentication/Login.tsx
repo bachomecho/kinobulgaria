@@ -13,7 +13,7 @@ export default function Login() {
 		"username" | "password" | null
 	>();
 	const navigate = useNavigate();
-	const { _, setIsAuthenticated } = useContext(authContext);
+	const { setIsAuthenticated } = useContext(authContext);
 
 	useEffect(() => {
 		setErrorState(null);
@@ -32,27 +32,19 @@ export default function Login() {
 				body: credentials.toString(),
 			});
 
-			if (!response.ok) {
-				throw new Error("Login failed");
-			}
-
-			const data: TLoginResponseData = await response.json();
-
-			localStorage.setItem("userUuid", "");
-			if (typeof data.credentials.username !== "string") {
+			if (response.status === 404) {
 				setErrorState("username");
 				return;
-			}
-			if (typeof data.credentials.password !== "string") {
+			} else if (response.status === 401) {
 				setErrorState("password");
 				return;
+			} else {
+				const data = await response.json();
+				localStorage.setItem("userUuid", data.userUuid);
+				setIsAuthenticated(true);
+				// TODO: snack bar to show login was successful
+				navigate("/");
 			}
-			// Store user UUID in local storage on successful login and change authentication status to true
-			localStorage.setItem("userUuid", data.credentials.userUuid);
-			setIsAuthenticated(true);
-			// TODO: snack bar to show login was successful
-
-			navigate("/");
 		} catch (error: any) {
 			throw new Error(error.message);
 		}
@@ -76,7 +68,7 @@ export default function Login() {
 					onSubmit={handleSubmit}
 				>
 					<div className="mb-4">
-						{errorState == "username" ? (
+						{errorState === "username" ? (
 							<TextField
 								error
 								name="username"
@@ -97,7 +89,7 @@ export default function Login() {
 						)}
 					</div>
 					<div className="mb-4">
-						{errorState == "password" ? (
+						{errorState === "password" ? (
 							<TextField
 								error
 								name="password"
