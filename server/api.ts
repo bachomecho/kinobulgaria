@@ -126,12 +126,27 @@ setInterval(() => {
 	console.log("All usernames have been fetched from the user database");
 }, 10000);
 
-router.post("/check-username", (req, res) => {
-	const { username } = req.query;
-	if (!allUsernames.includes(username as string)) {
-		res.send({ available: true });
+router.post("/change-password", (req, res) => {
+	const { userUuid } = req.query;
+	const { oldPassword, newPassword } = req.body;
+
+	const userPass = usersDB.run(
+		"SELECT password FROM users WHERE userUuid=?",
+		userUuid
+	);
+	if (userPass) {
+		if (userPass === oldPassword) {
+			res.send({ oldPasswordCorrect: true });
+			usersDB.run(
+				"UPDATE users SET password=? WHERE userUuid=?",
+				newPassword,
+				userUuid
+			);
+		} else {
+			res.send({ oldPasswordCorrect: false });
+		}
 	} else {
-		res.send({ available: false });
+		throw new Error(`User with following id does not exist ${userUuid}`);
 	}
 });
 
