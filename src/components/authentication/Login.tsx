@@ -13,7 +13,7 @@ export default function Login() {
 		"username" | "password" | null
 	>();
 	const navigate = useNavigate();
-	const { setIsAuthenticated } = useContext(authContext);
+	const { setUserUuid } = useContext(authContext);
 
 	useEffect(() => {
 		setErrorState(null);
@@ -41,7 +41,7 @@ export default function Login() {
 			} else {
 				const data = await response.json();
 				localStorage.setItem("userUuid", data.userUuid);
-				setIsAuthenticated(true);
+				setUserUuid(data.userUuid);
 				// TODO: snack bar to show login was successful
 				navigate("/");
 			}

@@ -3,35 +3,24 @@ import Home from "./components/Home";
 import Login from "./components/authentication/Login";
 import Register from "./components/authentication/Register";
 import UserSettings from "./components/authentication/UserSettings";
-import { useEffect, createContext, useState } from "react";
+import { createContext, useState } from "react";
 
 let authContext = createContext({} as any);
 
 function App() {
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-	useEffect(() => {
-		const userUuid = localStorage.getItem("userUuid");
-		if (userUuid) {
-			setIsAuthenticated(true);
-		} else {
-			setIsAuthenticated(false);
-		}
-	}, []);
+	const [userUuid, setUserUuid] = useState(
+		localStorage.getItem("userUuid") || null
+	);
 
 	return (
 		<div className="wrapper">
 			<BrowserRouter>
-				<authContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+				<authContext.Provider value={{ userUuid, setUserUuid }}>
 					<Routes>
 						<Route path="/" element={<Home />} />
-						{!isAuthenticated && <Route path="/login" element={<Login />} />}
-						{!isAuthenticated && (
-							<Route path="/register" element={<Register />} />
-						)}
-						{isAuthenticated && (
-							<Route path="/user-settings" element={<UserSettings />} />
-						)}
+						<Route path="/login" element={<Login />} />
+						<Route path="/register" element={<Register />} />
+						<Route path="/usersettings" element={<UserSettings />} />
 					</Routes>
 				</authContext.Provider>
 			</BrowserRouter>
