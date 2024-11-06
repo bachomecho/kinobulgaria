@@ -6,20 +6,6 @@ import Button from "@mui/material/Button";
 import logo from "/assets/static/logo/logo_kino.png";
 import { authContext } from "../../App";
 
-function debounce(func: (...args: any[]) => void, wait: number) {
-	let timeoutId: NodeJS.Timeout | null = null;
-
-	return function (...args: any[]) {
-		if (timeoutId !== null) {
-			clearTimeout(timeoutId);
-		}
-
-		timeoutId = setTimeout(() => {
-			func(...args);
-		}, wait);
-	};
-}
-
 function Register() {
 	const [username, setUserName] = useState("");
 	const [password, setPassword] = useState("");
@@ -29,7 +15,7 @@ function Register() {
 		"username" | "password" | "confirmPassword" | null
 	>(null);
 	const navigate = useNavigate();
-	const { userUuid } = useContext(authContext);
+	const { userUuid, setUserUuid } = useContext(authContext);
 
 	useEffect(() => {
 		if (userUuid) {
@@ -40,38 +26,6 @@ function Register() {
 			return () => clearTimeout(timer);
 		}
 	}, []);
-
-	const checkUsernameAvailability = (username: string) => {
-		try {
-			fetch(`/api/check-username/${username}`, {
-				method: "POST",
-			})
-				.then((res) => {
-					if (!res.ok)
-						throw new Error(`Api did not respond. Status code: ${res.status}`);
-					return res.json();
-				})
-				.then((data) => {
-					setIsUserNameAvailable(data.available);
-				})
-				.catch(
-					(error) =>
-						`Following error occurred while fetching movie data: ${error}`
-				);
-		} catch (error) {
-			console.error("Error checking username availability", error);
-		}
-	};
-
-	// run a username availabilty test every second
-	const debouncedCheckUsernameAvailability = debounce(
-		checkUsernameAvailability,
-		500
-	);
-
-	useEffect(() => {
-		debouncedCheckUsernameAvailability(username);
-	}, [username]);
 
 	useEffect(() => {
 		if (confirmPassword !== password) {
@@ -95,14 +49,16 @@ function Register() {
 			});
 
 			if (!response.ok) {
-				throw new Error("Registration failed");
+				throw new Error("Registration failed.");
 			}
 
 			const status = await response.json();
-			if (status.registrationStatus) {
+			if (status.successfulRegistration) {
+				setUserUuid(status.userUuid);
+				localStorage.setItem("userUuid", status.userUuid);
 				navigate("/");
 			} else {
-				window.alert("Something went wrong with the registration.");
+				setIsUserNameAvailable(false);
 			}
 		} catch (error: any) {
 			throw new Error(error.message);

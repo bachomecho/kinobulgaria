@@ -152,9 +152,35 @@ router.post("/change-password", (req, res) => {
 
 router.post("/register", (req, res) => {
 	const { username, password } = req.body;
-
-	sampleDB.push({ username: username, password: password });
-	res.send({ registrationStatus: true });
+	usersDB.get(
+		`SELECT * FROM users WHERE username=?`,
+		[username],
+		async (getErr, row: any) => {
+			if (getErr) {
+				console.error(
+					"Error checking if username is available:",
+					getErr.message
+				);
+				return;
+			}
+			if (row) {
+				return res.send({ successfulRegistration: false });
+			} else {
+				const id: string = uuid();
+				const date = new Date();
+				usersDB.run(
+					"INSERT INTO users (userUuid, username, password, lastLogin, isLoggedIn, watchlist) VALUES (?, ?, ?, ?, ?, ?)",
+					id,
+					username,
+					password,
+					date.toISOString(),
+					1,
+					""
+				);
+				return res.send({ successfulRegistration: true, userUuid: id });
+			}
+		}
+	);
 });
 
 export default router;
