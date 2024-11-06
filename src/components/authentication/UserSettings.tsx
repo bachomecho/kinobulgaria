@@ -1,27 +1,49 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Button from "@mui/material/Button";
+
+import { Video, Trash2 } from "lucide-react";
 import {
-	List,
 	Card,
 	CardContent,
 	CardHeader,
 	Avatar,
 	TextField,
 } from "@mui/material";
-import { TWatchlist } from "../../../server/api";
 import Header from "../Header";
-import { removeMovieWatchlist, watchlistContext } from "../../App";
+import { removeMovieWatchlist, authContext } from "../../App";
 
-function UserSettings({ userUuid }: { userUuid: string }) {
+function UserSettings() {
 	const [oldPassword, setOldPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [isChangingPassword, setIsChangingPassword] = useState(false);
 	const [oldPasswordError, setOldPasswordError] = useState("");
-	const { watchlist, setWatchlist, watchlistChanged, setWatchlistChanged } =
-		useContext(watchlistContext);
-	const username = useRef("");
-	console.log("user settings watchlist: ", watchlist);
+	const [watchlist, setWatchlist] = useState<TWatchlist[]>([]);
+	const { userUuid } = useContext(authContext);
+
+	useEffect(() => {
+		fetch(`/api/watchlist/${userUuid}`, {
+			method: "GET",
+		})
+			.then((res) => {
+				if (!res.ok)
+					throw new Error(
+						`Error status code while fetching watchlist: ${res.status}`
+					);
+				return res.json();
+			})
+			.then((data: any) => {
+				console.log("Fetched watchlist data:", data.watchlist);
+				if (data.watchlist)
+					setWatchlist(JSON.parse(data.watchlist.split("|").join(",")));
+			})
+			.catch((error) => {
+				console.error(
+					"Following error occurred while fetching watchlist data:",
+					error
+				);
+			});
+	}, []);
 
 	const handlePasswordChange = async (e: React.FormEvent) => {
 		// TODO: potentially throttle change password requests: 3 hourly max
@@ -73,11 +95,11 @@ function UserSettings({ userUuid }: { userUuid: string }) {
 							<Avatar className="w-20 h-20">
 								<img
 									src="/placeholder.svg?height=80&width=80"
-									alt={username.current}
+									alt={"username"}
 								/>
 							</Avatar>
 							<div>
-								<h2 className="text-2xl font-bold">{username.current}</h2>
+								<h2 className="text-2xl font-bold">{"username"}</h2>
 								<p className="text-muted-foreground">Member since 2023</p>
 							</div>
 						</div>
@@ -164,38 +186,63 @@ function UserSettings({ userUuid }: { userUuid: string }) {
 								</form>
 							)}
 						</div>
-
-						<div className="space-y-4">
-							<h3 className="text-lg font-semibold">Your Watchlist</h3>
-							<List
-								className="h-[200px] rounded-md border p-4"
-								style={{ maxHeight: 200, overflow: "auto" }}
-							>
-								<ul className="space-y-2">
-									{watchlist.map((movie: TWatchlist) => (
-										<li
-											key={movie.id}
-											className="flex justify-between items-center"
-										>
-											<span>{movie.title}</span>
-											<span className="text-muted-foreground">
-												{movie.year}
-											</span>
-											<span>-</span>
-											<button
-												onClick={() => {
-													setWatchlist(
-														removeMovieWatchlist(watchlist, movie.title)
-													);
-													setWatchlistChanged(!watchlistChanged);
-												}}
+						<h3 className="text-lg font-semibold">Movie List</h3>
+						<div className="w-full max-w-md">
+							<ul className="space-y-4">
+								{watchlist.map((item, index) => (
+									<li
+										key={index}
+										className="flex items-center space-x-4 bg-card p-4 rounded-lg shadow"
+									>
+										<img
+											src={item.thumbnail_name}
+											alt={item.title}
+											width={50}
+											height={50}
+											className="rounded-md"
+										/>
+										<div className="flex-grow">
+											<h3 className="font-semibold">{item.title}</h3>
+											<p className="text-sm text-muted-foreground">
+												{item.release_year}
+											</p>
+										</div>
+										<div className="flex space-x-2">
+											<Button
+												variant="outlined"
+												onClick={() =>
+													window.open(
+														`https://www.youtube.com/watch?v=${item.video_id}`,
+														"_blank"
+													)
+												}
+												aria-label={`Watch ${item.title} trailer on YouTube`}
 											>
-												-
-											</button>
-										</li>
-									))}
-								</ul>
-							</List>
+												<Video className="w-4 h-4" />
+											</Button>
+											<Button
+												variant="contained"
+												onClick={() => {
+													removeMovieWatchlist(userUuid, item.title);
+													setWatchlist((watchlist) =>
+														watchlist.filter(
+															(elem) => elem.title !== item.title
+														)
+													);
+												}}
+												aria-label={`Remove ${item.title}`}
+											>
+												<Trash2 className="h-4 w-4" />
+											</Button>
+										</div>
+									</li>
+								))}
+							</ul>
+							{watchlist.length === 0 && (
+								<p className="text-center text-muted-foreground mt-4">
+									No items in the list
+								</p>
+							)}
 						</div>
 					</CardContent>
 				</Card>

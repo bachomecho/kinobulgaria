@@ -74,7 +74,13 @@ export default function Home() {
 	const initialMovies = useRef<Movie[]>([]);
 	const genres = useRef<string[]>([]);
 	genres.current = generateGenreList(initialMovies.current);
-	const { isAuthenticated, setIsAuthenticated } = useContext(authContext);
+
+	const [watchlist, setWatchlist] = useState<TWatchlist[]>([]);
+
+	const titlesInWatchlist =
+		watchlist.length > 0
+			? watchlist.map((movie: TWatchlist) => movie.title)
+			: [];
 
 	useEffect(() => {
 		fetch("/api/movies")
@@ -163,18 +169,22 @@ export default function Home() {
 				<>
 					<main className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
 						<ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-							{movies.map((item, index) => (
-								<li>
-									<MovieItem
-										key={index}
-										{...item}
-										modalOpenClosedMethod={() => {
-											setSelectedMovie(item);
-											setModalOpen(true);
-										}}
-									/>
-								</li>
-							))}
+							{movies.map((item, index) => {
+								return (
+									<li>
+										<MovieItem
+											key={index}
+											{...item}
+											isInWatchlist={titlesInWatchlist.includes(item.title)}
+											modalOpenClosedMethod={(e) => {
+												e.preventDefault();
+												setSelectedMovie(item);
+												setModalOpen(true);
+											}}
+										/>
+									</li>
+								);
+							})}
 						</ul>
 					</main>
 				</>

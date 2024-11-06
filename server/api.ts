@@ -54,15 +54,93 @@ router.get("/movies", (_req, res) => {
 		res.send({ data: rows });
 	});
 });
-const sampleDB = [
-	{
-		userUuid: "s12312dxm",
-		username: "sample",
-		password: "sample",
-		lastLogin: new Date(),
-		isLoggedIn: 0,
-	},
-];
+
+type TWatchlist = {
+	id: number;
+	title: string;
+	year: number;
+};
+
+router.put("/watchlist/:userUuid", (req, res) => {
+	const { userUuid } = req.params;
+	const updateMethod = req.headers["x-watchlist-update-method"];
+	let watchlist: TWatchlist[] = [];
+	usersDB.get(
+		"SELECT watchlist FROM users WHERE userUuid=?",
+		[userUuid],
+		(err, row: any) => {
+			if (err) {
+				throw new Error("Watchlist could not be fetched for this user.");
+			}
+			if (row.watchlist && row.watchlist.length > 0) {
+				watchlist = JSON.parse(row.watchlist.split("|").join(","));
+				switch (updateMethod) {
+					case "remove":
+						watchlist = watchlist?.filter(
+							(movie: TWatchlist) => movie.title !== req.body.title
+						);
+						break;
+					case "add":
+						watchlist?.push({
+							id: watchlist.length + 1,
+							title: req.body.title,
+							year: req.body.year, // TODO: do some kind of validation that title and year are present
+						});
+						break;
+					default:
+						break;
+				}
+
+				console.log("on server put watchlist body: ", watchlist);
+				usersDB.run(
+					"UPDATE users SET watchlist=? WHERE userUuid=?",
+					[JSON.stringify(watchlist), userUuid],
+					(updateErr) => {
+						if (updateErr) {
+							console.error("Error updating watchlist:", updateErr.message);
+							return;
+						}
+						console.log("Watchlist updated successfully.");
+					}
+				);
+				res.sendStatus(204);
+			}
+		}
+	);
+});
+
+router.get("/watchlist/:userUuid", (req, res) => {
+	const { userUuid } = req.params;
+	console.log("get useruuid: ", userUuid);
+	userUuid;
+
+	if (userUuid === "null") {
+		console.log("userUuid empty: ", userUuid);
+		// send some json message and check the json in the component, that way you won't have to check for statuses
+		res.send({ loginStatus: false });
+		return;
+	}
+
+	usersDB.get(
+		"SELECT watchlist FROM users WHERE userUuid=?",
+		[userUuid],
+		(err, row: any) => {
+			if (err) {
+				res.status(500).json({ error: err.message });
+				return;
+			}
+			if (row) {
+				console.log("yes row");
+				res.send({ loginStatus: true, watchlist: row.watchlist });
+				return;
+			} else {
+				console.log("no row");
+				res.sendStatus(404);
+				return;
+			}
+		}
+	);
+});
 
 router.post("/login", (req, res) => {
 	const { username, password } = req.body;

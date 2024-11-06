@@ -1,6 +1,8 @@
 import youtubeIcon from "/assets/static/icons/yt_icon_black.png";
 import wikipediaIcon from "/assets/static/icons/wikipedia.png";
 import conf from "../../pathConfig";
+import { addMovieWatchlist, removeMovieWatchlist, authContext } from "../App";
+import { useContext, useState } from "react";
 
 export default function MovieItem(props: Movie) {
 	type Mode = "DEV" | "PROD";
@@ -12,6 +14,10 @@ export default function MovieItem(props: Movie) {
 	const formattedDuration = `${quotientDuration} ${
 		quotientDuration == 1 ? "час" : "часа"
 	} и ${props.duration % 60} минути`;
+
+	const [inWatchlist, setInWatchlist] = useState(props.isInWatchlist);
+	const { userUuid } = useContext(authContext);
+
 	return (
 		<>
 			<div
@@ -65,6 +71,34 @@ export default function MovieItem(props: Movie) {
 							/>
 							Wikipedia
 						</a>
+						{userUuid &&
+							(!inWatchlist ? (
+								<button
+									className="wiki-btn"
+									onClick={(e) => {
+										e.stopPropagation();
+										addMovieWatchlist(
+											userUuid,
+											props.title,
+											props.release_year
+										);
+										setInWatchlist(true);
+									}}
+								>
+									+
+								</button>
+							) : (
+								<button
+									className="wiki-btn"
+									onClick={(e) => {
+										e.stopPropagation();
+										removeMovieWatchlist(userUuid, props.title);
+										setInWatchlist(false);
+									}}
+								>
+									-
+								</button>
+							))}
 					</div>
 				</div>
 			</div>

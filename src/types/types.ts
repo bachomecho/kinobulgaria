@@ -22,13 +22,10 @@ interface HeaderProps {
 	setSearchQuery?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-type TLoginResponseData = {
-	credentials: {
-		userUuid: string;
-		username: string | boolean;
-		password: string | boolean;
-	};
-};
+type TWatchlist = Pick<
+	Movie,
+	"title" | "thumbnail_name" | "video_id" | "release_year"
+>;
 
 type TSearchMethod = (movieState: Movie[], filterState: string) => Movie[];
 type TFilterMethod = (movieState: Movie[], filterState: FilterProps) => Movie[];
