@@ -9,6 +9,7 @@ interface Movie {
 	director: string;
 	plot: string;
 	modalOpenClosedMethod: (e: any) => void;
+	isInWatchlist: boolean;
 }
 
 interface FilterProps {
