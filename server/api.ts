@@ -2,6 +2,7 @@ import express from "express";
 import sqlite3 from "sqlite3";
 import path from "path";
 import dotenv from "dotenv";
+import bcrypt from "bcryptjs";
 import { v4 as uuid } from "uuid";
 dotenv.config();
 
@@ -148,14 +149,18 @@ router.post("/login", (req, res) => {
 	usersDB.get(
 		"SELECT userUuid, username, password FROM users WHERE username=?",
 		[username],
-		(err, row: any) => {
+		async (err, row: any) => {
 			if (err) {
 				res.sendStatus(404);
 				return;
 			}
-			console.log("User exists");
 			if (row) {
-				if (row.password === password) {
+				console.log("User exists");
+				const isPasswordMatch: boolean = await bcrypt.compare(
+					password,
+					row.password
+				);
+				if (isPasswordMatch) {
 					console.log("Password is correct");
 					res.send({
 						userUuid: row.userUuid,
@@ -191,18 +196,6 @@ router.post("/logout", (req, res) => {
 	);
 	res.sendStatus(200);
 });
-
-let allUsernames: string[] = [];
-for (let i = 0; i < sampleDB.length; i++) {
-	allUsernames.push(sampleDB[i].username);
-}
-setInterval(() => {
-	for (let i = 0; i < sampleDB.length; i++) {
-		allUsernames.push(sampleDB[i].username);
-	}
-
-	console.log("All usernames have been fetched from the user database");
-}, 10000);
 
 router.post("/change-password", (req, res) => {
 	const { userUuid } = req.query;
@@ -246,11 +239,12 @@ router.post("/register", (req, res) => {
 			} else {
 				const id: string = uuid();
 				const date = new Date();
+				const passwordHash = await bcrypt.hash(password, 10);
 				usersDB.run(
 					"INSERT INTO users (userUuid, username, password, lastLogin, isLoggedIn, watchlist) VALUES (?, ?, ?, ?, ?, ?)",
 					id,
 					username,
-					password,
+					passwordHash,
 					date.toISOString(),
 					1,
 					""
