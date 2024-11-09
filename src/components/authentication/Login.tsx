@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { authContext } from "../../App";
 import logo from "/assets/static/logo/logo_kino.png";
+import { ArrowLeft } from "lucide-react";
 
 export default function Login() {
 	const [username, setUserName] = useState("");
@@ -61,73 +62,90 @@ export default function Login() {
 	};
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gray-100">
-			<div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md">
-				<div className="flex justify-center mb-6">
-					<img src={logo} alt="Logo" className="h-12 w-12" />
-				</div>
-
-				<Box
-					component="form"
-					sx={{
-						display: "flex",
-						flexDirection: "column",
-						justifyContent: "center",
-						alignItems: "center",
-					}}
-					onSubmit={handleSubmit}
-				>
-					<div className="mb-4">
-						{errorState === "username" ? (
-							<TextField
-								error
-								name="username"
-								label="Username"
-								id="username-error-helper-text"
-								variant="outlined"
-								helperText="User does not exist."
-								onChange={(e) => setUserName(e.target.value)}
-							/>
-						) : (
-							<TextField
-								name="username"
-								label="Username"
-								id="username-helper-text"
-								variant="outlined"
-								onChange={(e) => setUserName(e.target.value)}
-							/>
-						)}
-					</div>
-					<div className="mb-4">
-						{errorState === "password" ? (
-							<TextField
-								error
-								name="password"
-								label="Password"
-								id="password-error-helper-text"
-								variant="outlined"
-								helperText="Incorrect password. Please try again."
-								onChange={(e) => setPassword(e.target.value)}
-							/>
-						) : (
-							<TextField
-								name="password"
-								label="Password"
-								id="password-helper-text"
-								variant="outlined"
-								onChange={(e) => setPassword(e.target.value)}
-							/>
-						)}
-					</div>
+		<div>
+			{!userUuid ? (
+				<>
 					<Button
-						variant="contained"
-						type="submit"
-						className="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+						variant="outlined"
+						className="absolute top-7 left-7 mb-4 flex space-x-2 bg-gray-100"
+						aria-label="Return to home page"
+						href="/"
 					>
-						Вход
+						<ArrowLeft className="h-4 w-4" />
+						<span>Return to Home</span>
 					</Button>
-				</Box>
-			</div>
+					<div className="min-h-screen flex items-center justify-center bg-gray-100">
+						<div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md">
+							<div className="flex justify-center mb-6">
+								<img src={logo} alt="Logo" className="h-12 w-12" />
+							</div>
+
+							<Box
+								component="form"
+								sx={{
+									display: "flex",
+									flexDirection: "column",
+									justifyContent: "center",
+									alignItems: "center",
+								}}
+								onSubmit={handleSubmit}
+							>
+								<div className="mb-4">
+									{errorState === "username" ? (
+										<TextField
+											error
+											name="username"
+											label="Username"
+											id="username-error-helper-text"
+											variant="outlined"
+											helperText="User does not exist."
+											onChange={(e) => setUserName(e.target.value)}
+										/>
+									) : (
+										<TextField
+											name="username"
+											label="Username"
+											id="username-helper-text"
+											variant="outlined"
+											onChange={(e) => setUserName(e.target.value)}
+										/>
+									)}
+								</div>
+								<div className="mb-4">
+									{errorState === "password" ? (
+										<TextField
+											error
+											name="password"
+											label="Password"
+											id="password-error-helper-text"
+											variant="outlined"
+											helperText="Incorrect password. Please try again."
+											onChange={(e) => setPassword(e.target.value)}
+										/>
+									) : (
+										<TextField
+											name="password"
+											label="Password"
+											id="password-helper-text"
+											variant="outlined"
+											onChange={(e) => setPassword(e.target.value)}
+										/>
+									)}
+								</div>
+								<Button
+									variant="contained"
+									type="submit"
+									className="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+								>
+									Вход
+								</Button>
+							</Box>
+						</div>
+					</div>
+				</>
+			) : (
+				<p>You are already registered. You will be redirected to home.</p>
+			)}
 		</div>
 	);
 }
