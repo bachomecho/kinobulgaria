@@ -62,10 +62,48 @@ type TWatchlist = {
 	year: number;
 };
 
+type TUpdateMethod = "add" | "remove";
+function updateWatchlist(
+	req: any,
+	userUuid: string,
+	updateMethod: TUpdateMethod,
+	watchlist: TWatchlist[]
+) {
+	// TODO: do some kind of validation that title and year are present
+	switch (updateMethod) {
+		case "remove":
+			watchlist = watchlist?.filter(
+				(movie: TWatchlist) => movie.title !== req.body.title
+			);
+			break;
+		case "add":
+			watchlist?.push({
+				id: watchlist.length + 1,
+				title: req.body.title,
+				year: req.body.year,
+			});
+			break;
+		default:
+			break;
+	}
+	usersDB.run(
+		"UPDATE users SET watchlist=? WHERE userUuid=?",
+		[JSON.stringify(watchlist), userUuid],
+		(updateErr) => {
+			if (updateErr) {
+				console.error("Error updating watchlist:", updateErr.message);
+				return;
+			}
+			console.log("Watchlist updated successfully.");
+		}
+	);
+}
 router.put("/watchlist/:userUuid", (req, res) => {
 	const { userUuid } = req.params;
 	const updateMethod = req.headers["x-watchlist-update-method"];
-	let watchlist: TWatchlist[] = [];
+	function isUpdateMethod(updateMethod: any): updateMethod is TUpdateMethod {
+		return updateMethod === "add" || updateMethod === "remove";
+	}
 	usersDB.get(
 		"SELECT watchlist FROM users WHERE userUuid=?",
 		[userUuid],
@@ -74,36 +112,17 @@ router.put("/watchlist/:userUuid", (req, res) => {
 				throw new Error("Watchlist could not be fetched for this user.");
 			}
 			if (row.watchlist && row.watchlist.length > 0) {
-				watchlist = JSON.parse(row.watchlist.split("|").join(","));
-				switch (updateMethod) {
-					case "remove":
-						watchlist = watchlist?.filter(
-							(movie: TWatchlist) => movie.title !== req.body.title
-						);
-						break;
-					case "add":
-						watchlist?.push({
-							id: watchlist.length + 1,
-							title: req.body.title,
-							year: req.body.year, // TODO: do some kind of validation that title and year are present
-						});
-						break;
-					default:
-						break;
-				}
+				const watchlist = JSON.parse(row.watchlist.split("|").join(","));
+				if (isUpdateMethod(updateMethod))
+					updateWatchlist(req, userUuid, updateMethod, watchlist);
 
 				console.log("on server put watchlist body: ", watchlist);
-				usersDB.run(
-					"UPDATE users SET watchlist=? WHERE userUuid=?",
-					[JSON.stringify(watchlist), userUuid],
-					(updateErr) => {
-						if (updateErr) {
-							console.error("Error updating watchlist:", updateErr.message);
-							return;
-						}
-						console.log("Watchlist updated successfully.");
-					}
-				);
+				res.sendStatus(204);
+			} else {
+				const watchlist: TWatchlist[] = [];
+
+				if (isUpdateMethod(updateMethod))
+					updateWatchlist(req, userUuid, updateMethod, watchlist);
 				res.sendStatus(204);
 			}
 		}
@@ -112,12 +131,8 @@ router.put("/watchlist/:userUuid", (req, res) => {
 
 router.get("/watchlist/:userUuid", (req, res) => {
 	const { userUuid } = req.params;
-	console.log("get useruuid: ", userUuid);
-	userUuid;
 
 	if (userUuid === "null") {
-		console.log("userUuid empty: ", userUuid);
-		// send some json message and check the json in the component, that way you won't have to check for statuses
 		res.send({ loginStatus: false });
 		return;
 	}
@@ -131,11 +146,9 @@ router.get("/watchlist/:userUuid", (req, res) => {
 				return;
 			}
 			if (row) {
-				console.log("yes row");
 				res.send({ loginStatus: true, watchlist: row.watchlist });
 				return;
 			} else {
-				console.log("no row");
 				res.sendStatus(404);
 				return;
 			}
