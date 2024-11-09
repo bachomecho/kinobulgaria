@@ -13,7 +13,17 @@ export default function Login() {
 		"username" | "password" | null
 	>();
 	const navigate = useNavigate();
-	const { setUserUuid } = useContext(authContext);
+	const { userUuid, setUserUuid } = useContext(authContext);
+
+	useEffect(() => {
+		if (userUuid) {
+			const timer = setTimeout(() => {
+				navigate("/");
+			}, 1500);
+
+			return () => clearTimeout(timer);
+		}
+	}, []);
 
 	useEffect(() => {
 		setErrorState(null);
