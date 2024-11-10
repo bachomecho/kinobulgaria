@@ -210,28 +210,36 @@ router.post("/logout", (req, res) => {
 	res.sendStatus(200);
 });
 
-router.post("/change-password", (req, res) => {
-	const { userUuid } = req.query;
+router.post("/change-password/:userUuid", (req, res) => {
+	const { userUuid } = req.params;
 	const { oldPassword, newPassword } = req.body;
 
-	const userPass = usersDB.run(
+	usersDB.get(
 		"SELECT password FROM users WHERE userUuid=?",
-		userUuid
-	);
-	if (userPass) {
-		if (userPass === oldPassword) {
-			res.send({ oldPasswordCorrect: true });
-			usersDB.run(
-				"UPDATE users SET password=? WHERE userUuid=?",
-				newPassword,
-				userUuid
+		userUuid,
+		async (err, row: any) => {
+			if (err) {
+				res.sendStatus(404);
+			}
+			console.log("testing userpass: ", row.password);
+			const isPasswordMatch: boolean = await bcrypt.compare(
+				oldPassword,
+				row.password
 			);
-		} else {
-			res.send({ oldPasswordCorrect: false });
+			console.log(isPasswordMatch);
+			if (row.password && isPasswordMatch) {
+				res.send({ oldPasswordCorrect: true });
+				const passwordHash = await bcrypt.hash(newPassword, 10);
+				usersDB.run(
+					"UPDATE users SET password=? WHERE userUuid=?",
+					passwordHash,
+					userUuid
+				);
+			} else {
+				res.send({ oldPasswordCorrect: false });
+			}
 		}
-	} else {
-		throw new Error(`User with following id does not exist ${userUuid}`);
-	}
+	);
 });
 
 router.post("/register", (req, res) => {

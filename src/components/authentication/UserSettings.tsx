@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 import { Video, Trash2 } from "lucide-react";
@@ -20,6 +21,7 @@ function UserSettings() {
 	const [oldPasswordError, setOldPasswordError] = useState("");
 	const [watchlist, setWatchlist] = useState<TWatchlist[]>([]);
 	const { userUuid } = useContext(authContext);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		fetch(`/api/watchlist/${userUuid}`, {
@@ -51,19 +53,16 @@ function UserSettings() {
 
 		console.log("user settings useruuid: ", userUuid);
 		try {
-			const response = await fetch(
-				`/api/change-password/userUuid=${userUuid}`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/x-www-form-urlencoded",
-					},
-					body: new URLSearchParams({
-						oldPassword: oldPassword,
-						newPassword: newPassword,
-					}).toString(),
-				}
-			);
+			const response = await fetch(`/api/change-password/${userUuid}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+				body: new URLSearchParams({
+					oldPassword: oldPassword,
+					newPassword: newPassword,
+				}).toString(),
+			});
 
 			if (!response.ok) {
 				throw new Error("Password change cannot be requested.");
