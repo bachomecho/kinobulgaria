@@ -70,6 +70,7 @@ export default function Home() {
 	const [scrollTop, setScrollTop] = useState(false);
 	const [selectedMovie, setSelectedMovie] = useState<Movie>();
 	const [modalOpen, setModalOpen] = useState(false);
+	const { userUuid } = useContext(authContext);
 
 	const initialMovies = useRef<Movie[]>([]);
 	const genres = useRef<string[]>([]);
@@ -83,23 +84,28 @@ export default function Home() {
 			: [];
 
 	useEffect(() => {
-		fetch("/api/movies")
-			.then((res) => {
-				if (!res.ok)
-					throw new Error(`Api did not respond. Status code: ${res.status}`);
-				return res.json();
+		const fetchMovies = fetch("/api/movies");
+		const fetchWatchlist = fetch(`/api/watchlist/${userUuid}`);
+		Promise.all([fetchMovies, fetchWatchlist])
+			.then(([resMovies, resWatchlist]: [Response, Response]) => {
+				return Promise.all([resMovies.json(), resWatchlist.json()]);
 			})
-			.then((data) => {
-				const availableMovies = data.data.filter(
-					(movie: Movie) => movie.video_id !== null
+			.then(([dataMovies, dataWatchlist]: any) => {
+				console.log("movies: ", dataMovies);
+				console.log("watchlist: ", dataWatchlist);
+				if (dataWatchlist.loginStatus && dataWatchlist.watchlist) {
+					setWatchlist(
+						JSON.parse(dataWatchlist.watchlist.split("|").join(","))
+					);
+				}
+
+				const availableMovies = dataMovies.data.filter(
+					(movie: Movie) => movie.video_id
 				);
 				initialMovies.current = availableMovies;
 				setMovies(availableMovies);
 			})
-			.catch(
-				(error) =>
-					`Following error occurred while fetching movie data: ${error}`
-			);
+			.catch((error) => console.error("Error fetching data:", error));
 	}, []);
 
 	const toggleVisibility = () => {
