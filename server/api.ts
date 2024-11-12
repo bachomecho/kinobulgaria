@@ -45,6 +45,24 @@ const usersDB = new sqlite3.Database(
 		}
 	}
 );
+interface Movie {
+	title: string;
+	thumbnail_name: string;
+	video_id: string;
+	multi_part: 0 | 1;
+	duration: number;
+	release_year: number;
+	genre: string;
+	director: string;
+	plot: string;
+	modalOpenClosedMethod: (e: any) => void;
+	isInWatchlist: boolean;
+}
+
+type TWatchlist = Pick<
+	Movie,
+	"title" | "thumbnail_name" | "video_id" | "release_year"
+>;
 
 router.get("/movies", (_req, res) => {
 	moviesDb.all("SELECT * FROM movies", [], (err, rows) => {
@@ -56,12 +74,6 @@ router.get("/movies", (_req, res) => {
 	});
 });
 
-type TWatchlist = {
-	id: number;
-	title: string;
-	year: number;
-};
-
 type TUpdateMethod = "add" | "remove";
 function updateWatchlist(
 	req: any,
@@ -69,7 +81,7 @@ function updateWatchlist(
 	updateMethod: TUpdateMethod,
 	watchlist: TWatchlist[]
 ) {
-	// TODO: do some kind of validation that title and year are present
+	const body = req.body as TWatchlist;
 	switch (updateMethod) {
 		case "remove":
 			watchlist = watchlist?.filter(
@@ -78,9 +90,10 @@ function updateWatchlist(
 			break;
 		case "add":
 			watchlist?.push({
-				id: watchlist.length + 1,
-				title: req.body.title,
-				year: req.body.year,
+				title: body.title,
+				thumbnail_name: body.thumbnail_name,
+				release_year: body.release_year,
+				video_id: body.video_id,
 			});
 			break;
 		default:

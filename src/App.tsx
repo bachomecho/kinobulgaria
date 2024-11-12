@@ -26,14 +26,26 @@ function removeMovieWatchlist(userUuid: string, title: string) {
 			console.error("Error occured while updating watchlist: " + err);
 		});
 }
-function addMovieWatchlist(userUuid: string, title: string, year: number) {
+function addMovieWatchlist(
+	userUuid: string,
+	title: string,
+	thumbnail_name: string,
+	video_id: string,
+	year: number
+) {
+	const reqBody: TWatchlist = {
+		title: title,
+		release_year: year,
+		video_id: video_id,
+		thumbnail_name: thumbnail_name,
+	};
 	fetch(`/api/watchlist/${userUuid}`, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
 			"X-Watchlist-Update-Method": "add",
 		},
-		body: JSON.stringify({ title: title, year: year }),
+		body: JSON.stringify(reqBody),
 	})
 		.then((res) => {
 			if (!res.ok)
