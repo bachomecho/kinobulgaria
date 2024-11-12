@@ -16,7 +16,7 @@ export default function Modal(props: Movie) {
 				</div>
 				<div className="flex">
 					<img
-						src={`/assets/static/images/${props.thumbnail_name}.jpg`}
+						src={`/images/${props.thumbnail_name}.jpg`}
 						alt={props.title}
 						className="w-1/3 h-64 rounded-lg object-cover"
 					/>

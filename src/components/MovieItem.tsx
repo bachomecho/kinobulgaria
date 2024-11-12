@@ -25,7 +25,7 @@ export default function MovieItem(props: Movie) {
 				onClick={props.modalOpenClosedMethod}
 			>
 				<img
-					src={thumbnailSource}
+					src={`/images/${props.thumbnail_name}.jpg`}
 					alt="Movie Poster"
 					width="400"
 					height="600"
