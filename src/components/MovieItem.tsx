@@ -1,15 +1,10 @@
 import youtubeIcon from "/assets/static/icons/yt_icon_black.png";
 import wikipediaIcon from "/assets/static/icons/wikipedia.png";
-import conf from "../../pathConfig";
+import { Plus, Minus } from "lucide-react";
 import { addMovieWatchlist, removeMovieWatchlist, authContext } from "../App";
 import { useContext, useState } from "react";
 
 export default function MovieItem(props: Movie) {
-	type Mode = "DEV" | "PROD";
-	const thumbnailSource = `${
-		conf[import.meta.env.VITE_ENVIRONMENT as Mode]
-	}/images/${props.thumbnail_name}.jpg`;
-
 	const quotientDuration = Math.floor(props.duration / 60);
 	const formattedDuration = `${quotientDuration} ${
 		quotientDuration == 1 ? "час" : "часа"
@@ -49,54 +44,57 @@ export default function MovieItem(props: Movie) {
 					<div className="flex justify-between items-center">
 						<a
 							href={`https://www.youtube.com/watch?v=${props.video_id}`}
-							className="yt-btn ring-offset-background"
+							className="yt-btn flex items-center justify-center 2xl:justify-start gap-2 ring-offset-background"
 							target="_blank"
 							onClick={(e) => e.stopPropagation()}
+							title="Филма в ютуб"
 						>
-							<img src={youtubeIcon} className="fill-current w-4 h-4 mr-2" />
-							YouTube
+							<img src={youtubeIcon} className="w-4 h-4 2xl:ml-4" />
+							<span className="hidden 2xl:block">Youtube</span>
 						</a>
 						<a
 							href={`https://bg.wikipedia.org/wiki/${props.title.replace(
 								" ",
 								"_"
 							)}`}
-							className="wiki-btn ring-offset-background"
+							className="wiki-btn flex items-center justify-center 2xl:justify-start gap-2 ring-offset-background"
 							target="_blank"
 							onClick={(e) => e.stopPropagation()}
+							title="Информация за филма"
 						>
-							<img
-								src={wikipediaIcon}
-								className="fill-current w-4 h-4 mr-2 -ml-1"
-							/>
-							Wikipedia
+							<img src={wikipediaIcon} className="w-4 h-4 2xl:ml-4" />
+							<span className="hidden 2xl:block">Wikipedia</span>
 						</a>
 						{userUuid &&
 							(!inWatchlist ? (
 								<button
-									className="wiki-btn"
+									className="watchlist-btn"
 									onClick={(e) => {
 										e.stopPropagation();
 										addMovieWatchlist(
 											userUuid,
 											props.title,
+											props.thumbnail_name,
+											props.video_id,
 											props.release_year
 										);
 										setInWatchlist(true);
 									}}
+									title="Запази за гледане по-късно"
 								>
-									+
+									<Plus />
 								</button>
 							) : (
 								<button
-									className="wiki-btn"
+									className="watchlist-btn"
 									onClick={(e) => {
 										e.stopPropagation();
 										removeMovieWatchlist(userUuid, props.title);
 										setInWatchlist(false);
 									}}
+									title="Премахни от Гледай по-късно"
 								>
-									-
+									<Minus />
 								</button>
 							))}
 					</div>
