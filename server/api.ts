@@ -169,6 +169,37 @@ router.get("/watchlist/:userUuid", (req, res) => {
 	);
 });
 
+router.get("/userdata/:userUuid", (req, res) => {
+	const { userUuid } = req.params;
+
+	if (userUuid === "null") {
+		res.sendStatus(404);
+		return;
+	}
+
+	usersDB.get(
+		"SELECT watchlist, username, registrationDate FROM users WHERE userUuid=?",
+		[userUuid],
+		(err, row: any) => {
+			if (err) {
+				res.status(500).json({ error: err.message });
+				return;
+			}
+			if (row) {
+				res.send({
+					loginStatus: true,
+					watchlist: row.watchlist,
+					username: row.username,
+					registrationDate: row.registrationDate,
+				});
+				return;
+			} else {
+				res.sendStatus(404);
+				return;
+			}
+		}
+	);
+});
 router.post("/login", (req, res) => {
 	const { username, password } = req.body;
 

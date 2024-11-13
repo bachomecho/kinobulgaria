@@ -20,11 +20,15 @@ function UserSettings() {
 	const [isChangingPassword, setIsChangingPassword] = useState(false);
 	const [oldPasswordError, setOldPasswordError] = useState("");
 	const [watchlist, setWatchlist] = useState<TWatchlist[]>([]);
+	const [userData, setUserData] = useState({
+		username: "",
+		registrationDate: new Date(),
+	});
 	const { userUuid } = useContext(authContext);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetch(`/api/watchlist/${userUuid}`, {
+		fetch(`/api/userdata/${userUuid}`, {
 			method: "GET",
 		})
 			.then((res) => {
@@ -38,6 +42,10 @@ function UserSettings() {
 				console.log("Fetched watchlist data:", data.watchlist);
 				if (data.watchlist)
 					setWatchlist(JSON.parse(data.watchlist.split("|").join(",")));
+				setUserData({
+					username: data.username,
+					registrationDate: new Date(data.registrationDate),
+				});
 			})
 			.catch((error) => {
 				console.error(
@@ -98,8 +106,13 @@ function UserSettings() {
 								/>
 							</Avatar>
 							<div>
-								<h2 className="text-2xl font-bold">{"username"}</h2>
-								<p className="text-muted-foreground">Member since 2023</p>
+								<h2 className="text-2xl font-bold">{userData.username}</h2>
+								<p className="text-muted-foreground">
+									Member since{" "}
+									{`${userData.registrationDate.toLocaleString("default", {
+										month: "long",
+									})}, ${userData.registrationDate.getFullYear()}`}
+								</p>
 							</div>
 						</div>
 
@@ -194,7 +207,7 @@ function UserSettings() {
 										className="flex items-center space-x-4 bg-card p-4 rounded-lg shadow"
 									>
 										<img
-											src={item.thumbnail_name}
+											src={`/images/${item.thumbnail_name}.jpg`}
 											alt={item.title}
 											width={50}
 											height={50}
