@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { authContext } from "../App";
+import { useNavigate } from "react-router-dom";
 import logo from "/assets/static/logo/logo_kino.png";
 
 export default function Header(props: HeaderProps) {
 	const { userUuid, setUserUuid } = useContext(authContext);
+	const navigate = useNavigate();
 
 	async function handleLogout() {
 		try {
@@ -14,10 +16,12 @@ export default function Header(props: HeaderProps) {
 			if (!response.ok) {
 				throw new Error("Logout failed");
 			} else {
-				setTimeout(() => {
+				const timeoutId = setTimeout(() => {
 					localStorage.removeItem("userUuid");
 					setUserUuid(""); // invoking setUserUuid function here to re-render whole app with the new unauthenticated state
-				}, 200);
+				}, 100);
+				navigate("/");
+				return () => clearTimeout(timeoutId);
 			}
 		} catch (err) {
 			throw new Error("Error while logging out: " + err);
