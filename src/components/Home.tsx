@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import { pathContext } from "../index";
 import { authContext } from "../App";
 import arrowUpIcon from "/assets/static/icons/scroll_top.svg";
+import { CircleArrowUp } from "lucide-react";
 
 
 const filterWithSearch: TSearchMethod = (movieState, searchState) => {
@@ -197,13 +198,14 @@ export default function Home() {
 			) : (
 				<p className="flex items-center justify-center">Няма намерени филми</p>
 			)}
-			<div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
+			<div className="fixed bottom-4 right-8 z-50">
 				{scrollTop && (
 					<button
 						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 						className=" text-white p-2 rounded-full shadow-lg hover:bg-grey-700 focus:outline-none"
 					>
-						<img src={arrowUpIcon} alt="Scroll to top" className="w-7 h-7" />
+						{/* <img src={arrowUpIcon} alt="Scroll to top" className="w-7 h-7" /> */}
+						<CircleArrowUp className="w-7 h-7" color="black" />
 					</button>
 				)}
 			</div>
