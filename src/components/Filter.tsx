@@ -24,7 +24,7 @@ export default function Filter({
 						<InputLabel
 							sx={{
 								"&.Mui-focused": {
-									color: "green",
+									color: "black",
 								},
 							}}
 						>
@@ -44,10 +44,10 @@ export default function Filter({
 							}
 							sx={{
 								"&:hover .MuiOutlinedInput-notchedOutline": {
-									borderColor: "green",
+									borderColor: "#FFD700",
 								},
 								"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-									borderColor: "green",
+									borderColor: "#FFD700",
 								},
 							}}
 						>
@@ -69,7 +69,7 @@ export default function Filter({
 						<InputLabel
 							sx={{
 								"&.Mui-focused": {
-									color: "green",
+									color: "black",
 								},
 							}}
 						>
@@ -89,10 +89,10 @@ export default function Filter({
 							}
 							sx={{
 								"&:hover .MuiOutlinedInput-notchedOutline": {
-									borderColor: "green",
+									borderColor: "#FFD700",
 								},
 								"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-									borderColor: "green",
+									borderColor: "#FFD700",
 								},
 							}}
 						>
@@ -113,7 +113,7 @@ export default function Filter({
 						<InputLabel
 							sx={{
 								"&.Mui-focused": {
-									color: "green",
+									color: "black",
 								},
 							}}
 						>
@@ -133,10 +133,10 @@ export default function Filter({
 							}
 							sx={{
 								"&:hover .MuiOutlinedInput-notchedOutline": {
-									borderColor: "green",
+									borderColor: "#FFD700",
 								},
 								"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-									borderColor: "green",
+									borderColor: "#FFD700",
 								},
 							}}
 						>
