@@ -98,6 +98,7 @@ export default function Login() {
 											label="Username"
 											id="username-error-helper-text"
 											variant="outlined"
+											size="small"
 											helperText="User does not exist."
 											onChange={(e) => setUserName(e.target.value)}
 										/>
@@ -105,6 +106,7 @@ export default function Login() {
 										<TextField
 											name="username"
 											label="Username"
+											size="small"
 											id="username-helper-text"
 											variant="outlined"
 											onChange={(e) => setUserName(e.target.value)}
@@ -117,6 +119,8 @@ export default function Login() {
 											error
 											name="password"
 											label="Password"
+											type="password"
+											size="small"
 											id="password-error-helper-text"
 											variant="outlined"
 											helperText="Incorrect password. Please try again."
@@ -126,6 +130,8 @@ export default function Login() {
 										<TextField
 											name="password"
 											label="Password"
+											type="password"
+											size="small"
 											id="password-helper-text"
 											variant="outlined"
 											onChange={(e) => setPassword(e.target.value)}

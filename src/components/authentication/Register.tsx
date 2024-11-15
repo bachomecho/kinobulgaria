@@ -105,6 +105,7 @@ function Register() {
 											name="username"
 											label="Username"
 											id="username-error-helper-text"
+											size="small"
 											variant="outlined"
 											helperText="This user name is already taken."
 											onChange={(e) => setUserName(e.target.value)}
@@ -113,6 +114,7 @@ function Register() {
 										<TextField
 											name="username"
 											label="Username"
+											size="small"
 											id="username-helper-text"
 											variant="outlined"
 											onChange={(e) => setUserName(e.target.value)}
@@ -125,6 +127,8 @@ function Register() {
 											error
 											name="password"
 											label="Password"
+											type="password"
+											size="small"
 											id="password-error-helper-text"
 											variant="outlined"
 											helperText="Incorrect password. Please try again."
@@ -134,6 +138,8 @@ function Register() {
 										<TextField
 											name="password"
 											label="Password"
+											type="password"
+											size="small"
 											id="password-helper-text"
 											variant="outlined"
 											onChange={(e) => setPassword(e.target.value)}
@@ -146,6 +152,8 @@ function Register() {
 											error
 											name="confirm-password"
 											label="ConfirmPassword"
+											type="password"
+											size="small"
 											id="confirm-password-error-helper-text"
 											variant="outlined"
 											helperText="Passwords do not match."
@@ -155,6 +163,8 @@ function Register() {
 										<TextField
 											name="confirm-password"
 											label="ConfirmPassword"
+											type="password"
+											size="small"
 											id="confirm-password-error-helper-text"
 											variant="outlined"
 											onChange={(e) => setConfirmPassword(e.target.value)}

@@ -130,6 +130,7 @@ function UserSettings() {
 											<TextField
 												id="old-password"
 												type="password"
+												size="small"
 												value={oldPassword}
 												onChange={(e) => setOldPassword(e.target.value)}
 												required
@@ -142,6 +143,7 @@ function UserSettings() {
 												id="old-password"
 												error
 												type="password"
+												size="small"
 												value={oldPassword}
 												onChange={(e) => setOldPassword(e.target.value)}
 												required
@@ -154,6 +156,7 @@ function UserSettings() {
 										<TextField
 											id="new-password"
 											type="password"
+											size="small"
 											value={newPassword}
 											onChange={(e) => setNewPassword(e.target.value)}
 											required
@@ -162,8 +165,10 @@ function UserSettings() {
 									{confirmPassword !== newPassword ? (
 										<TextField
 											error
+											type="password"
+											size="small"
 											name="confirm-password"
-											label="ConfirmPassword"
+											label="Потвърди новата парола"
 											id="confirm-password-error-helper-text"
 											variant="outlined"
 											color="error"
@@ -172,8 +177,9 @@ function UserSettings() {
 									) : (
 										<TextField
 											name="confirm-password"
-											label="ConfirmPassword"
+											size="small"
 											id="confirm-password-helper-text"
+											label="Потвърди новата парола"
 											variant="outlined"
 											color="success"
 											onChange={(e) => setConfirmPassword(e.target.value)}
