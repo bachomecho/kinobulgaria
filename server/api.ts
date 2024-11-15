@@ -306,13 +306,14 @@ router.post("/register", (req, res) => {
 				const date = new Date();
 				const passwordHash = await bcrypt.hash(password, 10);
 				usersDB.run(
-					"INSERT INTO users (userUuid, username, password, lastLogin, isLoggedIn, watchlist) VALUES (?, ?, ?, ?, ?, ?)",
+					"INSERT INTO users (userUuid, username, password, lastLogin, isLoggedIn, watchlist, registrationDate) VALUES (?, ?, ?, ?, ?, ?, ?)",
 					id,
 					username,
 					passwordHash,
 					date.toISOString(),
 					1,
-					""
+					"",
+					date.toISOString()
 				);
 				return res.send({ successfulRegistration: true, userUuid: id });
 			}
