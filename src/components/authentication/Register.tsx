@@ -67,7 +67,7 @@ function Register() {
 	};
 
 	return (
-		<div>
+		<>
 			{!userUuid ? (
 				<>
 					<Button
@@ -198,7 +198,7 @@ function Register() {
 			) : (
 				<p>You are already registered. You will be redirected to home.</p>
 			)}
-		</div>
+		</>
 	);
 }
 

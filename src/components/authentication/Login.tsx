@@ -62,7 +62,7 @@ export default function Login() {
 	};
 
 	return (
-		<div>
+		<>
 			{!userUuid ? (
 				<>
 					<Button
@@ -152,6 +152,6 @@ export default function Login() {
 			) : (
 				<p>You are already registered. You will be redirected to home.</p>
 			)}
-		</div>
+		</>
 	);
 }
