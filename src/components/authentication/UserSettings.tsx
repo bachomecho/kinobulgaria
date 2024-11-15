@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-
 import { Video, Trash2 } from "lucide-react";
 import {
 	Card,
@@ -32,10 +31,13 @@ function UserSettings() {
 			method: "GET",
 		})
 			.then((res) => {
-				if (!res.ok)
-					throw new Error(
-						`Error status code while fetching watchlist: ${res.status}`
-					);
+				if (!res.ok) {
+					const timer = setTimeout(() => {
+						navigate("/");
+					}, 1500);
+
+					return () => clearTimeout(timer);
+				}
 				return res.json();
 			})
 			.then((data: any) => {
@@ -90,181 +92,192 @@ function UserSettings() {
 
 	return (
 		<>
-			<Header showSearch={false} />
-			<div className="container mx-auto p-4 space-y-8">
-				<Card>
-					<CardHeader>
-						<h2>User Settings</h2>
-						<p>Manage your account settings and preferences.</p>
-					</CardHeader>
-					<CardContent className="space-y-8">
-						<div className="flex items-center space-x-4">
-							<Avatar className="w-20 h-20">
-								<img
-									src="/placeholder.svg?height=80&width=80"
-									alt={"username"}
-								/>
-							</Avatar>
-							<div>
-								<h2 className="text-2xl font-bold">{userData.username}</h2>
-								<p className="text-muted-foreground">
-									Member since{" "}
-									{`${userData.registrationDate.toLocaleString("default", {
-										month: "long",
-									})}, ${userData.registrationDate.getFullYear()}`}
-								</p>
-							</div>
-						</div>
-
-						<div className="space-y-4">
-							<h3 className="text-lg font-semibold">Password</h3>
-							{!isChangingPassword ? (
-								<Button onClick={() => setIsChangingPassword(true)}>
-									Change Password
-								</Button>
-							) : (
-								<form onSubmit={handlePasswordChange} className="space-y-4">
-									{!oldPasswordError ? (
-										<div className="space-y-2">
-											<h3>Old Password</h3>
-											<TextField
-												id="old-password"
-												type="password"
-												size="small"
-												value={oldPassword}
-												onChange={(e) => setOldPassword(e.target.value)}
-												required
-											/>
-										</div>
-									) : (
-										<div className="space-y-2">
-											<h3>Old Password</h3>
-											<TextField
-												id="old-password"
-												error
-												type="password"
-												size="small"
-												value={oldPassword}
-												onChange={(e) => setOldPassword(e.target.value)}
-												required
-												aria-errormessage={oldPasswordError}
-											/>
-										</div>
-									)}
-									<div className="space-y-2">
-										<h3>New Password</h3>
-										<TextField
-											id="new-password"
-											type="password"
-											size="small"
-											value={newPassword}
-											onChange={(e) => setNewPassword(e.target.value)}
-											required
-										/>
-									</div>
-									{confirmPassword !== newPassword ? (
-										<TextField
-											error
-											type="password"
-											size="small"
-											name="confirm-password"
-											label="Потвърди новата парола"
-											id="confirm-password-error-helper-text"
-											variant="outlined"
-											color="error"
-											onChange={(e) => setConfirmPassword(e.target.value)}
-										/>
-									) : (
-										<TextField
-											name="confirm-password"
-											size="small"
-											id="confirm-password-helper-text"
-											label="Потвърди новата парола"
-											variant="outlined"
-											color="success"
-											onChange={(e) => setConfirmPassword(e.target.value)}
-										/>
-									)}
-									<div className="space-x-2">
-										{confirmPassword !== newPassword ? (
-											<Button type="submit" disabled>
-												Save New Password
-											</Button>
-										) : (
-											<Button type="submit">Save New Password</Button>
-										)}
-										<Button
-											type="button"
-											variant="outlined"
-											onClick={() => setIsChangingPassword(false)}
-										>
-											Cancel
-										</Button>
-									</div>
-								</form>
-							)}
-						</div>
-						<h3 className="text-lg font-semibold">Movie List</h3>
-						<div className="w-full max-w-md">
-							<ul className="space-y-4">
-								{watchlist.map((item, index) => (
-									<li
-										key={index}
-										className="flex items-center space-x-4 bg-card p-4 rounded-lg shadow"
-									>
+			{!userUuid ? (
+				<div>
+					<p>
+						Моля влезте в акаунта си за да имате достъп до настройките. Ще
+						бъдете препратени към началото на сайта.
+					</p>
+				</div>
+			) : (
+				<>
+					<Header showSearch={false} />
+					<div className="container mx-auto p-4 space-y-8">
+						<Card>
+							<CardHeader>
+								<h2>User Settings</h2>
+								<p>Manage your account settings and preferences.</p>
+							</CardHeader>
+							<CardContent className="space-y-8">
+								<div className="flex items-center space-x-4">
+									<Avatar className="w-20 h-20">
 										<img
-											src={`/images/${item.thumbnail_name}.jpg`}
-											alt={item.title}
-											width={50}
-											height={50}
-											className="rounded-md"
+											src="/placeholder.svg?height=80&width=80"
+											alt={"username"}
 										/>
-										<div className="flex-grow">
-											<h3 className="font-semibold">{item.title}</h3>
-											<p className="text-sm text-muted-foreground">
-												{item.release_year}
-											</p>
-										</div>
-										<div className="flex space-x-2">
-											<Button
-												variant="outlined"
-												onClick={() =>
-													window.open(
-														`https://www.youtube.com/watch?v=${item.video_id}`,
-														"_blank"
-													)
-												}
-												aria-label={`Watch ${item.title} trailer on YouTube`}
+									</Avatar>
+									<div>
+										<h2 className="text-2xl font-bold">{userData.username}</h2>
+										<p className="text-muted-foreground">
+											Member since{" "}
+											{`${userData.registrationDate.toLocaleString("default", {
+												month: "long",
+											})}, ${userData.registrationDate.getFullYear()}`}
+										</p>
+									</div>
+								</div>
+
+								<div className="space-y-4">
+									<h3 className="text-lg font-semibold">Password</h3>
+									{!isChangingPassword ? (
+										<Button onClick={() => setIsChangingPassword(true)}>
+											Change Password
+										</Button>
+									) : (
+										<form onSubmit={handlePasswordChange} className="space-y-4">
+											{!oldPasswordError ? (
+												<div className="space-y-2">
+													<h3>Old Password</h3>
+													<TextField
+														id="old-password"
+														type="password"
+														size="small"
+														value={oldPassword}
+														onChange={(e) => setOldPassword(e.target.value)}
+														required
+													/>
+												</div>
+											) : (
+												<div className="space-y-2">
+													<h3>Old Password</h3>
+													<TextField
+														id="old-password"
+														error
+														type="password"
+														size="small"
+														value={oldPassword}
+														onChange={(e) => setOldPassword(e.target.value)}
+														required
+														aria-errormessage={oldPasswordError}
+													/>
+												</div>
+											)}
+											<div className="space-y-2">
+												<h3>New Password</h3>
+												<TextField
+													id="new-password"
+													type="password"
+													size="small"
+													value={newPassword}
+													onChange={(e) => setNewPassword(e.target.value)}
+													required
+												/>
+											</div>
+											{confirmPassword !== newPassword ? (
+												<TextField
+													error
+													type="password"
+													size="small"
+													name="confirm-password"
+													label="Потвърди новата парола"
+													id="confirm-password-error-helper-text"
+													variant="outlined"
+													color="error"
+													onChange={(e) => setConfirmPassword(e.target.value)}
+												/>
+											) : (
+												<TextField
+													name="confirm-password"
+													size="small"
+													id="confirm-password-helper-text"
+													label="Потвърди новата парола"
+													variant="outlined"
+													color="success"
+													onChange={(e) => setConfirmPassword(e.target.value)}
+												/>
+											)}
+											<div className="space-x-2">
+												{confirmPassword !== newPassword ? (
+													<Button type="submit" disabled>
+														Save New Password
+													</Button>
+												) : (
+													<Button type="submit">Save New Password</Button>
+												)}
+												<Button
+													type="button"
+													variant="outlined"
+													onClick={() => setIsChangingPassword(false)}
+												>
+													Cancel
+												</Button>
+											</div>
+										</form>
+									)}
+								</div>
+								<h3 className="text-lg font-semibold">Movie List</h3>
+								<div className="w-full max-w-md">
+									<ul className="space-y-4">
+										{watchlist.map((item, index) => (
+											<li
+												key={index}
+												className="flex items-center space-x-4 bg-card p-4 rounded-lg shadow"
 											>
-												<Video className="w-4 h-4" />
-											</Button>
-											<Button
-												variant="contained"
-												onClick={() => {
-													removeMovieWatchlist(userUuid, item.title);
-													setWatchlist((watchlist) =>
-														watchlist.filter(
-															(elem) => elem.title !== item.title
-														)
-													);
-												}}
-												aria-label={`Remove ${item.title}`}
-											>
-												<Trash2 className="h-4 w-4" />
-											</Button>
-										</div>
-									</li>
-								))}
-							</ul>
-							{watchlist.length === 0 && (
-								<p className="text-center text-muted-foreground mt-4">
-									No items in the list
-								</p>
-							)}
-						</div>
-					</CardContent>
-				</Card>
-			</div>
+												<img
+													src={`/images/${item.thumbnail_name}.jpg`}
+													alt={item.title}
+													width={50}
+													height={50}
+													className="rounded-md"
+												/>
+												<div className="flex-grow">
+													<h3 className="font-semibold">{item.title}</h3>
+													<p className="text-sm text-muted-foreground">
+														{item.release_year}
+													</p>
+												</div>
+												<div className="flex space-x-2">
+													<Button
+														variant="outlined"
+														onClick={() =>
+															window.open(
+																`https://www.youtube.com/watch?v=${item.video_id}`,
+																"_blank"
+															)
+														}
+														aria-label={`Watch ${item.title} trailer on YouTube`}
+													>
+														<Video className="w-4 h-4" />
+													</Button>
+													<Button
+														variant="contained"
+														onClick={() => {
+															removeMovieWatchlist(userUuid, item.title);
+															setWatchlist((watchlist) =>
+																watchlist.filter(
+																	(elem) => elem.title !== item.title
+																)
+															);
+														}}
+														aria-label={`Remove ${item.title}`}
+													>
+														<Trash2 className="h-4 w-4" />
+													</Button>
+												</div>
+											</li>
+										))}
+									</ul>
+									{watchlist.length === 0 && (
+										<p className="text-center text-muted-foreground mt-4">
+											No items in the list
+										</p>
+									)}
+								</div>
+							</CardContent>
+						</Card>
+					</div>
+				</>
+			)}
 		</>
 	);
 }
