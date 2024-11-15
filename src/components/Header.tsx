@@ -16,12 +16,9 @@ export default function Header(props: HeaderProps) {
 			if (!response.ok) {
 				throw new Error("Logout failed");
 			} else {
-				const timeoutId = setTimeout(() => {
-					localStorage.removeItem("userUuid");
-					setUserUuid(""); // invoking setUserUuid function here to re-render whole app with the new unauthenticated state
-				}, 100);
+				localStorage.removeItem("userUuid");
+				setUserUuid(""); // invoking setUserUuid function here to re-render whole app
 				navigate("/");
-				return () => clearTimeout(timeoutId);
 			}
 		} catch (err) {
 			throw new Error("Error while logging out: " + err);
