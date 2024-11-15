@@ -212,13 +212,16 @@ router.post("/login", (req, res) => {
 				return;
 			}
 			if (row) {
-				console.log("User exists");
 				const isPasswordMatch: boolean = await bcrypt.compare(
 					password,
 					row.password
 				);
 				if (isPasswordMatch) {
-					console.log("Password is correct");
+					const date = new Date();
+					usersDB.run(
+						"UPDATE users SET isLoggedIn=1, lastLogin=? WHERE userUuid=?",
+						[date.toISOString(), row.userUuid]
+					);
 					res.send({
 						userUuid: row.userUuid,
 					});

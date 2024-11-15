@@ -13,7 +13,7 @@ app.use(cors());
 app.use("/api", apiRouter);
 
 const pathConf = {
-	DEV: "public/assets/static",
+	DEV: "assets/static",
 	PROD: "dist/app/assets/static",
 };
 type Mode = "DEV" | "PROD";
