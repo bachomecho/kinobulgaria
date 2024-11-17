@@ -67,7 +67,16 @@ export default function Login() {
 				<>
 					<Button
 						variant="outlined"
-						className="absolute top-7 left-7 mb-4 flex space-x-2 bg-gray-100"
+						className="absolute top-7 left-7 mb-4 flex space-x-2"
+						sx={{
+							color: "black",
+							backgroundColor: "#FFD700",
+							"&:hover": {
+								backgroundColor: "#f5d31b",
+								borderColor: "black",
+							},
+							borderColor: "black",
+						}}
 						aria-label="Return to home page"
 						href="/"
 					>
@@ -141,7 +150,16 @@ export default function Login() {
 								<Button
 									variant="contained"
 									type="submit"
-									className="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+									className="reg-btn"
+									sx={{
+										color: "black",
+										backgroundColor: "#FFD700",
+										"&:hover": {
+											backgroundColor: "#f5d31b",
+											borderColor: "black",
+										},
+										borderColor: "black",
+									}}
 								>
 									Вход
 								</Button>
