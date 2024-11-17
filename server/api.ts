@@ -290,7 +290,15 @@ router.post("/change-password/:userUuid", (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-	const { username, password } = req.body;
+	const { username, password, confirmPassword } = req.body;
+	if (!username || !password || !confirmPassword) {
+		res.send({ successfulRegistration: false, message: "missingCredentials" });
+		return;
+	}
+	if (password !== confirmPassword) {
+		res.send({ successfulRegistration: false, message: "passwordMismatch" });
+		return;
+	}
 	usersDB.get(
 		`SELECT * FROM users WHERE username=?`,
 		[username],
@@ -303,7 +311,10 @@ router.post("/register", (req, res) => {
 				return;
 			}
 			if (row) {
-				return res.send({ successfulRegistration: false });
+				return res.send({
+					successfulRegistration: false,
+					message: "existingUser",
+				});
 			} else {
 				const id: string = uuid();
 				const date = new Date();

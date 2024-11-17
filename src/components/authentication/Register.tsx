@@ -38,7 +38,11 @@ function Register() {
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		const credentials = new URLSearchParams({ username, password });
+		const credentials = new URLSearchParams({
+			username,
+			password,
+			confirmPassword,
+		});
 
 		try {
 			const response = await fetch("/api/register", {
@@ -59,7 +63,19 @@ function Register() {
 				localStorage.setItem("userUuid", status.userUuid);
 				navigate("/");
 			} else {
-				setIsUserNameAvailable(false);
+				switch (status.message) {
+					case "missingCredentials":
+						window.alert("Моля задайте потребителско име и парола.");
+						break;
+					case "existingUser":
+						setIsUserNameAvailable(false);
+						break;
+					case "passwordMismatch":
+						setErrorState("confirmPassword");
+						break;
+					default:
+						break;
+				}
 			}
 		} catch (error: any) {
 			throw new Error(error.message);
