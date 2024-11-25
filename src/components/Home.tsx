@@ -71,6 +71,7 @@ export default function Home() {
 	const [scrollTop, setScrollTop] = useState(false);
 	const [selectedMovie, setSelectedMovie] = useState<Movie>();
 	const [modalOpen, setModalOpen] = useState(false);
+	const [isSmallScreen, setIsSmallScreen] = useState(false);
 	const { userUuid } = useContext(authContext);
 
 	const initialMovies = useRef<Movie[]>([]);
@@ -124,6 +125,17 @@ export default function Home() {
 		};
 	}, []);
 
+	const isMobileChecker = () => {
+		if (window.innerWidth <= 800) {
+			setIsSmallScreen(true);
+		} else {
+			setIsSmallScreen(false);
+		}
+	};
+	useEffect(() => {
+		window.addEventListener("resize", isMobileChecker);
+	}, []);
+
 	const escFunction = useCallback((event: any) => {
 		if (event.key === "Escape") {
 			setModalOpen(false);
@@ -142,7 +154,6 @@ export default function Home() {
 		if (search) {
 			const filteredMovies = filterWithSearch(initialMovies.current, search);
 			setMovies(filteredMovies);
-
 		} else if (!Object.values(filter).every((val) => val === "")) {
 			const filteredMovies = filterWithFilter(initialMovies.current, filter);
 			setMovies(filteredMovies);
@@ -166,7 +177,7 @@ export default function Home() {
 				setRemoveFilters={setRemoveFilters}
 				genreList={genres.current}
 			/>
-			{modalOpen && selectedMovie && (
+			{!isSmallScreen && modalOpen && selectedMovie && (
 				<Modal
 					{...selectedMovie}
 					modalOpenClosedMethod={() => setModalOpen(false)}
