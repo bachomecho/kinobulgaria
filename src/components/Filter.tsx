@@ -3,6 +3,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { X } from "lucide-react";
 
 export default function Filter({
 	filterState,
@@ -18,9 +19,13 @@ export default function Filter({
 	let emptyString = "";
 	return (
 		<div className="grid gap-4">
-			<div className="flex flex-col sm:flex-row px-8 items-start sm:items-center  gap-4 sm:gap-8 w-full">
-				<div className="flex items-center gap-2 text-sm font-medium flex-grow">
-					<FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+			<div className="flex flex-col sm:flex-row px-8 items-center sm:items-center sm:gap-8 w-full">
+				<div className="flex flex-col sm:flex-row sm:gap-4 w-full">
+					<FormControl
+						className="w-full sm:w-auto"
+						sx={{ m: 0.5, minWidth: 120 }}
+						size="small"
+					>
 						<InputLabel
 							sx={{
 								"&.Mui-focused": {
@@ -32,7 +37,7 @@ export default function Filter({
 						</InputLabel>
 						<Select
 							labelId="demo-select-small-label"
-							className="w-32"
+							className="w-full sm:w-32"
 							id="year"
 							value={!emptyString ? filterState.yearRange : ""}
 							label="godina"
@@ -65,7 +70,11 @@ export default function Filter({
 							<MenuItem value={"1990-2000"}>1990-2000</MenuItem>
 						</Select>
 					</FormControl>
-					<FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+					<FormControl
+						className="w-full sm:w-auto"
+						sx={{ m: 0.5, minWidth: 120 }}
+						size="small"
+					>
 						<InputLabel
 							sx={{
 								"&.Mui-focused": {
@@ -77,7 +86,7 @@ export default function Filter({
 						</InputLabel>
 						<Select
 							labelId="demo-select-small-label"
-							className="w-40"
+							className="w-full sm:w-40"
 							id="duration"
 							value={!emptyString ? filterState.duration : ""}
 							label="vremetraenee"
@@ -109,7 +118,11 @@ export default function Filter({
 							<MenuItem value={"над 2 часа"}>над 2 часа</MenuItem>
 						</Select>
 					</FormControl>
-					<FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+					<FormControl
+						className="w-full sm:w-auto"
+						sx={{ m: 0.5, minWidth: 120 }}
+						size="small"
+					>
 						<InputLabel
 							sx={{
 								"&.Mui-focused": {
@@ -121,7 +134,7 @@ export default function Filter({
 						</InputLabel>
 						<Select
 							labelId="demo-select-small-label"
-							className="w-40"
+							className="w-full sm:w-40"
 							id="genre"
 							value={!emptyString ? filterState.genre : ""}
 							label="janree"
@@ -154,12 +167,13 @@ export default function Filter({
 					</FormControl>
 				</div>
 				<Button
-					className="self-end sm:self-auto"
+					className="sm:w-auto"
+					size="small"
 					variant="outlined"
 					color="error"
 					onClick={() => setRemoveFilters(true)}
 				>
-					Премахни филтри
+					<X />
 				</Button>
 			</div>
 		</div>

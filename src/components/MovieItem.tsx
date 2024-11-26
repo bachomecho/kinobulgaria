@@ -22,8 +22,6 @@ export default function MovieItem(props: Movie) {
 				<img
 					src={`/images/${props.thumbnail_name}.jpg`}
 					alt="Movie Poster"
-					width="400"
-					height="600"
 					className="w-full h-[300px] object-cover aspect-ratio: 400 / 600; object-fit: cover"
 					loading="lazy"
 				/>

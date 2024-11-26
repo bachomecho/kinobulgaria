@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useContext } from "react";
+import { useEffect, useState, useRef, useCallback, useContext } from "react";
 import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";

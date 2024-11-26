@@ -102,7 +102,7 @@ function Register() {
 						href="/"
 					>
 						<ArrowLeft className="h-4 w-4" />
-						<span>Return to Home</span>
+						<span>Връщане към началото</span>
 					</Button>
 					<div
 						className="min-h-screen flex items-center justify-center bg-gray-100"
@@ -128,7 +128,7 @@ function Register() {
 										<TextField
 											error
 											name="username"
-											label="Username"
+											label="Потребителско име"
 											id="username-error-helper-text"
 											size="small"
 											variant="outlined"
@@ -138,8 +138,21 @@ function Register() {
 									) : (
 										<TextField
 											name="username"
-											label="Username"
+											label="Потребителско име"
 											size="small"
+											sx={{
+												"& .MuiOutlinedInput-root": {
+													"&:hover fieldset": {
+														borderColor: "#FFD700",
+													},
+													"&.Mui-focused fieldset": {
+														borderColor: "#FFD700",
+													},
+												},
+												"& .MuiInputLabel-root.Mui-focused": {
+													color: "#FFD700",
+												},
+											}}
 											id="username-helper-text"
 											variant="outlined"
 											onChange={(e) => setUserName(e.target.value)}
@@ -151,7 +164,7 @@ function Register() {
 										<TextField
 											error
 											name="password"
-											label="Password"
+											label="Парола"
 											type="password"
 											size="small"
 											id="password-error-helper-text"
@@ -162,8 +175,21 @@ function Register() {
 									) : (
 										<TextField
 											name="password"
-											label="Password"
+											label="Парола"
 											type="password"
+											sx={{
+												"& .MuiOutlinedInput-root": {
+													"&:hover fieldset": {
+														borderColor: "#FFD700",
+													},
+													"&.Mui-focused fieldset": {
+														borderColor: "#FFD700",
+													},
+												},
+												"& .MuiInputLabel-root.Mui-focused": {
+													color: "#FFD700",
+												},
+											}}
 											size="small"
 											id="password-helper-text"
 											variant="outlined"
@@ -176,7 +202,7 @@ function Register() {
 										<TextField
 											error
 											name="confirm-password"
-											label="ConfirmPassword"
+											label="Потвърди парола"
 											type="password"
 											size="small"
 											id="confirm-password-error-helper-text"
@@ -187,8 +213,21 @@ function Register() {
 									) : (
 										<TextField
 											name="confirm-password"
-											label="ConfirmPassword"
+											label="Потвърди парола"
 											type="password"
+											sx={{
+												"& .MuiOutlinedInput-root": {
+													"&:hover fieldset": {
+														borderColor: "#FFD700",
+													},
+													"&.Mui-focused fieldset": {
+														borderColor: "#FFD700",
+													},
+												},
+												"& .MuiInputLabel-root.Mui-focused": {
+													color: "#FFD700",
+												},
+											}}
 											size="small"
 											id="confirm-password-error-helper-text"
 											variant="outlined"
@@ -239,7 +278,9 @@ function Register() {
 					</div>
 				</>
 			) : (
-				<p>You are already registered. You will be redirected to home.</p>
+				<p>
+					Вече сте регистрирани. Ще бъдете препратени към началото на сайта.
+				</p>
 			)}
 		</>
 	);

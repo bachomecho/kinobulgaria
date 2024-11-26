@@ -81,7 +81,7 @@ export default function Login() {
 						href="/"
 					>
 						<ArrowLeft className="h-4 w-4" />
-						<span>Return to Home</span>
+						<span>Връщане към началото</span>
 					</Button>
 					<div className="min-h-screen flex items-center justify-center bg-gray-100">
 						<div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md">
@@ -104,7 +104,7 @@ export default function Login() {
 										<TextField
 											error
 											name="username"
-											label="Username"
+											label="Потребителско име"
 											id="username-error-helper-text"
 											variant="outlined"
 											size="small"
@@ -114,10 +114,23 @@ export default function Login() {
 									) : (
 										<TextField
 											name="username"
-											label="Username"
+											label="Потребителско име"
 											size="small"
 											id="username-helper-text"
 											variant="outlined"
+											sx={{
+												"& .MuiOutlinedInput-root": {
+													"&:hover fieldset": {
+														borderColor: "#FFD700",
+													},
+													"&.Mui-focused fieldset": {
+														borderColor: "#FFD700",
+													},
+												},
+												"& .MuiInputLabel-root.Mui-focused": {
+													color: "#FFD700",
+												},
+											}}
 											onChange={(e) => setUserName(e.target.value)}
 										/>
 									)}
@@ -127,7 +140,7 @@ export default function Login() {
 										<TextField
 											error
 											name="password"
-											label="Password"
+											label="Парола"
 											type="password"
 											size="small"
 											id="password-error-helper-text"
@@ -138,9 +151,22 @@ export default function Login() {
 									) : (
 										<TextField
 											name="password"
-											label="Password"
+											label="Парола"
 											type="password"
 											size="small"
+											sx={{
+												"& .MuiOutlinedInput-root": {
+													"&:hover fieldset": {
+														borderColor: "#FFD700",
+													},
+													"&.Mui-focused fieldset": {
+														borderColor: "#FFD700",
+													},
+												},
+												"& .MuiInputLabel-root.Mui-focused": {
+													color: "#FFD700",
+												},
+											}}
 											id="password-helper-text"
 											variant="outlined"
 											onChange={(e) => setPassword(e.target.value)}
@@ -168,7 +194,9 @@ export default function Login() {
 					</div>
 				</>
 			) : (
-				<p>You are already registered. You will be redirected to home.</p>
+				<p>
+					Вече сте регистрирани. Ще бъдете препратени към началото на сайта.
+				</p>
 			)}
 		</>
 	);

@@ -12,6 +12,10 @@ export default {
 					500: "#001f3f",
 					600: "#001a35",
 				},
+				nav: {
+					normal: "#FFD700",
+					dark: "#f5d31b",
+				},
 			},
 		},
 	},

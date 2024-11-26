@@ -28,7 +28,7 @@ export default function Header(props: HeaderProps) {
 		<header className="flex items-center justify-between px-4 md:px-6 lg:px-8 h-16 bg-white shadow">
 			<a className="flex items-center" href="/" rel="ugc">
 				<img src={logo} width="24" height="24" className="h-6 w-6 mr-2" />
-				<span className="font-bold text-lg">Kино България</span>
+				<span className="hidden md:flex font-bold text-lg">Kино България</span>
 			</a>
 			<div className="flex items-center space-x-4">
 				{!userUuid ? (
@@ -70,7 +70,7 @@ export default function Header(props: HeaderProps) {
 								<path d="m21 21-4.3-4.3"></path>
 							</svg>
 							<input
-								className="flex h-10 w-full bg-background px-3 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+								className="flex h-7 md:h-10 w-full bg-background px-3 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 								placeholder="Търсене..."
 								type="search"
 								onChange={(e) => props.setSearchQuery!(e.target.value)}
