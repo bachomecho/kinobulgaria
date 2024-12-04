@@ -129,7 +129,6 @@ router.put("/watchlist/:userUuid", (req, res) => {
 				if (isUpdateMethod(updateMethod))
 					updateWatchlist(req, userUuid, updateMethod, watchlist);
 
-				console.log("on server put watchlist body: ", watchlist);
 				res.sendStatus(204);
 			} else {
 				const watchlist: TWatchlist[] = [];

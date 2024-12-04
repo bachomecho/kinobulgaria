@@ -43,10 +43,10 @@ export default function Header(props: HeaderProps) {
 				) : (
 					<div className="inline-flex items-center space-x-2">
 						<a className="btn-nav" href="/usersettings">
-							Settings
+							Настройки
 						</a>
 						<button className="btn-nav" onClick={handleLogout}>
-							Logout
+							Излизане
 						</button>
 					</div>
 				)}
@@ -70,7 +70,7 @@ export default function Header(props: HeaderProps) {
 								<path d="m21 21-4.3-4.3"></path>
 							</svg>
 							<input
-								className="flex h-7 md:h-10 w-full bg-background px-3 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+								className="flex h-7 md:h-10 w-full bg-background px-3 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2  focus:border-yellow-400"
 								placeholder="Търсене..."
 								type="search"
 								onChange={(e) => props.setSearchQuery!(e.target.value)}

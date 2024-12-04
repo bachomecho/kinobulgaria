@@ -10,6 +10,7 @@ import {
 	TextField,
 } from "@mui/material";
 import Header from "../Header";
+import defaultUser from "/assets/static/icons/default_user.svg";
 import { removeMovieWatchlist, authContext } from "../../App";
 
 function UserSettings() {
@@ -25,6 +26,30 @@ function UserSettings() {
 	});
 	const { userUuid } = useContext(authContext);
 	const navigate = useNavigate();
+
+	const buttonSx = {
+		color: "black",
+		backgroundColor: "#FFD700",
+		"&:hover": {
+			backgroundColor: "#f5d31b",
+			borderColor: "black",
+		},
+		borderColor: "black",
+	};
+
+	const textFieldSx = {
+		"& .MuiOutlinedInput-root": {
+			"&:hover fieldset": {
+				borderColor: "#FFD700",
+			},
+			"&.Mui-focused fieldset": {
+				borderColor: "#FFD700",
+			},
+		},
+		"& .MuiInputLabel-root.Mui-focused": {
+			color: "#FFD700",
+		},
+	};
 
 	useEffect(() => {
 		fetch(`/api/userdata/${userUuid}`, {
@@ -111,37 +136,40 @@ function UserSettings() {
 							<CardContent className="space-y-8">
 								<div className="flex items-center space-x-4">
 									<Avatar className="w-20 h-20">
-										<img
-											src="/placeholder.svg?height=80&width=80"
-											alt={"username"}
-										/>
+										<img src={defaultUser} alt={"username"} />
 									</Avatar>
 									<div>
 										<h2 className="text-2xl font-bold">{userData.username}</h2>
 										<p className="text-muted-foreground">
-											Member since{" "}
-											{`${userData.registrationDate.toLocaleString("default", {
+											гледа от{" "}
+											{`${userData.registrationDate.toLocaleString("bg", {
 												month: "long",
-											})}, ${userData.registrationDate.getFullYear()}`}
+											})} ${userData.registrationDate.getFullYear()}`}
 										</p>
 									</div>
 								</div>
 
 								<div className="space-y-4">
-									<h3 className="text-lg font-semibold">Password</h3>
+									<h3 className="text-lg font-semibold">Парола</h3>
 									{!isChangingPassword ? (
-										<Button onClick={() => setIsChangingPassword(true)}>
-											Change Password
+										<Button
+											onClick={() => setIsChangingPassword(true)}
+											variant="contained"
+											type="submit"
+											sx={buttonSx}
+										>
+											Смени паролата
 										</Button>
 									) : (
 										<form onSubmit={handlePasswordChange} className="space-y-4">
 											{!oldPasswordError ? (
 												<div className="space-y-2">
-													<h3>Old Password</h3>
+													<h3>Стара парола</h3>
 													<TextField
 														id="old-password"
 														type="password"
 														size="small"
+														sx={textFieldSx}
 														value={oldPassword}
 														onChange={(e) => setOldPassword(e.target.value)}
 														required
@@ -149,7 +177,7 @@ function UserSettings() {
 												</div>
 											) : (
 												<div className="space-y-2">
-													<h3>Old Password</h3>
+													<h3>Стара парола</h3>
 													<TextField
 														id="old-password"
 														error
@@ -163,59 +191,74 @@ function UserSettings() {
 												</div>
 											)}
 											<div className="space-y-2">
-												<h3>New Password</h3>
+												<h3>Нова парола</h3>
 												<TextField
 													id="new-password"
 													type="password"
 													size="small"
+													sx={textFieldSx}
 													value={newPassword}
 													onChange={(e) => setNewPassword(e.target.value)}
 													required
 												/>
 											</div>
-											{confirmPassword !== newPassword ? (
-												<TextField
-													error
-													type="password"
-													size="small"
-													name="confirm-password"
-													label="Потвърди новата парола"
-													id="confirm-password-error-helper-text"
-													variant="outlined"
-													color="error"
-													onChange={(e) => setConfirmPassword(e.target.value)}
-												/>
-											) : (
-												<TextField
-													name="confirm-password"
-													size="small"
-													id="confirm-password-helper-text"
-													label="Потвърди новата парола"
-													variant="outlined"
-													color="success"
-													onChange={(e) => setConfirmPassword(e.target.value)}
-												/>
-											)}
+											<div className="space-y-2">
+												<h3>Потвърди новата парола</h3>
+												{confirmPassword !== newPassword ? (
+													<TextField
+														error
+														type="password"
+														size="small"
+														name="confirm-password"
+														id="confirm-password-error-helper-text"
+														variant="outlined"
+														color="error"
+														onChange={(e) => setConfirmPassword(e.target.value)}
+													/>
+												) : (
+													<TextField
+														name="confirm-password"
+														type="password"
+														size="small"
+														sx={textFieldSx}
+														id="confirm-password-helper-text"
+														variant="outlined"
+														onChange={(e) => setConfirmPassword(e.target.value)}
+													/>
+												)}
+											</div>
 											<div className="space-x-2">
 												{confirmPassword !== newPassword ? (
-													<Button type="submit" disabled>
-														Save New Password
+													<Button
+														type="submit"
+														variant="contained"
+														className="reg-btn"
+														sx={buttonSx}
+														disabled
+													>
+														Запази новата парола
 													</Button>
 												) : (
-													<Button type="submit">Save New Password</Button>
+													<Button
+														type="submit"
+														variant="contained"
+														sx={buttonSx}
+													>
+														Запази новата парола
+													</Button>
 												)}
 												<Button
 													type="button"
-													variant="outlined"
+													sx={buttonSx}
 													onClick={() => setIsChangingPassword(false)}
 												>
-													Cancel
+													Затвори
 												</Button>
 											</div>
 										</form>
 									)}
 								</div>
-								<h3 className="text-lg font-semibold">Movie List</h3>
+								<h3 className="text-lg font-semibold">Гледай по-късно</h3>
 								<div className="w-full max-w-md">
 									<ul className="space-y-4">
 										{watchlist.map((item, index) => (
@@ -245,7 +288,7 @@ function UserSettings() {
 																"_blank"
 															)
 														}
-														aria-label={`Watch ${item.title} trailer on YouTube`}
+														aria-label={`Watch ${item.title} on YouTube`}
 													>
 														<Video className="w-4 h-4" />
 													</Button>
