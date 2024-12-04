@@ -133,7 +133,10 @@ function Register() {
 											size="small"
 											variant="outlined"
 											helperText="This user name is already taken."
-											onChange={(e) => setUserName(e.target.value)}
+											onChange={(e) => {
+												setUserName(e.target.value);
+												setIsUserNameAvailable(true);
+											}}
 										/>
 									) : (
 										<TextField
