@@ -3,9 +3,7 @@ import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";
 import Modal from "./Modal";
-import { pathContext } from "../index";
 import { authContext } from "../App";
-import arrowUpIcon from "/assets/static/icons/scroll_top.svg";
 import { CircleArrowUp } from "lucide-react";
 
 
@@ -218,7 +216,6 @@ export default function Home() {
 						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 						className=" text-white p-2 rounded-full shadow-lg hover:bg-grey-700 focus:outline-none"
 					>
-						{/* <img src={arrowUpIcon} alt="Scroll to top" className="w-7 h-7" /> */}
 						<CircleArrowUp className="w-7 h-7" color="black" />
 					</button>
 				)}

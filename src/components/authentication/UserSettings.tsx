@@ -66,7 +66,6 @@ function UserSettings() {
 				return res.json();
 			})
 			.then((data: any) => {
-				console.log("Fetched watchlist data:", data.watchlist);
 				if (data.watchlist)
 					setWatchlist(JSON.parse(data.watchlist.split("|").join(",")));
 				setUserData({
@@ -85,8 +84,6 @@ function UserSettings() {
 	const handlePasswordChange = async (e: React.FormEvent) => {
 		// TODO: potentially throttle change password requests: 3 hourly max
 		e.preventDefault();
-
-		console.log("user settings useruuid: ", userUuid);
 		try {
 			const response = await fetch(`/api/change-password/${userUuid}`, {
 				method: "POST",

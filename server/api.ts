@@ -267,12 +267,10 @@ router.post("/change-password/:userUuid", (req, res) => {
 			if (err) {
 				res.sendStatus(404);
 			}
-			console.log("testing userpass: ", row.password);
 			const isPasswordMatch: boolean = await bcrypt.compare(
 				oldPassword,
 				row.password
 			);
-			console.log(isPasswordMatch);
 			if (row.password && isPasswordMatch) {
 				res.send({ oldPasswordCorrect: true });
 				const passwordHash = await bcrypt.hash(newPassword, 10);
