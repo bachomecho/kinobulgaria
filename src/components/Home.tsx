@@ -79,6 +79,7 @@ export default function Home() {
 	genres.current = generateGenreList(initialMovies.current);
 
 	const [watchlist, setWatchlist] = useState<TWatchlist[]>([]);
+	const [watchlistLength, setWatchlistLength] = useState<number>(0);
 
 	const titlesInWatchlist =
 		watchlist.length > 0
@@ -93,12 +94,12 @@ export default function Home() {
 				return Promise.all([resMovies.json(), resWatchlist.json()]);
 			})
 			.then(([dataMovies, dataWatchlist]: any) => {
-				console.log("movies: ", dataMovies);
-				console.log("watchlist: ", dataWatchlist);
 				if (dataWatchlist.loginStatus && dataWatchlist.watchlist) {
-					setWatchlist(
-						JSON.parse(dataWatchlist.watchlist.split("|").join(","))
+					const parsedWatchlist: TWatchlist[] = JSON.parse(
+						dataWatchlist.watchlist.split("|").join(",")
 					);
+					setWatchlist(parsedWatchlist);
+					setWatchlistLength(parsedWatchlist.length);
 				}
 
 				const availableMovies = dataMovies.data.filter(
@@ -194,6 +195,8 @@ export default function Home() {
 											key={index}
 											{...item}
 											isInWatchlist={titlesInWatchlist.includes(item.title)}
+											watchlistLength={watchlistLength}
+											setWatchlistLength={setWatchlistLength}
 											modalOpenClosedMethod={(e) => {
 												e.preventDefault();
 												setSelectedMovie(item);

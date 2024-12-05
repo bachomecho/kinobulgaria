@@ -3,8 +3,9 @@ import wikipediaIcon from "/assets/static/icons/wikipedia.png";
 import { Plus, Minus } from "lucide-react";
 import { addMovieWatchlist, removeMovieWatchlist, authContext } from "../App";
 import { useContext, useState } from "react";
+import Button from "@mui/material/Button";
 
-export default function MovieItem(props: Movie) {
+export default function MovieItem(props: Movie & IWatchlistLengthState) {
 	const quotientDuration = Math.floor(props.duration / 60);
 	const formattedDuration = `${quotientDuration} ${
 		quotientDuration == 1 ? "час" : "часа"
@@ -65,7 +66,7 @@ export default function MovieItem(props: Movie) {
 						</a>
 						{userUuid &&
 							(!inWatchlist ? (
-								<button
+								<Button
 									className="watchlist-btn"
 									onClick={(e) => {
 										e.stopPropagation();
@@ -77,23 +78,25 @@ export default function MovieItem(props: Movie) {
 											props.release_year
 										);
 										setInWatchlist(true);
+										props.setWatchlistLength((prev: number) => prev + 1);
 									}}
-									title="Запази за гледане по-късно"
+									disabled={props.watchlistLength >= 5 ? true : false}
 								>
 									<Plus />
-								</button>
+								</Button>
 							) : (
-								<button
+								<Button
 									className="watchlist-btn"
+									variant="contained"
 									onClick={(e) => {
 										e.stopPropagation();
 										removeMovieWatchlist(userUuid, props.title);
+										props.setWatchlistLength((prev: number) => prev - 1);
 										setInWatchlist(false);
 									}}
-									title="Премахни от Гледай по-късно"
 								>
 									<Minus />
-								</button>
+								</Button>
 							))}
 					</div>
 				</div>

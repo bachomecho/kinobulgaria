@@ -11,6 +11,10 @@ interface Movie {
 	modalOpenClosedMethod: (e: any) => void;
 	isInWatchlist: boolean;
 }
+interface IWatchlistLengthState {
+	watchlistLength: number;
+	setWatchlistLength: any;
+}
 
 interface FilterProps {
 	yearRange: string;
