@@ -25,3 +25,11 @@ dist
 *.sw?
 .env
 *.sql
+users copy.db
+users.db
+users.db-journal
+watchlist.db
+package-lock.json
+REVISED_*.db
+*.txt
+*.csv
