@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import logo from "/assets/static/logo/logo_kino.png";
-import { authContext } from "../../App";
 import { ArrowLeft } from "lucide-react";
 
 function Register() {
@@ -16,7 +15,7 @@ function Register() {
 		"username" | "password" | "confirmPassword" | null
 	>(null);
 	const navigate = useNavigate();
-	const { userUuid, setUserUuid } = useContext(authContext);
+	const userUuid = localStorage.getItem("userUuid") || null;
 
 	useEffect(() => {
 		if (userUuid) {
@@ -59,7 +58,6 @@ function Register() {
 
 			const status = await response.json();
 			if (status.successfulRegistration) {
-				setUserUuid(status.userUuid);
 				localStorage.setItem("userUuid", status.userUuid);
 				navigate("/");
 			} else {

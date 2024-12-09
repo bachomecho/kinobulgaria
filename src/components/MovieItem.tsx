@@ -1,8 +1,8 @@
 import youtubeIcon from "/assets/static/icons/yt_icon_black.png";
 import wikipediaIcon from "/assets/static/icons/wikipedia.png";
 import { Plus, Minus } from "lucide-react";
-import { addMovieWatchlist, removeMovieWatchlist, authContext } from "../App";
-import { useContext, useState } from "react";
+import { addMovieWatchlist, removeMovieWatchlist } from "../App";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 
 export default function MovieItem(props: Movie & IWatchlistLengthState) {
@@ -12,7 +12,7 @@ export default function MovieItem(props: Movie & IWatchlistLengthState) {
 	} и ${props.duration % 60} минути`;
 
 	const [inWatchlist, setInWatchlist] = useState(props.isInWatchlist);
-	const { userUuid } = useContext(authContext);
+	const userUuid = localStorage.getItem("userUuid") || null;
 
 	return (
 		<>

@@ -70,7 +70,9 @@ export default function Home() {
 	const [selectedMovie, setSelectedMovie] = useState<Movie>();
 	const [modalOpen, setModalOpen] = useState(false);
 	const [isSmallScreen, setIsSmallScreen] = useState(false);
-	const { userUuid } = useContext(authContext);
+	const [userUuid, setUserUuid] = useState(
+		localStorage.getItem("userUuid") || null
+	);
 
 	const initialMovies = useRef<Movie[]>([]);
 	const genres = useRef<string[]>([]);
@@ -89,6 +91,11 @@ export default function Home() {
 		const fetchWatchlist = fetch(`/api/watchlist/${userUuid}`);
 		Promise.all([fetchMovies, fetchWatchlist])
 			.then(([resMovies, resWatchlist]: [Response, Response]) => {
+				if (!resWatchlist.ok || !resMovies.ok) {
+					// if user is deleted unexpectedly in the database, while user is still logged in, this condition catches the faulty requests and rerenders component by setting user uuid
+					localStorage.removeItem("userUuid");
+					setUserUuid(null);
+				}
 				return Promise.all([resMovies.json(), resWatchlist.json()]);
 			})
 			.then(([dataMovies, dataWatchlist]: any) => {

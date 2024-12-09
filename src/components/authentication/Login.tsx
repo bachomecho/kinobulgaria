@@ -1,9 +1,8 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { authContext } from "../../App";
 import logo from "/assets/static/logo/logo_kino.png";
 import { ArrowLeft } from "lucide-react";
 
@@ -14,7 +13,7 @@ export default function Login() {
 		"username" | "password" | null
 	>();
 	const navigate = useNavigate();
-	const { userUuid, setUserUuid } = useContext(authContext);
+	const userUuid = localStorage.getItem("userUuid") || null;
 
 	useEffect(() => {
 		if (userUuid) {
@@ -52,7 +51,6 @@ export default function Login() {
 			} else {
 				const data = await response.json();
 				localStorage.setItem("userUuid", data.userUuid);
-				setUserUuid(data.userUuid);
 				// TODO: snack bar to show login was successful
 				navigate("/");
 			}

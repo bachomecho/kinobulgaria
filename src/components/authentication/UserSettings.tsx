@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { Video, Trash2 } from "lucide-react";
@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import Header from "../Header";
 import defaultUser from "/assets/static/icons/default_user.svg";
-import { removeMovieWatchlist, authContext } from "../../App";
+import { removeMovieWatchlist } from "../../App";
 
 function UserSettings() {
 	const [oldPassword, setOldPassword] = useState("");
@@ -24,7 +24,7 @@ function UserSettings() {
 		username: "",
 		registrationDate: new Date(),
 	});
-	const { userUuid } = useContext(authContext);
+	const userUuid = localStorage.getItem("userUuid") || null;
 	const navigate = useNavigate();
 
 	const buttonSx = {
@@ -59,7 +59,8 @@ function UserSettings() {
 				if (!res.ok) {
 					const timer = setTimeout(() => {
 						navigate("/");
-					}, 1500);
+					}, 200);
+					localStorage.removeItem("userUuid");
 
 					return () => clearTimeout(timer);
 				}

@@ -1,10 +1,8 @@
-import { useContext } from "react";
-import { authContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import logo from "/assets/static/logo/logo_kino.png";
 
 export default function Header(props: HeaderProps) {
-	const { userUuid, setUserUuid } = useContext(authContext);
+	const userUuid = localStorage.getItem("userUuid") || null;
 	const navigate = useNavigate();
 
 	async function handleLogout() {
@@ -17,7 +15,6 @@ export default function Header(props: HeaderProps) {
 				throw new Error("Logout failed");
 			} else {
 				localStorage.removeItem("userUuid");
-				setUserUuid(""); // invoking setUserUuid function here to re-render whole app
 				navigate("/");
 			}
 		} catch (err) {
