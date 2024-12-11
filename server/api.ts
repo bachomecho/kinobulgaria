@@ -70,7 +70,7 @@ router.get("/movies", (_req, res) => {
 			res.status(500).json({ error: err.message });
 			return;
 		}
-		res.send({ data: rows });
+		res.send(rows);
 	});
 });
 
@@ -158,10 +158,10 @@ router.get("/watchlist/:userUuid", (req, res) => {
 				return;
 			}
 			if (row) {
-				res.send({ loginStatus: true, watchlist: row.watchlist });
+				res.status(200).json({ loginStatus: true, watchlist: row.watchlist });
 				return;
 			} else {
-				res.sendStatus(404);
+				res.status(404).json({ loginStatus: false });
 				return;
 			}
 		}
