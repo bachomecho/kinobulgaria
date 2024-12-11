@@ -15,6 +15,11 @@ interface IWatchlistLengthState {
 	watchlistLength: number;
 	setWatchlistLength: any;
 }
+interface IWatchlistResponse {
+	error?: string;
+	watchlist?: string;
+	loginStatus: boolean;
+}
 
 interface FilterProps {
 	yearRange: string;

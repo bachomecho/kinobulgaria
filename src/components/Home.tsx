@@ -98,7 +98,7 @@ export default function Home() {
 				}
 				return Promise.all([resMovies.json(), resWatchlist.json()]);
 			})
-			.then(([dataMovies, dataWatchlist]: any) => {
+			.then(([dataMovies, dataWatchlist]: [Movie[], IWatchlistResponse]) => {
 				if (dataWatchlist.loginStatus && dataWatchlist.watchlist) {
 					const parsedWatchlist: TWatchlist[] = JSON.parse(
 						dataWatchlist.watchlist.split("|").join(",")
@@ -107,7 +107,7 @@ export default function Home() {
 					setWatchlistLength(parsedWatchlist.length);
 				}
 
-				const availableMovies = dataMovies.data.filter(
+				const availableMovies = dataMovies.filter(
 					(movie: Movie) => movie.video_id
 				);
 				initialMovies.current = availableMovies;
