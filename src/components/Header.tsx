@@ -24,7 +24,12 @@ export default function Header(props: HeaderProps) {
 	return (
 		<header className="flex items-center justify-between px-4 md:px-6 lg:px-8 h-16 bg-white shadow">
 			<a className="flex items-center" href="/" rel="ugc">
-				<img src={logo} width="24" height="24" className="h-6 w-6 mr-2" />
+				<img
+					src={logo}
+					width="24"
+					height="24"
+					className="h-6 w-6 mr-5 md:mr-2"
+				/>
 				<span className="hidden md:flex font-bold text-lg">Kино България</span>
 			</a>
 			<div className="flex items-center space-x-4">
