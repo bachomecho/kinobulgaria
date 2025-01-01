@@ -1,4 +1,4 @@
-interface Movie {
+export interface Movie {
 	title: string;
 	thumbnail_name: string;
 	video_id: string;
@@ -11,31 +11,37 @@ interface Movie {
 	modalOpenClosedMethod: (e: any) => void;
 	isInWatchlist: boolean;
 }
-interface IWatchlistLengthState {
+export interface IWatchlistLengthState {
 	watchlistLength: number;
 	setWatchlistLength: any;
 }
-interface IWatchlistResponse {
+export interface IWatchlistResponse {
 	error?: string;
 	watchlist?: string;
 	loginStatus: boolean;
 }
 
-interface FilterProps {
+export interface FilterProps {
 	yearRange: string;
 	duration: string;
 	genre: string;
 }
 
-interface HeaderProps {
+export interface HeaderProps {
 	showSearch: boolean;
 	setSearchQuery?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-type TWatchlist = Pick<
+export type TWatchlist = Pick<
 	Movie,
 	"title" | "thumbnail_name" | "video_id" | "release_year"
 >;
 
-type TSearchMethod = (movieState: Movie[], filterState: string) => Movie[];
-type TFilterMethod = (movieState: Movie[], filterState: FilterProps) => Movie[];
+export type TSearchMethod = (
+	movieState: Movie[],
+	filterState: string
+) => Movie[];
+export type TFilterMethod = (
+	movieState: Movie[],
+	filterState: FilterProps
+) => Movie[];

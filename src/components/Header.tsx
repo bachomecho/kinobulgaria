@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import logo from "/assets/static/logo/logo_kino.png";
+import { HeaderProps } from "../types/types";
 
 export default function Header(props: HeaderProps) {
 	const userUuid = localStorage.getItem("userUuid") || null;

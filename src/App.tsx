@@ -3,6 +3,7 @@ import Home from "./components/Home";
 import Login from "./components/authentication/Login";
 import Register from "./components/authentication/Register";
 import UserSettings from "./components/authentication/UserSettings";
+import { TWatchlist } from "./types/types";
 
 function removeMovieWatchlist(userUuid: string, title: string) {
 	fetch(`/api/watchlist/${userUuid}`, {

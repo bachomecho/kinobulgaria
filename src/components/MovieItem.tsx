@@ -4,6 +4,7 @@ import { Plus, Minus } from "lucide-react";
 import { addMovieWatchlist, removeMovieWatchlist } from "../App";
 import { useState } from "react";
 import Button from "@mui/material/Button";
+import { IWatchlistLengthState, Movie } from "../types/types";
 
 export default function MovieItem(props: Movie & IWatchlistLengthState) {
 	const quotientDuration = Math.floor(props.duration / 60);

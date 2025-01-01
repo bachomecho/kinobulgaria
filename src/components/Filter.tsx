@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { X } from "lucide-react";
+import { FilterProps } from "../types/types";
 
 export default function Filter({
 	filterState,

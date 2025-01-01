@@ -12,6 +12,7 @@ import {
 import Header from "../Header";
 import defaultUser from "/assets/static/icons/default_user.svg";
 import { removeMovieWatchlist } from "../../App";
+import { TWatchlist } from "../../types/types";
 
 function UserSettings() {
 	const [oldPassword, setOldPassword] = useState("");

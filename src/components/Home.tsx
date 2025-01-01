@@ -3,9 +3,15 @@ import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";
 import Modal from "./Modal";
-import { authContext } from "../App";
 import { CircleArrowUp } from "lucide-react";
-
+import {
+	FilterProps,
+	IWatchlistResponse,
+	Movie,
+	TFilterMethod,
+	TSearchMethod,
+	TWatchlist,
+} from "../types/types";
 
 const filterWithSearch: TSearchMethod = (movieState, searchState) => {
 	if (searchState === "") {
