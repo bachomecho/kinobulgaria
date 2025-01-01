@@ -86,7 +86,7 @@ function UserSettings() {
 		// TODO: potentially throttle change password requests: 3 hourly max
 		e.preventDefault();
 		try {
-			const response = await fetch(`/api/change-password/${userUuid}`, {
+			const response = await fetch(`/auth/change-password/${userUuid}`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/x-www-form-urlencoded",

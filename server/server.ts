@@ -2,6 +2,7 @@ import cors from "cors";
 import path from "path";
 import express from "express";
 import apiRouter from "./api.js";
+import authRouter from "./authentication.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -11,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/api", apiRouter);
+app.use("/auth", authRouter);
 
 const pathConf = {
 	DEV: "assets/static",
