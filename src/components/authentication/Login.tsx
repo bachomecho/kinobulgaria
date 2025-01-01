@@ -34,7 +34,7 @@ export default function Login() {
 		const credentials = new URLSearchParams({ username, password });
 
 		try {
-			const response = await fetch("/api/login", {
+			const response = await fetch("/auth/login", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/x-www-form-urlencoded",
