@@ -19,7 +19,7 @@ export default function Filter({
 }) {
 	let emptyString = "";
 	return (
-		<div className="grid gap-4">
+		<div className="grid gap-4 mt-4 justify-center">
 			<div className="flex flex-col sm:flex-row px-8 items-center sm:items-center sm:gap-8 w-full">
 				<div className="flex flex-col sm:flex-row sm:gap-4 w-full">
 					<FormControl

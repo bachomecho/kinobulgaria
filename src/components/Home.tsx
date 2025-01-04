@@ -197,7 +197,7 @@ export default function Home() {
 			)}
 			{movies.length > 0 ? (
 				<>
-					<main className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
+					<main className="container mx-auto py-8 px-4 md:px-6 lg:px-8">
 						<ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 							{movies.map((item, index) => {
 								return (
