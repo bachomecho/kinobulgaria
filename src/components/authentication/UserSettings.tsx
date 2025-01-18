@@ -12,7 +12,7 @@ import {
 import Header from "../Header";
 import defaultUser from "/assets/static/icons/default_user.svg";
 import { removeMovieWatchlist } from "../../App";
-import { TWatchlist } from "../../types/types";
+import { TWatchlist, IApiUserData } from "../../types/types";
 
 function UserSettings() {
 	const [oldPassword, setOldPassword] = useState("");
@@ -67,7 +67,7 @@ function UserSettings() {
 				}
 				return res.json();
 			})
-			.then((data: any) => {
+			.then((data: IApiUserData) => {
 				if (data.watchlist)
 					setWatchlist(JSON.parse(data.watchlist.split("|").join(",")));
 				setUserData({

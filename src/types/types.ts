@@ -60,3 +60,10 @@ export type TFilterMethod = (
 	movieState: Movie[],
 	filterState: FilterProps
 ) => Movie[];
+
+export interface IApiUserData {
+	loginStatus: boolean;
+	watchlist: string;
+	username: string;
+	registrationDate: Date;
+}
