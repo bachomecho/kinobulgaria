@@ -1,7 +1,12 @@
-interface Movie {
+export type MovieSite = "youtube" | "dailymotion" | "vk" | "gledambg";
+export interface Movie {
 	title: string;
 	thumbnail_name: string;
 	video_id: string;
+	site: MovieSite;
+	video_id_1: string;
+	site_1: MovieSite;
+	gledambg_video_id: string;
 	multi_part: 0 | 1;
 	duration: number;
 	release_year: number;
@@ -11,31 +16,47 @@ interface Movie {
 	modalOpenClosedMethod: (e: any) => void;
 	isInWatchlist: boolean;
 }
-interface IWatchlistLengthState {
+type TInferPropertyTypes<T> = T extends keyof Movie ? T : never;
+export type TIdAndSites<T, Keys extends keyof T = keyof T> = {
+	[K in Keys extends `${"video" | "site" | "gledam"}${infer _}`
+		? Keys
+		: never]: Movie[TInferPropertyTypes<K>];
+};
+export type MovieInfo = {
+	site: MovieSite;
+	video_id: string;
+};
+export interface IWatchlistLengthState {
 	watchlistLength: number;
 	setWatchlistLength: any;
 }
-interface IWatchlistResponse {
+export interface IWatchlistResponse {
 	error?: string;
 	watchlist?: string;
 	loginStatus: boolean;
 }
 
-interface FilterProps {
+export interface FilterProps {
 	yearRange: string;
 	duration: string;
 	genre: string;
 }
 
-interface HeaderProps {
+export interface HeaderProps {
 	showSearch: boolean;
 	setSearchQuery?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-type TWatchlist = Pick<
+export type TWatchlist = Pick<
 	Movie,
 	"title" | "thumbnail_name" | "video_id" | "release_year"
 >;
 
-type TSearchMethod = (movieState: Movie[], filterState: string) => Movie[];
-type TFilterMethod = (movieState: Movie[], filterState: FilterProps) => Movie[];
+export type TSearchMethod = (
+	movieState: Movie[],
+	filterState: string
+) => Movie[];
+export type TFilterMethod = (
+	movieState: Movie[],
+	filterState: FilterProps
+) => Movie[];

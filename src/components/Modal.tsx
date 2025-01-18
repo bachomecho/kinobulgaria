@@ -1,6 +1,6 @@
-//  TODO: youtube button in modal
 import youtubeIcon from "/assets/static/icons/yt_icon_black.png";
 import wikipediaIcon from "/assets/static/icons/wikipedia.png";
+import { Movie } from "../types/types";
 
 export default function Modal(props: Movie) {
 	return (

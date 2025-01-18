@@ -126,7 +126,7 @@ export default function Login() {
 													},
 												},
 												"& .MuiInputLabel-root.Mui-focused": {
-													color: "#FFD700",
+													color: "black",
 												},
 											}}
 											onChange={(e) => setUserName(e.target.value)}
@@ -162,7 +162,7 @@ export default function Login() {
 													},
 												},
 												"& .MuiInputLabel-root.Mui-focused": {
-													color: "#FFD700",
+													color: "black",
 												},
 											}}
 											id="password-helper-text"

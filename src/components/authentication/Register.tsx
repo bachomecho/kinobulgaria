@@ -151,7 +151,7 @@ function Register() {
 													},
 												},
 												"& .MuiInputLabel-root.Mui-focused": {
-													color: "#FFD700",
+													color: "black",
 												},
 											}}
 											id="username-helper-text"
@@ -188,7 +188,7 @@ function Register() {
 													},
 												},
 												"& .MuiInputLabel-root.Mui-focused": {
-													color: "#FFD700",
+													color: "black",
 												},
 											}}
 											size="small"
@@ -226,7 +226,7 @@ function Register() {
 													},
 												},
 												"& .MuiInputLabel-root.Mui-focused": {
-													color: "#FFD700",
+													color: "black",
 												},
 											}}
 											size="small"

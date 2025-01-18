@@ -3,9 +3,15 @@ import MovieItem from "./MovieItem";
 import Header from "./Header";
 import Filter from "./Filter";
 import Modal from "./Modal";
-import { authContext } from "../App";
 import { CircleArrowUp } from "lucide-react";
-
+import {
+	FilterProps,
+	IWatchlistResponse,
+	Movie,
+	TFilterMethod,
+	TSearchMethod,
+	TWatchlist,
+} from "../types/types";
 
 const filterWithSearch: TSearchMethod = (movieState, searchState) => {
 	if (searchState === "") {
@@ -108,7 +114,8 @@ export default function Home() {
 				}
 
 				const availableMovies = dataMovies.filter(
-					(movie: Movie) => movie.video_id
+					(movie: Movie) =>
+						movie.video_id || movie.video_id_1 || movie.gledambg_video_id
 				);
 				initialMovies.current = availableMovies;
 				setMovies(availableMovies);
@@ -142,7 +149,7 @@ export default function Home() {
 		window.addEventListener("resize", isMobileChecker);
 	}, []);
 
-	const escFunction = useCallback((event: any) => {
+	const escFunction = useCallback((event: KeyboardEvent) => {
 		if (event.key === "Escape") {
 			setModalOpen(false);
 		}
@@ -191,7 +198,7 @@ export default function Home() {
 			)}
 			{movies.length > 0 ? (
 				<>
-					<main className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
+					<main className="container mx-auto py-8 px-4 md:px-6 lg:px-8">
 						<ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 							{movies.map((item, index) => {
 								return (
