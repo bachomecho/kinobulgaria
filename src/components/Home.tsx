@@ -114,7 +114,8 @@ export default function Home() {
 				}
 
 				const availableMovies = dataMovies.filter(
-					(movie: Movie) => movie.video_id
+					(movie: Movie) =>
+						movie.video_id || movie.video_id_1 || movie.gledambg_video_id
 				);
 				initialMovies.current = availableMovies;
 				setMovies(availableMovies);
@@ -148,7 +149,7 @@ export default function Home() {
 		window.addEventListener("resize", isMobileChecker);
 	}, []);
 
-	const escFunction = useCallback((event: any) => {
+	const escFunction = useCallback((event: KeyboardEvent) => {
 		if (event.key === "Escape") {
 			setModalOpen(false);
 		}
