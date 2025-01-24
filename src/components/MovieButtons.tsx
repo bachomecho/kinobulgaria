@@ -1,6 +1,10 @@
-import wikipediaIcon from "/assets/static/icons/wikipedia.png";
-import { Movie, TIdAndSites, MovieSite, MovieInfo } from "../types/types";
-import youtubeIcon from "/assets/static/icons/yt_icon_black.png";
+import {
+	Movie,
+	TIdAndSites,
+	MovieSite,
+	MovieInfo,
+	TSiteInfoMapping,
+} from "../types/types";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -24,11 +28,11 @@ const objectFromArray = (arr: [MovieSite, string]) => {
 	const [site, video_id] = arr;
 	return { site: site, video_id: video_id };
 };
-const siteDisplayNames = {
-	youtube: "YouTube",
-	dailymotion: "Dailymotion",
-	gledambg: "GledamBG",
-	vk: "VK",
+const siteInfoMapping: TSiteInfoMapping = {
+	youtube: ["YouTube", "#eb2323"],
+	dailymotion: ["Dailymotion", "#60a5fa"],
+	gledambg: ["GledamBG", "#ad5e0e"],
+	vk: ["VK", "#0bc8c3"],
 };
 // movies are already filtered upon requesting from movie database to have at least one video id
 function MovieButtons(props: TIdAndSites<Movie> & Pick<Movie, "title">) {
@@ -72,19 +76,29 @@ function MovieButtons(props: TIdAndSites<Movie> & Pick<Movie, "title">) {
 		}
 	}, []);
 
+	const primaryMovieClassName =
+		"primary-" +
+		primaryMovie?.site +
+		"-btn" +
+		" " +
+		"flex items-center justify-center 2xl:justify-start gap-2 ring-offset-background";
+
 	return (
 		// TODO: change icon and css class name (yt-btn)
 		<>
 			{primaryMovie && (
 				<a
 					href={determineUrl(primaryMovie.site, primaryMovie.video_id)}
-					className="yt-btn flex items-center justify-center 2xl:justify-start gap-2 ring-offset-background"
+					className={primaryMovieClassName}
 					target="_blank"
 					onClick={(e) => e.stopPropagation()}
 				>
-					<img src={youtubeIcon} className="w-4 h-4 2xl:ml-4" />
+					<img
+						src={`/icons/${primaryMovie.site}_icon.svg`}
+						className="w-4 h-4 2xl:ml-4"
+					/>
 					<span className="hidden 2xl:block">
-						{siteDisplayNames[primaryMovie.site]}
+						{siteInfoMapping[primaryMovie.site][0]}
 					</span>
 				</a>
 			)}
@@ -108,12 +122,40 @@ function MovieButtons(props: TIdAndSites<Movie> & Pick<Movie, "title">) {
 						MenuListProps={{
 							"aria-labelledby": "basic-button",
 						}}
+						sx={{ width: 1000 }}
 					>
 						{otherMovieLinks &&
 							otherMovieLinks?.map((item) => {
+								const secondaryMovieClassName =
+									"secondary-" +
+									item.site +
+									"-btn" +
+									" " +
+									"flex items-center justify-center 2xl:justify-start gap-2 ring-offset-background";
 								return (
-									<MenuItem onClick={(e) => handleClose(e)}>
-										{siteDisplayNames[item.site]}
+									<MenuItem
+										onClick={(e) => handleClose(e)}
+										sx={{
+											"&:hover": {
+												backgroundColor: siteInfoMapping[item.site][1],
+											},
+											width: 170,
+										}}
+									>
+										<a
+											href={determineUrl(item.site, item.video_id)}
+											className={secondaryMovieClassName}
+											target="_blank"
+											onClick={(e) => e.stopPropagation()}
+										>
+											<img
+												src={`/icons/${item.site}_icon.svg`}
+												className="w-4 h-4 2xl:ml-4"
+											/>
+											<span className="hidden 2xl:block">
+												{siteInfoMapping[item.site][0]}
+											</span>
+										</a>
 									</MenuItem>
 								);
 							})}
@@ -130,7 +172,7 @@ function MovieButtons(props: TIdAndSites<Movie> & Pick<Movie, "title">) {
 					onClick={(e) => e.stopPropagation()}
 					title="Информация за филма"
 				>
-					<img src={wikipediaIcon} className="w-4 h-4 2xl:ml-4" />
+					<img src="/icons/wikipedia_icon.svg" className="w-4 h-4 2xl:ml-4" />
 					<span className="hidden 2xl:block">Wikipedia</span>
 				</a>
 			)}
