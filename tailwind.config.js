@@ -1,11 +1,11 @@
 export default {
+	mode: "aot",
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
-	important: true,
 	theme: {
 		extend: {
 			colors: {
-				primary: "#eb2323",
-				secondary: "#737373",
+				ytred: "#eb2323",
+				wikigrey: "#737373",
 				"primary-foreground": "#fff",
 				ring: "#5a67d8",
 				background: "#f7fafc",

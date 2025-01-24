@@ -1,5 +1,3 @@
-import youtubeIcon from "/assets/static/icons/yt_icon_black.png";
-import wikipediaIcon from "/assets/static/icons/wikipedia.png";
 import { Movie } from "../types/types";
 
 export default function Modal(props: Movie) {
@@ -32,7 +30,10 @@ export default function Modal(props: Movie) {
 								className="yt-btn ring-offset-background"
 								target="_blank"
 							>
-								<img src={youtubeIcon} className="fill-current w-4 h-4 mr-2" />
+								<img
+									src="/icons/youtube_icon.svg"
+									className="fill-current w-4 h-4 mr-2"
+								/>
 								YouTube
 							</a>
 							<a
@@ -44,7 +45,7 @@ export default function Modal(props: Movie) {
 								target="_blank"
 							>
 								<img
-									src={wikipediaIcon}
+									src="/icons/wikipedia_icon.svg"
 									className="fill-current w-4 h-4 mr-2 -ml-1"
 								/>
 								Wikipedia

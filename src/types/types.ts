@@ -22,6 +22,10 @@ export type TIdAndSites<T, Keys extends keyof T = keyof T> = {
 		? Keys
 		: never]: Movie[TInferPropertyTypes<K>];
 };
+export type TSiteInfoMapping = {
+	[site in MovieSite]: string[];
+};
+
 export type MovieInfo = {
 	site: MovieSite;
 	video_id: string;
