@@ -7,7 +7,7 @@
 		"preview": "vite preview",
 		"test": "npx jest",
 		"client:dev": "vite",
-		"server:dev": "npx tsx ./server/server.ts",
+		"server:dev": "npx tsx watch ./server/server.ts",
 		"client:build": "vite build --base=/",
 		"server:build": "tsc -p ./server/tsconfig.json",
 		"build": "npm run client:build && npm run server:build",

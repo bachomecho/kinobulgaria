@@ -113,12 +113,8 @@ export default function Home() {
 					setWatchlistLength(parsedWatchlist.length);
 				}
 
-				const availableMovies = dataMovies.filter(
-					(movie: Movie) =>
-						movie.video_id || movie.video_id_1 || movie.gledambg_video_id
-				);
-				initialMovies.current = availableMovies;
-				setMovies(availableMovies);
+				initialMovies.current = dataMovies;
+				setMovies(dataMovies);
 			})
 			.catch((error) => console.error("Error fetching data:", error));
 	}, []);
