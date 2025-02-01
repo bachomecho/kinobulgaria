@@ -1,4 +1,8 @@
 export type MovieSite = "youtube" | "dailymotion" | "vk" | "gledambg";
+export interface IPrimaryAndOtherVideoSources {
+	primaryMovieInfo: MovieInfo;
+	other?: MovieInfo[];
+}
 export interface Movie {
 	title: string;
 	thumbnail_name: string;
@@ -7,6 +11,7 @@ export interface Movie {
 	video_id_1: string;
 	site_1: MovieSite;
 	gledambg_video_id: string;
+	movieInfo: IPrimaryAndOtherVideoSources;
 	multi_part: 0 | 1;
 	duration: number;
 	release_year: number;

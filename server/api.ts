@@ -2,7 +2,13 @@ import express from "express";
 import sqlite3 from "sqlite3";
 import path from "path";
 import dotenv from "dotenv";
-import { TWatchlist } from "../src/types/types";
+import {
+	TWatchlist,
+	Movie,
+	MovieSite,
+	IPrimaryAndOtherVideoSources,
+} from "../src/types/types";
+import { objectFromArray } from "../src/types/utils";
 dotenv.config();
 
 const router = express.Router();
@@ -30,7 +36,7 @@ const moviesDb = new sqlite3.Database(
 		if (err) {
 			console.error("Could not connect to db");
 		} else {
-			console.log("Successfully connected to db");
+			console.log("Successfully connected to movies database.");
 		}
 	}
 );
@@ -40,18 +46,59 @@ const usersDB = new sqlite3.Database(
 		if (err) {
 			console.error("Could not connect to db");
 		} else {
-			console.log("Successfully connected to db");
+			console.log("Successfully connected to user database.");
 		}
 	}
 );
 
+function isMovieSiteCorrect(movieSite: any): movieSite is MovieSite {
+	const movieSites: MovieSite[] = ["youtube", "dailymotion", "vk", "gledambg"];
+	return movieSites.includes(movieSite);
+}
 router.get("/movies", (_req, res) => {
-	moviesDb.all("SELECT * FROM movies", [], (err, rows) => {
+	moviesDb.all("SELECT * FROM movies", [], (err, rows: Movie[]) => {
 		if (err) {
 			res.status(500).json({ error: err.message });
 			return;
 		}
-		res.send(rows);
+
+		const availableMovies: Movie[] = new Array();
+		for (let row of rows) {
+			const movieSiteMapping = new Map<MovieSite, string>([
+				[row.site, row.video_id],
+				[row.site_1, row.video_id_1],
+				["gledambg", row.gledambg_video_id],
+			]);
+			movieSiteMapping.forEach((val, key, m) => {
+				if (!val || !key) m.delete(key);
+				else if (!isMovieSiteCorrect(key)) {
+					res.status(422).json({
+						error: `Typo or wrong site has been given to ${row.title}: ${key}`,
+					});
+					return;
+				}
+			});
+			if (movieSiteMapping.size !== 0) {
+				const mappingArray = Array.from(movieSiteMapping.entries());
+				const primaryMovieInfo = objectFromArray(mappingArray.shift()!);
+				const otherMovieInfo = mappingArray.map((elem) => {
+					return objectFromArray(elem);
+				});
+				const movieInfo: IPrimaryAndOtherVideoSources = {
+					primaryMovieInfo: primaryMovieInfo,
+					other: otherMovieInfo,
+				};
+
+				availableMovies.push(Object.assign(row, { movieInfo: movieInfo }));
+			} else {
+				res.status(422).json({
+					error: `There is a missing video id and site combo for movie ${row.title}`,
+				});
+				return;
+			}
+		}
+		res.send(Array.from(availableMovies));
+		return;
 	});
 });
 

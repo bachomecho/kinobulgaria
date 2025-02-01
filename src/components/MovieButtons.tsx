@@ -1,44 +1,21 @@
-import {
-	Movie,
-	TIdAndSites,
-	MovieSite,
-	MovieInfo,
-	TSiteInfoMapping,
-} from "../types/types";
+import { Movie, MovieInfo, TSiteInfoMapping } from "../types/types";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useEffect, useState } from "react";
+import { MutableRefObject, useRef, useState } from "react";
+import { determineUrl } from "../App";
 
-const determineUrl = (site: MovieSite, video_id: string): string => {
-	switch (site) {
-		case "youtube":
-			return `https://www.youtube.com/watch?v=${video_id}`;
-		case "dailymotion":
-			return `https://www.dailymotion.com/video/${video_id}`;
-		case "gledambg":
-			return `https://gledam.bg/programs/${video_id}`;
-		case "vk":
-			return `https://ok.ru/video/${video_id}`;
-		default:
-	}
-	return "";
-};
-const objectFromArray = (arr: [MovieSite, string]) => {
-	const [site, video_id] = arr;
-	return { site: site, video_id: video_id };
-};
-const siteInfoMapping: TSiteInfoMapping = {
+const siteFullNameAndColorMapping: TSiteInfoMapping = {
 	youtube: ["YouTube", "#eb2323"],
 	dailymotion: ["Dailymotion", "#60a5fa"],
 	gledambg: ["GledamBG", "#ad5e0e"],
 	vk: ["VK", "#0bc8c3"],
 };
 // movies are already filtered upon requesting from movie database to have at least one video id
-function MovieButtons(props: TIdAndSites<Movie> & Pick<Movie, "title">) {
+function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
 	// determine video id and the site the video is hosted on
-	const [primaryMovie, setPrimaryMovie] = useState<MovieInfo>();
-	const [otherMovieLinks, setOtherMovieLinks] = useState<MovieInfo[]>();
+	// const [primaryMovie, setPrimaryMovie] = useState<MovieInfo>();
+	// const [otherMovieLinks, setOtherMovieLinks] = useState<MovieInfo[]>();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,36 +26,16 @@ function MovieButtons(props: TIdAndSites<Movie> & Pick<Movie, "title">) {
 		e.stopPropagation();
 		setAnchorEl(null);
 	};
-
-	useEffect(() => {
-		const movieSiteMapping = new Map<MovieSite, string>([
-			[props.site, props.video_id],
-			[props.site_1, props.video_id_1],
-			["gledambg", props.gledambg_video_id],
-		]);
-		movieSiteMapping.forEach((val, key, m) => {
-			if (!val || !key) m.delete(key);
-		});
-		if (movieSiteMapping.size !== 0) {
-			const mappingArray = Array.from(movieSiteMapping.entries());
-			setPrimaryMovie(objectFromArray(mappingArray.shift()!));
-			if (mappingArray.length > 0) {
-				setOtherMovieLinks(
-					mappingArray.map((elem) => {
-						return objectFromArray(elem);
-					})
-				);
-			}
-		} else {
-			throw new Error(
-				`There is a missing video id and site combo for movie ${props.title}`
-			);
-		}
-	}, []);
+	const primaryMovie: MutableRefObject<MovieInfo> = useRef(
+		props.movieInfo.primaryMovieInfo
+	);
+	const otherMovieLinks: MutableRefObject<MovieInfo[] | undefined> = useRef(
+		props.movieInfo.other
+	);
 
 	const primaryMovieClassName =
 		"primary-" +
-		primaryMovie?.site +
+		primaryMovie.current.site +
 		"-btn" +
 		" " +
 		"flex items-center justify-center 2xl:justify-start gap-2 ring-offset-background";
@@ -88,21 +45,24 @@ function MovieButtons(props: TIdAndSites<Movie> & Pick<Movie, "title">) {
 		<>
 			{primaryMovie && (
 				<a
-					href={determineUrl(primaryMovie.site, primaryMovie.video_id)}
+					href={determineUrl(
+						props.movieInfo.primaryMovieInfo.site,
+						props.movieInfo.primaryMovieInfo.video_id
+					)}
 					className={primaryMovieClassName}
 					target="_blank"
 					onClick={(e) => e.stopPropagation()}
 				>
 					<img
-						src={`/icons/${primaryMovie.site}_icon.svg`}
+						src={`/icons/${primaryMovie.current.site}_icon.svg`}
 						className="w-4 h-4 2xl:ml-4"
 					/>
 					<span className="hidden 2xl:block">
-						{siteInfoMapping[primaryMovie.site][0]}
+						{siteFullNameAndColorMapping[primaryMovie.current.site][0]}
 					</span>
 				</a>
 			)}
-			{otherMovieLinks?.length! > 0 ? (
+			{otherMovieLinks.current?.length! > 0 ? (
 				<div>
 					<Button
 						id="basic-button"
@@ -125,7 +85,7 @@ function MovieButtons(props: TIdAndSites<Movie> & Pick<Movie, "title">) {
 						sx={{ width: 1000 }}
 					>
 						{otherMovieLinks &&
-							otherMovieLinks?.map((item) => {
+							otherMovieLinks.current?.map((item) => {
 								const secondaryMovieClassName =
 									"secondary-" +
 									item.site +
@@ -137,7 +97,8 @@ function MovieButtons(props: TIdAndSites<Movie> & Pick<Movie, "title">) {
 										onClick={(e) => handleClose(e)}
 										sx={{
 											"&:hover": {
-												backgroundColor: siteInfoMapping[item.site][1],
+												backgroundColor:
+													siteFullNameAndColorMapping[item.site][1],
 											},
 											width: 170,
 										}}
@@ -153,7 +114,7 @@ function MovieButtons(props: TIdAndSites<Movie> & Pick<Movie, "title">) {
 												className="w-4 h-4 2xl:ml-4"
 											/>
 											<span className="hidden 2xl:block">
-												{siteInfoMapping[item.site][0]}
+												{siteFullNameAndColorMapping[item.site][0]}
 											</span>
 										</a>
 									</MenuItem>
