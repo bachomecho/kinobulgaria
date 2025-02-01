@@ -3,8 +3,22 @@ import Home from "./components/Home";
 import Login from "./components/authentication/Login";
 import Register from "./components/authentication/Register";
 import UserSettings from "./components/authentication/UserSettings";
-import { TWatchlist } from "./types/types";
+import { TWatchlist, MovieSite } from "./types/types";
 
+function determineUrl(site: MovieSite, video_id: string): string {
+	switch (site) {
+		case "youtube":
+			return `https://www.youtube.com/watch?v=${video_id}`;
+		case "dailymotion":
+			return `https://www.dailymotion.com/video/${video_id}`;
+		case "gledambg":
+			return `https://gledam.bg/programs/${video_id}`;
+		case "vk":
+			return `https://vk.com/video-${video_id}`;
+		default:
+	}
+	return "";
+}
 function removeMovieWatchlist(userUuid: string, title: string) {
 	fetch(`/api/watchlist/${userUuid}`, {
 		method: "PUT",
@@ -71,4 +85,4 @@ function App() {
 	);
 }
 
-export { addMovieWatchlist, removeMovieWatchlist, App };
+export { addMovieWatchlist, removeMovieWatchlist, App, determineUrl };
