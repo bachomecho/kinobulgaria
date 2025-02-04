@@ -1,16 +1,10 @@
-import cors from "cors";
-import path from "path";
+import createServer from "./app";
 import express from "express";
 import apiRouter from "./api.js";
 import authRouter from "./authentication.js";
-import dotenv from "dotenv";
-dotenv.config();
+import path from "path";
 
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-
+const app = createServer();
 app.use("/api", apiRouter);
 app.use("/auth", authRouter);
 
@@ -31,6 +25,5 @@ app.use(express.static("dist/app"));
 app.get("*", (_req, res) => {
 	res.sendFile(path.join(process.cwd(), "./dist/app/index.html"));
 });
-
 const port = process.env.API_PORT || 8080;
 app.listen(port, () => console.log(`listening on port ${port}`));
