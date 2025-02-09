@@ -1,6 +1,7 @@
 import supertest from "supertest";
 import createServer from "../../server/app";
 import apiRouter from "../../server/api";
+import { siteFullNameAndColorMapping } from "../types/utils.ts";
 
 const app = createServer();
 app.use("/api", apiRouter);
@@ -23,5 +24,21 @@ describe("testing api reads and writes to the movies database", () => {
             }
             expect(res.status).toBe(200);
         });
+    });
+});
+function isSecondaryHoverColorHex(color: string): boolean {
+    return color.startsWith("#");
+}
+
+describe("testing additional movie button info", () => {
+    it("should test if secondary color that is used in case of a hover in the 'more options' button", () => {
+        for (const [key, value] of Object.entries(
+            siteFullNameAndColorMapping
+        )) {
+            console.log(key);
+            expect(
+                isSecondaryHoverColorHex(value.secondaryHoverColor)
+            ).toBeTruthy();
+        }
     });
 });
