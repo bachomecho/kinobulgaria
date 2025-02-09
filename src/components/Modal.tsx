@@ -56,4 +56,5 @@ export default function Modal(props: Movie) {
 			</div>
 		</div>
 	);
+                                className="more-options-btn ring-offset-background"
 }
