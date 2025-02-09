@@ -1,7 +1,8 @@
 import supertest from "supertest";
 import createServer from "../../server/app";
 import apiRouter from "../../server/api";
-import { siteFullNameAndColorMapping } from "../types/utils.ts";
+import { siteFullNameAndColorMapping, determineUrl } from "../types/utils.ts";
+import { MovieSite } from "../types/types.ts";
 
 const app = createServer();
 app.use("/api", apiRouter);
@@ -39,6 +40,19 @@ describe("testing additional movie button info", () => {
             expect(
                 isSecondaryHoverColorHex(value.secondaryHoverColor)
             ).toBeTruthy();
+        }
+    });
+    it("should test if method determineUrl implements url string interpolation for all sites", () => {
+        const movieSites: MovieSite[] = [
+            "youtube",
+            "dailymotion",
+            "vk",
+            "gledambg",
+            "losho",
+        ];
+        const sampleVideoId = "test";
+        for (const site of movieSites) {
+            expect(determineUrl(site, sampleVideoId)).toBeTruthy();
         }
     });
 });
