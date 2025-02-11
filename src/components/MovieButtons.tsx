@@ -5,11 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import React, { MutableRefObject, useRef, useState } from "react";
 import { determineUrl, siteFullNameAndColorMapping } from "../types/utils.ts";
 
-// movies are already filtered upon requesting from movie database to have at least one video id
 function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
-    // determine video id and the site the video is hosted on
-    // const [primaryMovie, setPrimaryMovie] = useState<MovieInfo>();
-    // const [otherMovieLinks, setOtherMovieLinks] = useState<MovieInfo[]>();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,6 +16,7 @@ function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
         e.stopPropagation();
         setAnchorEl(null);
     };
+
     const primaryMovie: MutableRefObject<MovieInfo> = useRef(
         props.movieInfo.primaryMovieInfo
     );
@@ -77,7 +74,13 @@ function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
                         MenuListProps={{
                             "aria-labelledby": "basic-button",
                         }}
-                        sx={{ width: 1000 }}
+                        sx={{
+                            "& .MuiPaper-root": {
+                                backgroundColor: "transparent",
+                                boxShadow: "none",
+                            },
+                            width: 3000,
+                        }}
                     >
                         {otherMovieLinks &&
                             otherMovieLinks.current?.map((item) => {
@@ -85,13 +88,20 @@ function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
                                     <MenuItem
                                         onClick={(e) => handleClose(e)}
                                         sx={{
+                                            borderRadius: "12px",
+                                            backgroundColor:
+                                                siteFullNameAndColorMapping[
+                                                    item.site
+                                                ].secondaryHoverColor,
+                                            color: "white",
+                                            width: 170,
                                             "&:hover": {
                                                 backgroundColor:
                                                     siteFullNameAndColorMapping[
                                                         item.site
-                                                    ].secondaryHoverColor,
+                                                    ].secondaryHoverColor +
+                                                    "F2",
                                             },
-                                            width: 170,
                                         }}
                                     >
                                         <a
@@ -127,7 +137,7 @@ function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
                         " ",
                         "_"
                     )}`}
-                    className="more-options-btn flex items-center justify-center 2xl:justify-start gap-2 ring-offset-background"
+                    className="more-options-btn"
                     target="_blank"
                     onClick={(e) => e.stopPropagation()}
                     title="Информация за филма"
