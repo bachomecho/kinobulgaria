@@ -17,13 +17,13 @@ body {
         @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-700 text-primary-foreground hover:bg-blue-700/90 h-10 mr-2 w-full p-0;
     }
     .primary-gledambg-btn {
-        @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-primary-foreground hover:bg-black/90 h-10 mr-2 w-full p-0;
+        @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-yellow-800 text-primary-foreground hover:bg-yellow-800/90 h-10 mr-2 w-full p-0;
     }
     .general-secondary-btn {
-        @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-slate-950  dark:text-primary-foreground h-10 mr-2 w-full p-0;
+        @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-slate-950 h-10 mr-2 w-full p-0;
     }
-    .wiki-btn {
-        @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-wikigrey text-primary-foreground hover:bg-wikigrey/90 h-10 mr-2 w-full p-0;
+    .more-options-btn {
+        @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-wikigrey text-primary-foreground hover:bg-wikigrey/90 h-10 mr-2 w-full p-0 !important;
     }
     .watchlist-btn {
         @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-wikigrey text-primary-foreground hover:bg-wikigrey/90 h-10 w-8 ml-2 p-0 !important;

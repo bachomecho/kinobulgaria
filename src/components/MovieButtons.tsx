@@ -3,8 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import React, { MutableRefObject, useRef, useState } from "react";
-import { determineUrl } from "../App";
-import { siteFullNameAndColorMapping } from "../types/utils.ts";
+import { determineUrl, siteFullNameAndColorMapping } from "../types/utils.ts";
 
 // movies are already filtered upon requesting from movie database to have at least one video id
 function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
@@ -65,6 +64,7 @@ function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
                         aria-haspopup="true"
                         aria-expanded={open ? "true" : undefined}
                         onClick={handleClick}
+                        className={"more-options-btn"}
                     >
                         Още опции
                     </Button>
@@ -127,7 +127,7 @@ function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
                         " ",
                         "_"
                     )}`}
-                    className="wiki-btn flex items-center justify-center 2xl:justify-start gap-2 ring-offset-background"
+                    className="more-options-btn flex items-center justify-center 2xl:justify-start gap-2 ring-offset-background"
                     target="_blank"
                     onClick={(e) => e.stopPropagation()}
                     title="Информация за филма"
