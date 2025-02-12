@@ -27,3 +27,19 @@ export const siteFullNameAndColorMapping: TSiteInfoMapping = {
         secondaryHoverColor: "#0bc8c3",
     },
 };
+function determineUrl(site: MovieSite, video_id: string): string {
+    switch (site) {
+        case "youtube":
+            return `https://www.youtube.com/watch?v=${video_id}`;
+        case "dailymotion":
+            return `https://www.dailymotion.com/video/${video_id}`;
+        case "gledambg":
+            return `https://gledam.bg/programs/${video_id}`;
+        case "vk":
+            return `https://vk.com/video-${video_id}`;
+        default:
+    }
+    return "";
+}
+
+export { determineUrl, objectFromArray, siteFullNameAndColorMapping };
