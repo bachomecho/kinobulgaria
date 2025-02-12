@@ -3,7 +3,7 @@ import Home from "./components/Home";
 import Login from "./components/authentication/Login";
 import Register from "./components/authentication/Register";
 import UserSettings from "./components/authentication/UserSettings";
-import { TWatchlist } from "./types/types";
+import { MovieSite, TWatchlist } from "./types/types";
 
 function removeMovieWatchlist(userUuid: string, title: string) {
     fetch(`/api/watchlist/${userUuid}`, {
@@ -30,12 +30,14 @@ function addMovieWatchlist(
     title: string,
     thumbnail_name: string,
     video_id: string,
+    site: MovieSite,
     year: number
 ) {
     const reqBody: TWatchlist = {
         title: title,
         release_year: year,
         video_id: video_id,
+        site: site,
         thumbnail_name: thumbnail_name,
     };
     fetch(`/api/watchlist/${userUuid}`, {
