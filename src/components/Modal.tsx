@@ -7,13 +7,29 @@ export default function Modal(props: ModalProps) {
         props.movieInfo.primaryMovieInfo
     );
 
-export default function Modal(props: Movie) {
+    const modalRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const clickOutsideModal = (event: any) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                props.setModalState(false);
+            }
+        };
+        document.addEventListener("mousedown", clickOutsideModal, false);
+        return () => {
+            document.removeEventListener("mousedown", clickOutsideModal, false);
+        };
+    }, [props.setModalState]);
+
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-lg w-full max-w-5xl">
+            <div
+                ref={modalRef}
+                className="bg-white p-6 rounded-lg w-full max-w-5xl"
+            >
                 <div className="flex justify-end items-center mb-3">
                     <button
-                        onClick={props.modalOpenClosedMethod}
+                        onClick={() => props.setModalState(false)}
                         className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
                     >
                         &times;
