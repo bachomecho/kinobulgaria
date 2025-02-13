@@ -8,7 +8,7 @@ export default function Header(props: HeaderProps) {
 
     async function handleLogout() {
         try {
-            const response = await fetch(`/api/logout?userUuid=${userUuid}`, {
+            const response = await fetch(`/auth/logout?userUuid=${userUuid}`, {
                 method: "POST",
             });
 
@@ -17,6 +17,7 @@ export default function Header(props: HeaderProps) {
             } else {
                 localStorage.removeItem("userUuid");
                 navigate("/");
+                navigate(0);
             }
         } catch (err) {
             throw new Error("Error while logging out: " + err);
