@@ -52,7 +52,10 @@ export default function MovieItem(props: Movie & IWatchlistLengthState) {
                                             userUuid,
                                             props.title,
                                             props.thumbnail_name,
-                                            props.video_id,
+                                            props.movieInfo.primaryMovieInfo
+                                                .video_id,
+                                            props.movieInfo.primaryMovieInfo
+                                                .site,
                                             props.release_year
                                         );
                                         setInWatchlist(true);

@@ -1,4 +1,11 @@
-import { Movie } from "../types/types";
+import { ModalProps, MovieInfo } from "../types/types";
+import { MutableRefObject, useEffect, useRef } from "react";
+import { determineUrl, siteFullNameAndColorMapping } from "../types/utils.ts";
+
+export default function Modal(props: ModalProps) {
+    const primaryMovie: MutableRefObject<MovieInfo> = useRef(
+        props.movieInfo.primaryMovieInfo
+    );
 
 export default function Modal(props: Movie) {
     return (
@@ -26,22 +33,33 @@ export default function Modal(props: Movie) {
                         <p className="mb-4">{props.plot}</p>
                         <div className="flex justify-between items-center">
                             <a
-                                href={`https://www.youtube.com/watch?v=${props.video_id}`}
-                                className="yt-btn ring-offset-background"
+                                href={determineUrl(
+                                    primaryMovie.current.site,
+                                    primaryMovie.current.video_id
+                                )}
+                                className={
+                                    siteFullNameAndColorMapping[
+                                        primaryMovie.current.site
+                                    ].primaryCssClass
+                                }
                                 target="_blank"
                             >
                                 <img
-                                    src="/icons/youtube_icon.svg"
+                                    src={`/icons/${primaryMovie.current.site}_icon.svg`}
                                     className="fill-current w-4 h-4 mr-2"
                                 />
-                                YouTube
+                                {
+                                    siteFullNameAndColorMapping[
+                                        primaryMovie.current.site
+                                    ].fullSiteName
+                                }
                             </a>
                             <a
                                 href={`https://bg.wikipedia.org/wiki/${props.title.replace(
                                     " ",
                                     "_"
                                 )}`}
-                                className="wiki-btn ring-offset-background"
+                                className="more-options-btn ring-offset-background"
                                 target="_blank"
                             >
                                 <img

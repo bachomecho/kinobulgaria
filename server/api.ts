@@ -68,7 +68,7 @@ router.get("/movies", (_req, res) => {
         }
 
         const availableMovies: Movie[] = new Array();
-        for (let row of rows) {
+        for (const row of rows) {
             const movieSiteMapping = new Map<MovieSite, string>([
                 [row.site, row.video_id],
                 [row.site_1, row.video_id_1],
@@ -129,6 +129,7 @@ function updateWatchlist(
                 thumbnail_name: body.thumbnail_name,
                 release_year: body.release_year,
                 video_id: body.video_id,
+                site: body.site,
             });
             break;
         default:
