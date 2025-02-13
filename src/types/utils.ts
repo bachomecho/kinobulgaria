@@ -1,25 +1,25 @@
 import { MovieSite, TSiteInfoMapping } from "./types";
 
-export const objectFromArray = (arr: [MovieSite, string]) => {
+const objectFromArray = (arr: [MovieSite, string]) => {
     const [site, video_id] = arr;
     return { site: site, video_id: video_id };
 };
 
-export const siteFullNameAndColorMapping: TSiteInfoMapping = {
+const siteFullNameAndColorMapping: TSiteInfoMapping = {
     youtube: {
         fullSiteName: "YouTube",
         primaryCssClass: "primary-youtube-btn",
-        secondaryHoverColor: "#dc1648",
+        secondaryHoverColor: "#eb2323",
     },
     dailymotion: {
         fullSiteName: "Dailymotion",
         primaryCssClass: "primary-dailymotion-btn",
-        secondaryHoverColor: "#60a5fa",
+        secondaryHoverColor: "#1d4ed8",
     },
     gledambg: {
         fullSiteName: "GledamBG",
         primaryCssClass: "primary-gledambg-btn",
-        secondaryHoverColor: "#ad5e0e",
+        secondaryHoverColor: "#854d0e",
     },
     vk: {
         fullSiteName: "VK",

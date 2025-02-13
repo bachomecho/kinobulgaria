@@ -1,6 +1,6 @@
 const config = {
-	DEV: "/assets/static/",
-	PROD: "",
+    DEV: "/assets/static/",
+    PROD: "",
 };
 
 export default config;

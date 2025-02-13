@@ -48,7 +48,6 @@ describe("testing additional movie button info", () => {
             "dailymotion",
             "vk",
             "gledambg",
-            "losho",
         ];
         const sampleVideoId = "test";
         for (const site of movieSites) {

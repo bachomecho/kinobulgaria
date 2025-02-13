@@ -25,6 +25,12 @@ export interface Movie {
     modalOpenClosedMethod: (e: any) => void;
     isInWatchlist: boolean;
 }
+export type ModalProps = Omit<
+    Movie,
+    "genre" | "multi_part" | "isInWatchlist"
+> & {
+    setModalState: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 export type TSiteInfoMapping = {
     [movie in MovieSite]: {
@@ -63,7 +69,7 @@ export interface HeaderProps {
 
 export type TWatchlist = Pick<
     Movie,
-    "title" | "thumbnail_name" | "video_id" | "release_year"
+    "title" | "thumbnail_name" | "video_id" | "site" | "release_year"
 >;
 
 export type TSearchMethod = (

@@ -11,7 +11,6 @@ node_modules
 dist-ssr
 dist
 *.local
-*.cjs
 
 # Editor directories and files
 .vscode/*
@@ -27,8 +26,6 @@ dist
 *.sql
 users copy.db
 users.db
-users.db-journal
-watchlist.db
 package-lock.json
 REVISED_*.db
 *.txt

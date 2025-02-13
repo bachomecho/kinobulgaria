@@ -9,8 +9,8 @@ app.use("/api", apiRouter);
 app.use("/auth", authRouter);
 
 const pathConf = {
-	DEV: "assets/static",
-	PROD: "dist/app/assets/static",
+    DEV: "assets/static",
+    PROD: "dist/app/assets/static",
 };
 type Mode = "DEV" | "PROD";
 const envi = process.env.VITE_ENVIRONMENT as Mode;
@@ -23,7 +23,7 @@ app.use("/logo", express.static(`${filePath}/logo`));
 app.use(express.static("dist/app"));
 
 app.get("*", (_req, res) => {
-	res.sendFile(path.join(process.cwd(), "./dist/app/index.html"));
+    res.sendFile(path.join(process.cwd(), "./dist/app/index.html"));
 });
 const port = process.env.API_PORT || 8080;
 app.listen(port, () => console.log(`listening on port ${port}`));
