@@ -19,6 +19,12 @@ body {
     .primary-gledambg-btn {
         @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-yellow-800 text-primary-foreground hover:bg-yellow-800/90 h-10 mr-2 w-full p-0;
     }
+    .primary-playtube-btn {
+        @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-purple-700 text-primary-foreground hover:bg-purple-700/90 h-10 mr-2 w-full p-0;
+    }
+    .primary-vk-btn {
+        @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-primary-foreground hover:bg-blue-500/90 h-10 mr-2 w-full p-0;
+    }
     .general-secondary-btn {
         @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 mr-2 w-full p-0;
     }

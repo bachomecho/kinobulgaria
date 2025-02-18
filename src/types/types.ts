@@ -1,6 +1,11 @@
 import React from "react";
 
-export type MovieSite = "youtube" | "dailymotion" | "vk" | "gledambg";
+export type MovieSite =
+    | "youtube"
+    | "dailymotion"
+    | "vk"
+    | "gledambg"
+    | "playtube";
 
 export interface IPrimaryAndOtherVideoSources {
     primaryMovieInfo: MovieInfo;
