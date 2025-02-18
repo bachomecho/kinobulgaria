@@ -26,6 +26,11 @@ const siteFullNameAndColorMapping: TSiteInfoMapping = {
         primaryCssClass: "primary-vk-btn",
         secondaryHoverColor: "#0bc8c3",
     },
+    playtube: {
+        fullSiteName: "PlayTube",
+        primaryCssClass: "primary-vk-btn",
+        secondaryHoverColor: "#7b30c6",
+    },
 };
 function determineUrl(site: MovieSite, video_id: string): string {
     switch (site) {
@@ -36,7 +41,9 @@ function determineUrl(site: MovieSite, video_id: string): string {
         case "gledambg":
             return `https://gledam.bg/programs/${video_id}`;
         case "vk":
-            return `https://vk.com/video-${video_id}`;
+            return `https://vk.com/video${video_id}`;
+        case "playtube":
+            return `https://playtube.tv/watch/${video_id}`;
         default:
     }
     return "";

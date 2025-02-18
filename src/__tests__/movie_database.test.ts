@@ -33,10 +33,7 @@ function isSecondaryHoverColorHex(color: string): boolean {
 
 describe("testing additional movie button info", () => {
     it("should test if secondary color that is used in case of a hover in the 'more options' button", () => {
-        for (const [key, value] of Object.entries(
-            siteFullNameAndColorMapping
-        )) {
-            console.log(key);
+        for (const value of Object.values(siteFullNameAndColorMapping)) {
             expect(
                 isSecondaryHoverColorHex(value.secondaryHoverColor)
             ).toBeTruthy();
@@ -48,6 +45,7 @@ describe("testing additional movie button info", () => {
             "dailymotion",
             "vk",
             "gledambg",
+            "playtube",
         ];
         const sampleVideoId = "test";
         for (const site of movieSites) {
