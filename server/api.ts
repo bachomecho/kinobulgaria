@@ -8,7 +8,7 @@ import {
     MovieSite,
     IPrimaryAndOtherVideoSources,
 } from "../src/types/types";
-import { objectFromArray } from "../src/types/utils";
+import { objectFromArray } from "../src/types/utils.js";
 dotenv.config();
 
 const router = express.Router();

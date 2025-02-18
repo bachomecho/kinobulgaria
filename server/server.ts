@@ -1,4 +1,4 @@
-import createServer from "./app";
+import createServer from "./app.js";
 import express from "express";
 import apiRouter from "./api.js";
 import authRouter from "./authentication.js";
