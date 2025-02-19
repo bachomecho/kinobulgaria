@@ -2,7 +2,7 @@ import { Movie, MovieInfo } from "../types/types";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import React, { MutableRefObject, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { determineUrl, siteFullNameAndColorMapping } from "../types/utils.ts";
 
 function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
@@ -16,44 +16,44 @@ function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
         e.stopPropagation();
         setAnchorEl(null);
     };
-
-    const primaryMovie: MutableRefObject<MovieInfo> = useRef(
-        props.movieInfo.primaryMovieInfo
-    );
-    const otherMovieLinks: MutableRefObject<MovieInfo[] | undefined> = useRef(
-        props.movieInfo.other
-    );
+    const [primaryMovie, setPrimaryMovie] = useState<MovieInfo>();
+    const [otherMovieLinks, setOtherMovieLinks] = useState<
+        MovieInfo[] | undefined
+    >();
+    useEffect(() => {
+        setPrimaryMovie(props.movieInfo.primaryMovieInfo);
+        setOtherMovieLinks(props.movieInfo.other);
+    }, [props.title]);
 
     return (
         <>
             {primaryMovie && (
                 <a
                     href={determineUrl(
-                        primaryMovie.current.site,
-                        primaryMovie.current.video_id
+                        primaryMovie.site,
+                        primaryMovie.video_id
                     )}
                     className={
-                        siteFullNameAndColorMapping[primaryMovie.current.site]
+                        siteFullNameAndColorMapping[primaryMovie.site]
                             .primaryCssClass
                     }
                     target="_blank"
                     onClick={(e) => e.stopPropagation()}
                 >
                     <img
-                        src={`/icons/${primaryMovie.current.site}_icon.svg`}
+                        src={`/icons/${primaryMovie.site}_icon.svg`}
                         className="w-4 h-4 2xl:ml-4"
                         alt="thumbnail"
                     />
                     <span className="hidden 2xl:block">
                         {
-                            siteFullNameAndColorMapping[
-                                primaryMovie.current.site
-                            ].fullSiteName
+                            siteFullNameAndColorMapping[primaryMovie.site]
+                                .fullSiteName
                         }
                     </span>
                 </a>
             )}
-            {otherMovieLinks.current && otherMovieLinks.current.length > 0 ? (
+            {otherMovieLinks && otherMovieLinks.length > 0 ? (
                 <div>
                     <Button
                         id="basic-button"
@@ -83,7 +83,7 @@ function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
                         }}
                     >
                         {otherMovieLinks &&
-                            otherMovieLinks.current?.map((item) => {
+                            otherMovieLinks.map((item) => {
                                 return (
                                     <MenuItem
                                         onClick={(e) => handleClose(e)}
