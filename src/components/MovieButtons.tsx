@@ -4,6 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import React, { useEffect, useState } from "react";
 import { determineUrl, siteFullNameAndColorMapping } from "../types/utils.ts";
+import WikipediaButton from "./WikipediaButton.tsx";
 
 function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -62,6 +63,10 @@ function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
                         aria-expanded={open ? "true" : undefined}
                         onClick={handleClick}
                         className={"more-options-btn"}
+                        text-transform
+                        sx={{
+                            textTransform: "none",
+                        }}
                     >
                         Още опции
                     </Button>
@@ -129,26 +134,23 @@ function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
                                     </MenuItem>
                                 );
                             })}
+                        <MenuItem
+                            sx={{
+                                borderRadius: "12px",
+                                backgroundColor: "#737373",
+                                color: "white",
+                                width: 170,
+                                "&:hover": {
+                                    backgroundColor: "#737373F2",
+                                },
+                            }}
+                        >
+                            <WikipediaButton title={props.title} />
+                        </MenuItem>
                     </Menu>
                 </div>
             ) : (
-                <a
-                    href={`https://bg.wikipedia.org/wiki/${props.title.replace(
-                        " ",
-                        "_"
-                    )}`}
-                    className="more-options-btn"
-                    target="_blank"
-                    onClick={(e) => e.stopPropagation()}
-                    title="Информация за филма"
-                >
-                    <img
-                        src="/icons/wikipedia_icon.svg"
-                        className="w-4 h-4 2xl:ml-4"
-                        alt="wikipedia-icon"
-                    />
-                    <span className="hidden 2xl:block">Wikipedia</span>
-                </a>
+                <WikipediaButton title={props.title} />
             )}
         </>
     );
