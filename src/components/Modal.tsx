@@ -7,7 +7,11 @@ export default function Modal(props: ModalProps) {
 
     useEffect(() => {
         const clickOutsideModal = (event: any) => {
-            if (modalRef.current && !modalRef.current.contains(event.target)) {
+            if (
+                modalRef.current &&
+                !modalRef.current.contains(event.target) &&
+                !(event.target as HTMLElement).hasAttribute("aria-hidden") // this attribute tells us that more options menu was expanded and this click is not to close the modal but to close the expanded more options menu
+            ) {
                 props.setModalState(false);
             }
         };
