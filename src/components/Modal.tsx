@@ -1,12 +1,8 @@
-import { ModalProps, MovieInfo } from "../types/types";
-import { MutableRefObject, useEffect, useRef } from "react";
-import { determineUrl, siteFullNameAndColorMapping } from "../types/utils.ts";
+import { ModalProps } from "../types/types";
+import { useEffect, useRef } from "react";
+import MovieButtons from "./MovieButtons.tsx";
 
 export default function Modal(props: ModalProps) {
-    const primaryMovie: MutableRefObject<MovieInfo> = useRef(
-        props.movieInfo.primaryMovieInfo
-    );
-
     const modalRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -48,42 +44,7 @@ export default function Modal(props: ModalProps) {
                         </p>
                         <p className="mb-4">{props.plot}</p>
                         <div className="flex justify-between items-center">
-                            <a
-                                href={determineUrl(
-                                    primaryMovie.current.site,
-                                    primaryMovie.current.video_id
-                                )}
-                                className={
-                                    siteFullNameAndColorMapping[
-                                        primaryMovie.current.site
-                                    ].primaryCssClass
-                                }
-                                target="_blank"
-                            >
-                                <img
-                                    src={`/icons/${primaryMovie.current.site}_icon.svg`}
-                                    className="fill-current w-4 h-4 mr-2"
-                                />
-                                {
-                                    siteFullNameAndColorMapping[
-                                        primaryMovie.current.site
-                                    ].fullSiteName
-                                }
-                            </a>
-                            <a
-                                href={`https://bg.wikipedia.org/wiki/${props.title.replace(
-                                    " ",
-                                    "_"
-                                )}`}
-                                className="more-options-btn ring-offset-background"
-                                target="_blank"
-                            >
-                                <img
-                                    src="/icons/wikipedia_icon.svg"
-                                    className="fill-current w-4 h-4 mr-2 -ml-1"
-                                />
-                                Wikipedia
-                            </a>
+                            <MovieButtons {...props} />
                         </div>
                     </div>
                 </div>
