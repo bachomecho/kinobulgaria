@@ -26,7 +26,6 @@ jobs:
             cd ${{ secrets.PROJECT_PATH }}
             pm2 stop all
             git pull origin master
-            mv ${{ secrets.DATABASE_DIR }} public/assets/static/movies.db
             rm -rf dist
             npm install
             npm run build
