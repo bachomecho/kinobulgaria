@@ -58,6 +58,7 @@ function isMovieSiteCorrect(movieSite: any): movieSite is MovieSite {
         "vk",
         "gledambg",
         "playtube",
+        "videoclip",
     ];
     return movieSites.includes(movieSite);
 }
