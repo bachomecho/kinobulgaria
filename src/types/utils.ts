@@ -31,6 +31,11 @@ const siteFullNameAndColorMapping: TSiteInfoMapping = {
         primaryCssClass: "primary-vk-btn",
         secondaryHoverColor: "#7b30c6",
     },
+    videoclip: {
+        fullSiteName: "VideoClip",
+        primaryCssClass: "primary-videoclip-btn",
+        secondaryHoverColor: "#22c55e",
+    },
 };
 function determineUrl(site: MovieSite, video_id: string): string {
     switch (site) {
@@ -44,6 +49,8 @@ function determineUrl(site: MovieSite, video_id: string): string {
             return `https://vk.com/video${video_id}`;
         case "playtube":
             return `https://playtube.tv/watch/${video_id}`;
+        case "videoclip":
+            return `https://videoclip.bg/watch/${video_id}`;
         default:
     }
     return "";
