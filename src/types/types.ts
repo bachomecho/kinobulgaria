@@ -5,7 +5,8 @@ export type MovieSite =
     | "dailymotion"
     | "vk"
     | "gledambg"
-    | "playtube";
+    | "playtube"
+    | "videoclip";
 
 export interface IPrimaryAndOtherVideoSources {
     primaryMovieInfo: MovieInfo;

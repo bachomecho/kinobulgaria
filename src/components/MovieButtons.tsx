@@ -42,7 +42,7 @@ function MovieButtons(props: Pick<Movie, "title" | "movieInfo">) {
                     onClick={(e) => e.stopPropagation()}
                 >
                     <img
-                        src={`/icons/${primaryMovie.site}_icon.svg`}
+                        src={`/icons/${['videoclip', 'playtube'].includes(primaryMovie!.site) ? 'playtube' : primaryMovie!.site}_icon.svg`}
                         className="w-4 h-4 2xl:ml-4"
                         alt="thumbnail"
                     />

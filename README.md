@@ -16,7 +16,7 @@ SQLite is used for data storage and Vite is the build system. Official site:`kin
    ```bash
    git clone https://github.com/bachomecho/kinobulgaria.git
    ```
-2. Install node modules
+2. Install node modules(node required - v16.17.0 or up)
     ```bash
    npm i
     ```
@@ -37,7 +37,10 @@ SQLite is used for data storage and Vite is the build system. Official site:`kin
     ```bash
    npm run dev
     ```
-   
+
+## TODO
+1. Add more movies to the library
+2. Refine plot descriptions as they are automatically being pulled from imdb and translated into Bulgarian using the deepl api
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for improvements.

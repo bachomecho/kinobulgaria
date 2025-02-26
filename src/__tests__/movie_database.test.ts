@@ -46,6 +46,7 @@ describe("testing additional movie button info", () => {
             "vk",
             "gledambg",
             "playtube",
+            "videoclip",
         ];
         const sampleVideoId = "test";
         for (const site of movieSites) {
